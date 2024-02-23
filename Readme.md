@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
-* Студент: [Сергей Мансуров](https://up.htmlacademy.ru/react/15/user/958445).
-* Наставник: `Неизвестно`.
+- Студент: [Сергей Мансуров](https://up.htmlacademy.ru/react/15/user/958445).
+- Наставник: [Дмитрий Свиридов](https://htmlacademy.ru/profile/slamach).
 
 ---
 
