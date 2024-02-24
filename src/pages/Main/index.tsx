@@ -1,4 +1,5 @@
 import faker from 'faker';
+import { useMemo } from 'react';
 
 import { Card } from '../../components';
 
@@ -7,6 +8,14 @@ type Props = {
 };
 
 export function MainPage({ cardsCount }: Props): JSX.Element {
+  const cards = useMemo(
+    () =>
+      Array.from({ length: cardsCount }, () => ({
+        id: faker.datatype.uuid(),
+      })),
+    [cardsCount]
+  );
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -118,11 +127,9 @@ export function MainPage({ cardsCount }: Props): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {Array(cardsCount)
-                  .fill(0)
-                  .map(() => (
-                    <Card key={faker.datatype.uuid()} />
-                  ))}
+                {cards.map((item) => (
+                  <Card key={item.id} />
+                ))}
               </div>
             </section>
             <div className="cities__right-section">
