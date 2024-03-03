@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom';
 
-import { AppRoutesEnum, AuthorizationStatusesEnum } from '../../consts.ts';
+import { AppRoutesEnum, AuthorizationStatusesEnum } from '../../consts';
 
 type PrivateRouteProps = {
   children: JSX.Element;
