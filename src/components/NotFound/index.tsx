@@ -11,7 +11,7 @@ export function NotFound() {
       <Helmet>
         <title>Not found</title>
       </Helmet>
-      <div className={styles.NotFound}>
+      <div className={styles.notFound}>
         Page not Found{' '}
         <Link className={styles.link} to={AppRoutesEnum.HOME}>
           Go home
