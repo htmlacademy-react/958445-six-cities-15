@@ -1,12 +1,13 @@
 import { Route, Routes } from 'react-router-dom';
 
 import { Layout } from '../Layout';
+import { Offer } from '../../types';
 import { NotFound } from '../NotFound';
 import { AppRoutesEnum } from '../../consts';
 import { FavoritesPage, LoginPage, MainPage, OfferPage } from '../../pages';
 
 type Props = {
-  cardsCount: number;
+  offers: ReadonlyArray<Offer>;
 };
 
 export function App(props: Props): JSX.Element {
@@ -15,7 +16,10 @@ export function App(props: Props): JSX.Element {
       <Route path={AppRoutesEnum.HOME} element={<Layout />}>
         <Route index element={<MainPage {...props} />} />
         <Route path={AppRoutesEnum.LOGIN} element={<LoginPage />} />
-        <Route path={AppRoutesEnum.FAVORITES} element={<FavoritesPage />} />
+        <Route
+          path={AppRoutesEnum.FAVORITES}
+          element={<FavoritesPage {...props} />}
+        />
         <Route path={`${AppRoutesEnum.OFFER}/:id`} element={<OfferPage />} />
       </Route>
       <Route path={AppRoutesEnum.ROUTE_STAR} element={<NotFound />} />

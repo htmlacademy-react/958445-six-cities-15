@@ -1,11 +1,15 @@
 import { Fragment } from 'react';
 import { Helmet } from 'react-helmet-async';
 
+import { offers } from '../../mocks/offers';
+
 export function OfferPage(): JSX.Element {
+  const offer = offers[Math.floor(Math.random() * 1)];
+
   return (
     <Fragment>
       <Helmet>
-        <title>Offer</title>
+        <title>{offer.name}</title>
       </Helmet>
       <div className="page">
         <header className="header">
@@ -97,13 +101,13 @@ export function OfferPage(): JSX.Element {
             </div>
             <div className="offer__container container">
               <div className="offer__wrapper">
-                <div className="offer__mark">
-                  <span>Premium</span>
-                </div>
+                {offer.premium && (
+                  <div className="offer__mark">
+                    <span>Premium</span>
+                  </div>
+                )}
                 <div className="offer__name-wrapper">
-                  <h1 className="offer__name">
-                    Beautiful &amp; luxurious studio at great location
-                  </h1>
+                  <h1 className="offer__name">{offer.name}</h1>
                   <button
                     className="offer__bookmark-button button"
                     type="button"
@@ -137,7 +141,7 @@ export function OfferPage(): JSX.Element {
                   </li>
                 </ul>
                 <div className="offer__price">
-                  <b className="offer__price-value">&euro;120</b>
+                  <b className="offer__price-value">&euro;{offer.price}</b>
                   <span className="offer__price-text">&nbsp;night</span>
                 </div>
                 <div className="offer__inside">

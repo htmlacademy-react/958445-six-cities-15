@@ -1,2 +1,4 @@
 export { App } from './App';
-export { Card } from './Card';
+export { Offers } from './Offers';
+export { Favorites } from './Favorites';
+export { PrivateCheck } from './PrivateCheck';

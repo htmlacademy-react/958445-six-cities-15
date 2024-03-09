@@ -1,22 +1,14 @@
-import faker from 'faker';
-import { Fragment, useMemo } from 'react';
+import { Fragment } from 'react';
 import { Helmet } from 'react-helmet-async';
 
-import { Card } from '../../components';
+import type { Offer } from '../../types';
+import { Offers } from '../../components';
 
 type Props = {
-  cardsCount: number;
+  offers: ReadonlyArray<Offer>;
 };
 
-export function MainPage({ cardsCount }: Props): JSX.Element {
-  const cards = useMemo(
-    () =>
-      Array.from({ length: cardsCount }, () => ({
-        id: faker.datatype.uuid(),
-      })),
-    [cardsCount]
-  );
-
+export function MainPage({ offers }: Props): JSX.Element {
   return (
     <Fragment>
       <Helmet>
@@ -131,11 +123,7 @@ export function MainPage({ cardsCount }: Props): JSX.Element {
                     </li>
                   </ul>
                 </form>
-                <div className="cities__places-list places__list tabs__content">
-                  {cards.map((item) => (
-                    <Card key={item.id} />
-                  ))}
-                </div>
+                <Offers offers={offers} />
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map"></section>
