@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 
-import { Card } from './Card';
 import type { Offer } from '../../types';
+import { PlaceCard } from '../PlaceCard';
 
 type Props = {
   offers: ReadonlyArray<Offer>;
@@ -24,9 +24,10 @@ export function Offers({ offers }: Props) {
   return (
     <div className="cities__places-list places__list tabs__content">
       {offers.map((offer) => (
-        <Card
+        <PlaceCard
           offer={offer}
           key={offer.id}
+          className="cities"
           onMouseIn={onMouseIn}
           onMouseOut={onMouseOut}
         />

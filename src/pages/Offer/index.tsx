@@ -2,7 +2,7 @@ import { Fragment } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import { offers } from '../../mocks/offers';
-import { Offer } from './Offer';
+import { PlaceCard } from '../../components/PlaceCard';
 
 export function OfferPage(): JSX.Element {
   const offer = offers[Math.floor(Math.random() * 1)];
@@ -374,7 +374,11 @@ export function OfferPage(): JSX.Element {
               </h2>
               <div className="near-places__list places__list">
                 {offers.slice(0, 3).map((item) => (
-                  <Offer key={offer.id} offer={item} />
+                  <PlaceCard
+                    offer={item}
+                    key={item.id}
+                    className="near-places"
+                  />
                 ))}
               </div>
             </section>
