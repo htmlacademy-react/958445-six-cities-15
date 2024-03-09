@@ -1,4 +1,6 @@
+import { Link } from 'react-router-dom';
 import type { Offer } from '../../../types';
+import { AppRoutesEnum } from '../../../consts';
 
 type Props = {
   offer: Offer;
@@ -8,6 +10,8 @@ type Props = {
 
 export function Card(props: Props): JSX.Element {
   const { offer, onMouseOut, onMouseIn } = props;
+  const link = `${AppRoutesEnum.OFFER}/${offer.id}`;
+
   return (
     <article
       onMouseLeave={onMouseOut}
@@ -20,7 +24,7 @@ export function Card(props: Props): JSX.Element {
         </div>
       )}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
+        <Link to={link}>
           <img
             width="260"
             height="200"
@@ -28,7 +32,7 @@ export function Card(props: Props): JSX.Element {
             src="img/apartment-01.jpg"
             className="place-card__image"
           />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -50,7 +54,7 @@ export function Card(props: Props): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{offer.name}</a>
+          <Link to={link}>{offer.name}</Link>
         </h2>
         <p className="place-card__type">Apartment</p>
       </div>
