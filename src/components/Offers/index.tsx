@@ -8,18 +8,14 @@ type Props = {
 };
 
 export function Offers({ offers }: Props) {
-  const [activeCard, setActiveCard] = useState<null | Offer>(null);
-
-  const onMouseIn = useCallback((card: Offer) => {
-    setActiveCard(card);
+  const [, setActiveCard] = useState<null | Offer>(null);
+  const onMouseMove = useCallback((evtName: string, card: Offer) => {
+    if (evtName === 'mouseenter') {
+      setActiveCard(card);
+    } else {
+      setActiveCard(null);
+    }
   }, []);
-
-  const onMouseOut = useCallback(() => {
-    setActiveCard(null);
-  }, []);
-
-  // eslint-disable-next-line no-console
-  console.log({ activeCard });
 
   return (
     <div className="cities__places-list places__list tabs__content">
@@ -28,8 +24,7 @@ export function Offers({ offers }: Props) {
           offer={offer}
           key={offer.id}
           className="cities"
-          onMouseIn={onMouseIn}
-          onMouseOut={onMouseOut}
+          onMouseMove={onMouseMove}
         />
       ))}
     </div>

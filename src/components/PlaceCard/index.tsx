@@ -1,24 +1,29 @@
-import { Link } from 'react-router-dom';
-import { AppRoutesEnum } from '../../consts';
-import type { Offer } from '../../types';
 import cn from 'classnames';
+import { Link } from 'react-router-dom';
+import { MouseEventHandler, useCallback } from 'react';
+
+import type { Offer } from '../../types';
+import { AppRoutesEnum } from '../../consts';
 
 type Props = Readonly<{
   offer: Offer;
   isActive?: boolean;
   className?: string;
-  onMouseOut?: () => void;
-  onMouseIn?: (offer: Offer) => void;
+  onMouseMove?: (evtName: string, offer: Offer) => void;
 }>;
 
 export function PlaceCard(props: Props) {
-  const { offer, isActive, onMouseOut, onMouseIn } = props;
+  const { offer, isActive, onMouseMove } = props;
   const link = `${AppRoutesEnum.OFFER}/${offer.id}`;
+  const onMouseEvent: MouseEventHandler<HTMLElement> = useCallback(
+    (evt) => onMouseMove?.(evt.type, offer),
+    [offer, onMouseMove]
+  );
 
   return (
     <article
-      onMouseLeave={onMouseOut}
-      onMouseEnter={() => onMouseIn?.(offer)}
+      onMouseLeave={onMouseEvent}
+      onMouseEnter={onMouseEvent}
       className={`${props.className}__card place-card`}
     >
       {offer.premium && (
@@ -59,8 +64,7 @@ export function PlaceCard(props: Props) {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            {/* compute percent */}
-            <span style={{ width: '100%' }}></span>
+            <span style={{ width: `${offer.rate * 20}%` }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
