@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 
 import { offers } from '../../mocks/offers';
 import { PlaceCard } from '../../components/PlaceCard';
+import { Form } from '../../components/Form';
 
 export function OfferPage(): JSX.Element {
   const offer = offers[Math.floor(Math.random() * 1)];
@@ -227,141 +228,7 @@ export function OfferPage(): JSX.Element {
                       </div>
                     </li>
                   </ul>
-                  <form className="reviews__form form" action="#" method="post">
-                    <label
-                      htmlFor="review"
-                      className="reviews__label form__label"
-                    >
-                      Your review
-                    </label>
-                    <div className="reviews__rating-form form__rating">
-                      <input
-                        value="5"
-                        id="5-stars"
-                        type="radio"
-                        name="rating"
-                        className="form__rating-input visually-hidden"
-                      />
-                      <label
-                        title="perfect"
-                        htmlFor="5-stars"
-                        className="reviews__rating-label form__rating-label"
-                      >
-                        <svg
-                          className="form__star-image"
-                          width="37"
-                          height="33"
-                        >
-                          <use xlinkHref="#icon-star"></use>
-                        </svg>
-                      </label>
-
-                      <input
-                        value="4"
-                        name="rating"
-                        id="4-stars"
-                        type="radio"
-                        className="form__rating-input visually-hidden"
-                      />
-                      <label
-                        title="good"
-                        htmlFor="4-stars"
-                        className="reviews__rating-label form__rating-label"
-                      >
-                        <svg
-                          className="form__star-image"
-                          width="37"
-                          height="33"
-                        >
-                          <use xlinkHref="#icon-star"></use>
-                        </svg>
-                      </label>
-
-                      <input
-                        value="3"
-                        name="rating"
-                        id="3-stars"
-                        type="radio"
-                        className="form__rating-input visually-hidden"
-                      />
-                      <label
-                        title="not bad"
-                        htmlFor="3-stars"
-                        className="reviews__rating-label form__rating-label"
-                      >
-                        <svg
-                          className="form__star-image"
-                          width="37"
-                          height="33"
-                        >
-                          <use xlinkHref="#icon-star"></use>
-                        </svg>
-                      </label>
-
-                      <input
-                        value="2"
-                        name="rating"
-                        id="2-stars"
-                        type="radio"
-                        className="form__rating-input visually-hidden"
-                      />
-                      <label
-                        htmlFor="2-stars"
-                        className="reviews__rating-label form__rating-label"
-                        title="badly"
-                      >
-                        <svg
-                          className="form__star-image"
-                          width="37"
-                          height="33"
-                        >
-                          <use xlinkHref="#icon-star"></use>
-                        </svg>
-                      </label>
-
-                      <input
-                        value="1"
-                        id="1-star"
-                        type="radio"
-                        name="rating"
-                        className="form__rating-input visually-hidden"
-                      />
-                      <label
-                        htmlFor="1-star"
-                        title="terribly"
-                        className="reviews__rating-label form__rating-label"
-                      >
-                        <svg
-                          className="form__star-image"
-                          width="37"
-                          height="33"
-                        >
-                          <use xlinkHref="#icon-star"></use>
-                        </svg>
-                      </label>
-                    </div>
-                    <textarea
-                      id="review"
-                      name="review"
-                      className="reviews__textarea form__textarea"
-                      placeholder="Tell how was your stay, what you like and what can be improved"
-                    />
-                    <div className="reviews__button-wrapper">
-                      <p className="reviews__help">
-                        To submit review please make sure to set{' '}
-                        <span className="reviews__star">rating</span> and
-                        describe your stay with at least{' '}
-                        <b className="reviews__text-amount">50 characters</b>.
-                      </p>
-                      <button
-                        disabled
-                        type="submit"
-                        className="reviews__submit form__submit button"
-                      >
-                        Submit
-                      </button>
-                    </div>
-                  </form>
+                  <Form />
                 </section>
               </div>
             </div>
