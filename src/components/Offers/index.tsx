@@ -9,7 +9,7 @@ type Props = {
 
 export function Offers({ offers }: Props) {
   const [, setActiveCard] = useState<null | Offer>(null);
-  const onMouseMove = useCallback((evtName: string, card: Offer) => {
+  const handleMouseMove = useCallback((evtName: string, card: Offer) => {
     if (evtName === 'mouseenter') {
       setActiveCard(card);
     } else {
@@ -24,7 +24,7 @@ export function Offers({ offers }: Props) {
           offer={offer}
           key={offer.id}
           className="cities"
-          onMouseMove={onMouseMove}
+          handleMouseMove={handleMouseMove}
         />
       ))}
     </div>

@@ -9,21 +9,21 @@ type Props = Readonly<{
   offer: Offer;
   isActive?: boolean;
   className?: string;
-  onMouseMove?: (evtName: string, offer: Offer) => void;
+  handleMouseMove?: (evtName: string, offer: Offer) => void;
 }>;
 
 export function PlaceCard(props: Props) {
-  const { offer, isActive, onMouseMove } = props;
+  const { offer, isActive, handleMouseMove } = props;
   const link = `${AppRoutesEnum.OFFER}/${offer.id}`;
-  const onMouseEvent: MouseEventHandler<HTMLElement> = useCallback(
-    (evt) => onMouseMove?.(evt.type, offer),
-    [offer, onMouseMove]
+  const handleMouseEvent: MouseEventHandler<HTMLElement> = useCallback(
+    (evt) => handleMouseMove?.(evt.type, offer),
+    [offer, handleMouseMove]
   );
 
   return (
     <article
-      onMouseLeave={onMouseEvent}
-      onMouseEnter={onMouseEvent}
+      onMouseLeave={handleMouseEvent}
+      onMouseEnter={handleMouseEvent}
       className={`${props.className}__card place-card`}
     >
       {offer.premium && (
