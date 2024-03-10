@@ -59,8 +59,8 @@ export function Form() {
         </p>
         <button
           type="submit"
-          disabled={form.rating > 0}
           className="reviews__submit form__submit button"
+          disabled={form.rating < 1 || form.review.trim().length < 50}
         >
           Submit
         </button>
