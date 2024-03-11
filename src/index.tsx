@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 
 import { offers } from './mocks';
-import { App } from './components/app/app';
+import { App } from './components';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

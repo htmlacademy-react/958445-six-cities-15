@@ -4,9 +4,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { offers } from '../../mocks';
 import type { Offer } from '../../types';
-import { Form } from '../../components/form/form';
-import { NotFound } from '../not-found/not-found';
-import { PlaceCard } from '../../components/place-card/place-card';
+import { Form, PlaceCard } from '../../components';
+import { NotFoundPage } from '../not-found/not-found';
 
 export function OfferPage(): null | JSX.Element {
   const { id } = useParams();
@@ -269,6 +268,6 @@ export function OfferPage(): null | JSX.Element {
       </div>
     </Fragment>
   ) : (
-    <NotFound />
+    <NotFoundPage />
   );
 }

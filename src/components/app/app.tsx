@@ -3,8 +3,13 @@ import { Route, Routes } from 'react-router-dom';
 import { Offer } from '../../types';
 import { Layout } from '../layout/layout';
 import { AppRoutesEnum } from '../../consts';
-import { NotFound } from '../../pages/not-found/not-found';
-import { FavoritesPage, LoginPage, MainPage, OfferPage } from '../../pages';
+import {
+  MainPage,
+  LoginPage,
+  OfferPage,
+  NotFoundPage,
+  FavoritesPage,
+} from '../../pages';
 
 type Props = {
   offers: ReadonlyArray<Offer>;
@@ -22,7 +27,7 @@ export function App(props: Props): JSX.Element {
         />
         <Route path={`${AppRoutesEnum.OFFER}/:id`} element={<OfferPage />} />
       </Route>
-      <Route path={AppRoutesEnum.ROUTE_STAR} element={<NotFound />} />
+      <Route path={AppRoutesEnum.ROUTE_STAR} element={<NotFoundPage />} />
     </Routes>
   );
 }

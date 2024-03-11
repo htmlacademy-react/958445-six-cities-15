@@ -3,8 +3,7 @@ import { Helmet } from 'react-helmet-async';
 
 import { Offer } from '../../types';
 import { AuthorizationStatusesEnum } from '../../consts';
-import { Favorites } from '../../components/favorites/favorites';
-import { PrivateCheck } from '../../components/private-check/private-check';
+import { Favorites, PrivateCheck } from '../../components';
 
 type Props = {
   offers: ReadonlyArray<Offer>;

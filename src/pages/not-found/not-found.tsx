@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import styles from './styles.module.scss';
 import { AppRoutesEnum } from '../../consts';
 
-export function NotFound() {
+export function NotFoundPage() {
   return (
     <Fragment>
       <Helmet>
