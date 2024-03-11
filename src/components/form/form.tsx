@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 
-import { Star } from './Star';
+import { Star } from './star/star';
 
 const STARS_VALUES = [
   { value: 1, title: 'terribly' },

@@ -2,11 +2,11 @@ import { Helmet } from 'react-helmet-async';
 import { Fragment, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import { offers } from '../../mocks';
 import type { Offer } from '../../types';
-import { offers } from '../../mocks/offers';
-import { Form } from '../../components/Form';
-import { NotFound } from '../../components/NotFound';
-import { PlaceCard } from '../../components/PlaceCard';
+import { Form } from '../../components/form/form';
+import { NotFound } from '../not-found/not-found';
+import { PlaceCard } from '../../components/place-card/place-card';
 
 export function OfferPage(): null | JSX.Element {
   const { id } = useParams();

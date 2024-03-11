@@ -1,4 +1,4 @@
-export { App } from './App';
-export { Offers } from './Offers';
-export { Favorites } from './Favorites';
-export { PrivateCheck } from './PrivateCheck';
+export { App } from './app/app';
+export { Offers } from './offers/offers';
+export { Favorites } from './favorites/favorites';
+export { PrivateCheck } from './private-check/private-check';

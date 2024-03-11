@@ -1,9 +1,9 @@
 import { Route, Routes } from 'react-router-dom';
 
-import { Layout } from '../Layout';
 import { Offer } from '../../types';
-import { NotFound } from '../NotFound';
+import { Layout } from '../layout/layout';
 import { AppRoutesEnum } from '../../consts';
+import { NotFound } from '../../pages/not-found/not-found';
 import { FavoritesPage, LoginPage, MainPage, OfferPage } from '../../pages';
 
 type Props = {

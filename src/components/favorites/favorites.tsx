@@ -1,5 +1,5 @@
 import type { Offer } from '../../types';
-import { PlaceCard } from '../PlaceCard';
+import { PlaceCard } from '../place-card/place-card';
 
 type Props = {
   offers: ReadonlyArray<Offer>;
