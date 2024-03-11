@@ -1,14 +1,33 @@
-import { Fragment } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { Fragment, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
+import type { Offer } from '../../types';
 import { offers } from '../../mocks/offers';
-import { PlaceCard } from '../../components/PlaceCard';
 import { Form } from '../../components/Form';
+import { AppRoutesEnum } from '../../consts';
+import { PlaceCard } from '../../components/PlaceCard';
 
-export function OfferPage(): JSX.Element {
-  const offer = offers[Math.floor(Math.random() * 1)];
+export function OfferPage(): null | JSX.Element {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [offer, setOffer] = useState<null | Offer>(null);
 
-  return (
+  useEffect(() => {
+    if (id?.length) {
+      const offerData = offers.find((item) => item.id === id);
+
+      if (offerData) {
+        setOffer(offerData);
+      } else {
+        navigate(AppRoutesEnum.HOME);
+      }
+    } else {
+      navigate(AppRoutesEnum.HOME);
+    }
+  }, []);
+
+  return offer ? (
     <Fragment>
       <Helmet>
         <title>{offer.name}</title>
@@ -253,5 +272,5 @@ export function OfferPage(): JSX.Element {
         </main>
       </div>
     </Fragment>
-  );
+  ) : null;
 }
