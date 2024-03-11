@@ -15,11 +15,15 @@ export function Form() {
     rating: 0,
     review: '',
   });
-  const handleChange = useCallback(
-    ({ target }: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      const value = 'checked' in target ? Number(target.value) : target.value;
-
-      setForm((prev) => ({ ...prev, [target.name]: value }));
+  const onChangeRating = useCallback(
+    ({ target }: React.ChangeEvent<HTMLInputElement>) => {
+      setForm((prev) => ({ ...prev, rating: Number(target.value) }));
+    },
+    []
+  );
+  const onChangeReview = useCallback(
+    ({ target }: React.ChangeEvent<HTMLTextAreaElement>) => {
+      setForm((prev) => ({ ...prev, review: target.value }));
     },
     []
   );
@@ -31,11 +35,12 @@ export function Form() {
           title={item.title}
           value={item.value}
           formValue={form.rating}
-          handleChange={handleChange}
+          handleChange={onChangeRating}
         />
       )).reverse(),
-    [form.rating, handleChange]
+    [form.rating, onChangeRating]
   );
+  const isValidReview = form.rating > 0 && form.review.trim().length >= 50;
 
   return (
     <form className="reviews__form form" action="#" method="post">
@@ -47,7 +52,7 @@ export function Form() {
         id="review"
         name="review"
         value={form.review}
-        onChange={handleChange}
+        onChange={onChangeReview}
         className="reviews__textarea form__textarea"
         placeholder="Tell how was your stay, what you like and what can be improved"
       />
@@ -59,8 +64,8 @@ export function Form() {
         </p>
         <button
           type="submit"
+          disabled={!isValidReview}
           className="reviews__submit form__submit button"
-          disabled={form.rating < 1 || form.review.trim().length < 50}
         >
           Submit
         </button>

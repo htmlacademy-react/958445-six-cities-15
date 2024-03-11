@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import type { Offer } from '../../types';
 import { offers } from '../../mocks/offers';
 import { Form } from '../../components/Form';
-import { AppRoutesEnum } from '../../consts';
+import { NotFound } from '../../components/NotFound';
 import { PlaceCard } from '../../components/PlaceCard';
 
 export function OfferPage(): null | JSX.Element {
@@ -19,13 +19,9 @@ export function OfferPage(): null | JSX.Element {
 
       if (offerData) {
         setOffer(offerData);
-      } else {
-        navigate(AppRoutesEnum.HOME);
       }
-    } else {
-      navigate(AppRoutesEnum.HOME);
     }
-  }, []);
+  }, [id, navigate]);
 
   return offer ? (
     <Fragment>
@@ -272,5 +268,7 @@ export function OfferPage(): null | JSX.Element {
         </main>
       </div>
     </Fragment>
-  ) : null;
+  ) : (
+    <NotFound />
+  );
 }
