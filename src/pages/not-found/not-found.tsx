@@ -1,4 +1,3 @@
-import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
@@ -7,16 +6,14 @@ import { AppRoutesEnum } from '../../consts';
 
 export function NotFoundPage() {
   return (
-    <Fragment>
+    <div className={styles.notFound}>
       <Helmet>
         <title>Not found</title>
       </Helmet>
-      <div className={styles.notFound}>
-        Page not Found{' '}
-        <Link className={styles.link} to={AppRoutesEnum.HOME}>
-          Go home
-        </Link>
-      </div>
-    </Fragment>
+      Page not Found{' '}
+      <Link className={styles.link} to={AppRoutesEnum.HOME}>
+        Go home
+      </Link>
+    </div>
   );
 }

@@ -7,7 +7,7 @@ import type { Offer } from '../../types';
 import { Form, PlaceCard } from '../../components';
 import { NotFoundPage } from '../not-found/not-found';
 
-export function OfferPage(): null | JSX.Element {
+export function OfferPage(): JSX.Element {
   const { id } = useParams();
   const navigate = useNavigate();
   const [offer, setOffer] = useState<null | Offer>(null);

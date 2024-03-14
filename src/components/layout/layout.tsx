@@ -1,5 +1,5 @@
-import classNames from 'classnames';
-import { Outlet, matchPath, useLocation } from 'react-router-dom';
+import cn from 'classnames';
+import { Link, Outlet, matchPath, useLocation } from 'react-router-dom';
 
 import { Header } from '..';
 import { AppRoutesEnum } from '../../consts';
@@ -13,7 +13,7 @@ export function Layout(): JSX.Element {
 
   return (
     <div
-      className={classNames('page', {
+      className={cn('page', {
         ['page--main']: isHome,
         ['page--login']: isLogin,
         ['page--gray']: isHome || isLogin,
@@ -21,7 +21,7 @@ export function Layout(): JSX.Element {
     >
       <Header withNav={!isLogin} />
       <main
-        className={classNames('page__main', {
+        className={cn('page__main', {
           ['page__main--index']: isHome,
           ['page__main--offer']: isOffer,
           ['page__main--login']: isLogin,
@@ -32,7 +32,7 @@ export function Layout(): JSX.Element {
       </main>
       {isFavorites && (
         <footer className="footer container">
-          <a className="footer__logo-link" href="main.html">
+          <Link className="footer__logo-link" to={AppRoutesEnum.HOME}>
             <img
               width="64"
               height="33"
@@ -40,7 +40,7 @@ export function Layout(): JSX.Element {
               src="img/logo.svg"
               className="footer__logo"
             />
-          </a>
+          </Link>
         </footer>
       )}
     </div>
