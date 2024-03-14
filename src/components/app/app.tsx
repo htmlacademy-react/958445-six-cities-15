@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 
 import { Offer } from '../../types';
 import { Layout } from '../layout/layout';
-import { AppRoutesEnum } from '../../consts';
+import { AppRoutesEnum, AuthorizationStatusesEnum } from '../../consts';
 import {
   MainPage,
   LoginPage,
@@ -10,6 +10,7 @@ import {
   NotFoundPage,
   FavoritesPage,
 } from '../../pages';
+import { PrivateCheck } from '..';
 
 type Props = {
   offers: ReadonlyArray<Offer>;
@@ -23,7 +24,11 @@ export function App(props: Props): JSX.Element {
         <Route path={AppRoutesEnum.LOGIN} element={<LoginPage />} />
         <Route
           path={AppRoutesEnum.FAVORITES}
-          element={<FavoritesPage {...props} />}
+          element={
+            <PrivateCheck authorizationStatus={AuthorizationStatusesEnum.AUTH}>
+              <FavoritesPage {...props} />
+            </PrivateCheck>
+          }
         />
         <Route path={`${AppRoutesEnum.OFFER}/:id`} element={<OfferPage />} />
       </Route>
