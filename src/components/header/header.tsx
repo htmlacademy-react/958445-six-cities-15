@@ -1,3 +1,7 @@
+import { Link } from 'react-router-dom';
+
+import { AppRoutesEnum } from '../../consts';
+
 type Props = Readonly<{
   withNav?: boolean;
 }>;
@@ -8,8 +12,10 @@ export function Header({ withNav = false }: Props): JSX.Element {
       <div className="container">
         <div className="header__wrapper">
           <div className="header__left">
-            {/* header__logo-link--active */}
-            <a className="header__logo-link" href="main.html">
+            <Link
+              to={AppRoutesEnum.HOME}
+              className="header__logo-link header__logo-link--active"
+            >
               <img
                 width="81"
                 height="41"
@@ -17,7 +23,7 @@ export function Header({ withNav = false }: Props): JSX.Element {
                 alt="6 cities logo"
                 className="header__logo"
               />
-            </a>
+            </Link>
           </div>
           {withNav && (
             <nav className="header__nav">
