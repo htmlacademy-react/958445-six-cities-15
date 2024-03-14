@@ -1,5 +1,3 @@
-export const CARDS_COUNT = 5;
-
 export enum AuthorizationStatusesEnum {
   AUTH = 'AUTH',
   NO_AUTH = 'NO_AUTH',
