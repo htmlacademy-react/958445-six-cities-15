@@ -1,22 +1,12 @@
-import { useCallback, useState } from 'react';
-
 import type { Offer } from '../../types';
 import { PlaceCard } from '../place-card/place-card';
 
 type Props = {
   offers: ReadonlyArray<Offer>;
+  handleMouseMove?: (offer: Offer) => void;
 };
 
-export function Offers({ offers }: Props) {
-  const [, setActiveCard] = useState<null | Offer>(null);
-  const handleMouseMove = useCallback((evtName: string, card: Offer) => {
-    if (evtName === 'mouseenter') {
-      setActiveCard(card);
-    } else {
-      setActiveCard(null);
-    }
-  }, []);
-
+export function Offers({ offers, handleMouseMove }: Props) {
   return (
     <div className="cities__places-list places__list tabs__content">
       {offers.map((offer) => (

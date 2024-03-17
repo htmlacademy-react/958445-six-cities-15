@@ -1,14 +1,21 @@
-import { Fragment } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useCallback, Fragment, useState } from 'react';
 
-import type { Offer } from '../../types';
 import { Offers } from '../../components';
+import type { City, Offer } from '../../types';
+import { Map } from '../../components/map/map';
 
 type Props = {
+  city: City;
   offers: ReadonlyArray<Offer>;
 };
 
-export function MainPage({ offers }: Props): JSX.Element {
+export function MainPage({ city, offers }: Props): JSX.Element {
+  const [activeCard, setActiveCard] = useState<null | Offer>(null);
+  const handleMouseMove = useCallback((card: Offer) => {
+    setActiveCard(card);
+  }, []);
+
   return (
     <Fragment>
       <Helmet>
@@ -82,10 +89,12 @@ export function MainPage({ offers }: Props): JSX.Element {
                 </li>
               </ul>
             </form>
-            <Offers offers={offers} />
+            <Offers offers={offers} handleMouseMove={handleMouseMove} />
           </section>
           <div className="cities__right-section">
-            <section className="cities__map map"></section>
+            <section className="cities__map map">
+              <Map city={city} points={offers} selectedPoint={activeCard} />
+            </section>
           </div>
         </div>
       </div>

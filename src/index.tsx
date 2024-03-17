@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 
-import { offers } from './mocks';
+import { CITY, OFFERS } from './mocks';
 import { App } from './components';
 
 const root = ReactDOM.createRoot(
@@ -14,7 +14,7 @@ root.render(
   <React.StrictMode>
     <HelmetProvider>
       <BrowserRouter>
-        <App offers={offers} />
+        <App city={CITY} offers={OFFERS} />
       </BrowserRouter>
     </HelmetProvider>
   </React.StrictMode>

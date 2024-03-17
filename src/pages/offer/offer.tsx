@@ -2,12 +2,15 @@ import { Helmet } from 'react-helmet-async';
 import { Fragment, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { offers } from '../../mocks';
 import type { Offer } from '../../types';
 import { Form, PlaceCard } from '../../components';
 import { NotFoundPage } from '../not-found/not-found';
 
-export function OfferPage(): JSX.Element {
+type Props = Readonly<{
+  offers: ReadonlyArray<Offer>;
+}>;
+
+export function OfferPage({ offers }: Props): JSX.Element {
   const { id } = useParams();
   const navigate = useNavigate();
   const [offer, setOffer] = useState<null | Offer>(null);
@@ -20,12 +23,12 @@ export function OfferPage(): JSX.Element {
         setOffer(offerData);
       }
     }
-  }, [id, navigate]);
+  }, [id, navigate, offers]);
 
   return offer ? (
     <Fragment>
       <Helmet>
-        <title>{offer.name}</title>
+        <title>{offer.title}</title>
       </Helmet>
       <section className="offer">
         <div className="offer__gallery-container container">
@@ -82,7 +85,7 @@ export function OfferPage(): JSX.Element {
               </div>
             )}
             <div className="offer__name-wrapper">
-              <h1 className="offer__name">{offer.name}</h1>
+              <h1 className="offer__name">{offer.title}</h1>
               <button className="offer__bookmark-button button" type="button">
                 <svg className="offer__bookmark-icon" width="31" height="33">
                   <use xlinkHref="#icon-bookmark"></use>
