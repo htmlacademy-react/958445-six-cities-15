@@ -9,15 +9,15 @@ type Props = Readonly<{
   offer: Offer;
   isActive?: boolean;
   className?: string;
-  setActiveCard?: (offer: Offer) => void;
+  onMouseEnter?: (offer: Offer) => void;
 }>;
 
 export function PlaceCard(props: Props) {
-  const { offer, isActive, setActiveCard } = props;
+  const { offer, isActive, onMouseEnter } = props;
   const link = `${AppRoutesEnum.OFFER}/${offer.id}`;
   const handleMouseEvent: MouseEventHandler<HTMLElement> = useCallback(
-    () => setActiveCard?.(offer),
-    [offer, setActiveCard]
+    () => onMouseEnter?.(offer),
+    [offer, onMouseEnter]
   );
 
   return (

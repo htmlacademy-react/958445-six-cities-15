@@ -14,7 +14,7 @@ export function Offers({ offers, setActiveCard }: Props) {
           offer={offer}
           key={offer.id}
           className="cities"
-          setActiveCard={setActiveCard}
+          onMouseEnter={setActiveCard}
         />
       ))}
     </div>
