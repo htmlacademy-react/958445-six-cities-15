@@ -1,5 +1,5 @@
+import { Fragment, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useCallback, Fragment, useState } from 'react';
 
 import { Offers } from '../../components';
 import type { City, Offer } from '../../types';
@@ -12,9 +12,6 @@ type Props = {
 
 export function MainPage({ city, offers }: Props): JSX.Element {
   const [activeCard, setActiveCard] = useState<null | Offer>(null);
-  const handleMouseMove = useCallback((card: Offer) => {
-    setActiveCard(card);
-  }, []);
 
   return (
     <Fragment>
@@ -89,12 +86,10 @@ export function MainPage({ city, offers }: Props): JSX.Element {
                 </li>
               </ul>
             </form>
-            <Offers offers={offers} handleMouseMove={handleMouseMove} />
+            <Offers offers={offers} setActiveCard={setActiveCard} />
           </section>
           <div className="cities__right-section">
-            <section className="cities__map map">
-              <Map city={city} points={offers} selectedPoint={activeCard} />
-            </section>
+            <Map city={city} points={offers} selectedPoint={activeCard} />
           </div>
         </div>
       </div>

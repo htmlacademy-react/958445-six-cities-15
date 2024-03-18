@@ -53,5 +53,9 @@ export function Map(props: Props) {
     }
   }, [map, points, selectedPoint]);
 
-  return <div style={{ height: '100vh' }} ref={mapRef}></div>;
+  return (
+    <section className="cities__map map">
+      <div style={{ height: '100%' }} ref={mapRef}></div>
+    </section>
+  );
 }

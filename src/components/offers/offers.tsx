@@ -3,10 +3,10 @@ import { PlaceCard } from '../place-card/place-card';
 
 type Props = {
   offers: ReadonlyArray<Offer>;
-  handleMouseMove?: (offer: Offer) => void;
+  setActiveCard?: (offer: Offer) => void;
 };
 
-export function Offers({ offers, handleMouseMove }: Props) {
+export function Offers({ offers, setActiveCard }: Props) {
   return (
     <div className="cities__places-list places__list tabs__content">
       {offers.map((offer) => (
@@ -14,7 +14,7 @@ export function Offers({ offers, handleMouseMove }: Props) {
           offer={offer}
           key={offer.id}
           className="cities"
-          handleMouseMove={handleMouseMove}
+          setActiveCard={setActiveCard}
         />
       ))}
     </div>
