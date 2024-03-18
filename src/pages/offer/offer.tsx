@@ -3,8 +3,8 @@ import { Fragment, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import type { Offer } from '../../types';
-import { Form, PlaceCard } from '../../components';
 import { NotFoundPage } from '../not-found/not-found';
+import { PlaceCard, Rating, Reviews } from '../../components';
 
 type Props = Readonly<{
   offers: ReadonlyArray<Offer>;
@@ -93,15 +93,7 @@ export function OfferPage({ offers }: Props): JSX.Element {
                 <span className="visually-hidden">To bookmarks</span>
               </button>
             </div>
-            <div className="offer__rating rating">
-              <div className="offer__stars rating__stars">
-                <span style={{ width: '80%' }}></span>
-                <span className="visually-hidden">Rating</span>
-              </div>
-              <span className="offer__rating-value rating__value">
-                {offer.rate}
-              </span>
-            </div>
+            <Rating withValue rate={offer.rate} classname="offer" />
             <ul className="offer__features">
               <li className="offer__feature offer__feature--entire">
                 Apartment
@@ -160,44 +152,7 @@ export function OfferPage({ offers }: Props): JSX.Element {
                 </p>
               </div>
             </div>
-            <section className="offer__reviews reviews">
-              <h2 className="reviews__title">
-                Reviews &middot; <span className="reviews__amount">1</span>
-              </h2>
-              <ul className="reviews__list">
-                <li className="reviews__item">
-                  <div className="reviews__user user">
-                    <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                      <img
-                        width="54"
-                        height="54"
-                        alt="Reviews avatar"
-                        src="img/avatar-max.jpg"
-                        className="reviews__avatar user__avatar"
-                      />
-                    </div>
-                    <span className="reviews__user-name">Max</span>
-                  </div>
-                  <div className="reviews__info">
-                    <div className="reviews__rating rating">
-                      <div className="reviews__stars rating__stars">
-                        <span style={{ width: '80%' }}></span>
-                        <span className="visually-hidden">Rating</span>
-                      </div>
-                    </div>
-                    <p className="reviews__text">
-                      A quiet cozy and picturesque that hides behind a a river
-                      by the unique lightness of Amsterdam. The building is
-                      green and from 18th century.
-                    </p>
-                    <time className="reviews__time" dateTime="2019-04-24">
-                      April 2019
-                    </time>
-                  </div>
-                </li>
-              </ul>
-              <Form />
-            </section>
+            <Reviews />
           </div>
         </div>
         <section className="offer__map map"></section>

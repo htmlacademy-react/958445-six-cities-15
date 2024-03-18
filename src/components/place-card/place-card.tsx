@@ -2,6 +2,7 @@ import cn from 'classnames';
 import { Link } from 'react-router-dom';
 import { MouseEventHandler, useCallback } from 'react';
 
+import { Rating } from '..';
 import type { Offer } from '../../types';
 import { AppRoutesEnum } from '../../consts';
 
@@ -61,12 +62,7 @@ export function PlaceCard(props: Props) {
             <span className="visually-hidden">To bookmarks</span>
           </button>
         </div>
-        <div className="place-card__rating rating">
-          <div className="place-card__stars rating__stars">
-            <span style={{ width: `${offer.rate * 20}%` }}></span>
-            <span className="visually-hidden">Rating</span>
-          </div>
-        </div>
+        <Rating rate={offer.rate} classname="place-card" />
         <h2 className="place-card__name">
           <Link to={link}>{offer.title}</Link>
         </h2>
