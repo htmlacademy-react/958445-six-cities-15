@@ -3,8 +3,7 @@ import { useEffect, useRef } from 'react';
 import { Icon, Marker, layerGroup } from 'leaflet';
 
 import { useMap } from './hooks';
-import { Offer } from '../../types';
-import { City } from '../../types/city';
+import type { City, Offer } from '../../types';
 import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from './consts';
 
 type Props = Readonly<{

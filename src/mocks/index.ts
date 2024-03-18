@@ -1,2 +1,2 @@
-export { CITY } from './city';
+export { CITIES } from './cities';
 export { OFFERS } from './offers';
