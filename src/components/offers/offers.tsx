@@ -3,7 +3,7 @@ import { PlaceCard } from '../place-card/place-card';
 
 type Props = {
   offers: ReadonlyArray<Offer>;
-  setActiveCard?: (offer: Offer) => void;
+  setActiveCard?: (id: string) => void;
 };
 
 export function Offers({ offers, setActiveCard }: Props) {

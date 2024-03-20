@@ -1,9 +1,21 @@
+type Location = Readonly<{
+  zoom: number;
+  latitude: number;
+  longitude: number;
+}>;
+
 export type Offer = Readonly<{
   id: string;
-  lat: number;
-  lng: number;
-  rate: number;
+  type: string;
   title: string;
   price: number;
-  premium: boolean;
+  rating: number;
+  previewImage: string;
+  city: {
+    name: string;
+    location: Location;
+  };
+  location: Location;
+  isPremium: boolean;
+  isFavorite: boolean;
 }>;

@@ -79,7 +79,7 @@ export function OfferPage({ offers }: Props): JSX.Element {
         </div>
         <div className="offer__container container">
           <div className="offer__wrapper">
-            {offer.premium && (
+            {offer.isPremium && (
               <div className="offer__mark">
                 <span>Premium</span>
               </div>
@@ -93,7 +93,7 @@ export function OfferPage({ offers }: Props): JSX.Element {
                 <span className="visually-hidden">To bookmarks</span>
               </button>
             </div>
-            <Rating withValue rate={offer.rate} classname="offer" />
+            <Rating withValue rating={offer.rating} classname="offer" />
             <ul className="offer__features">
               <li className="offer__feature offer__feature--entire">
                 Apartment

@@ -10,14 +10,14 @@ type Props = Readonly<{
   offer: Offer;
   isActive?: boolean;
   className?: string;
-  onMouseEnter?: (offer: Offer) => void;
+  onMouseEnter?: (id: string) => void;
 }>;
 
 export function PlaceCard(props: Props) {
   const { offer, isActive, onMouseEnter } = props;
   const link = `${AppRoutesEnum.OFFER}/${offer.id}`;
   const handleMouseEvent: MouseEventHandler<HTMLElement> = useCallback(
-    () => onMouseEnter?.(offer),
+    () => onMouseEnter?.(offer.id),
     [offer, onMouseEnter]
   );
 
@@ -26,7 +26,7 @@ export function PlaceCard(props: Props) {
       onMouseEnter={handleMouseEvent}
       className={`${props.className}__card place-card`}
     >
-      {offer.premium && (
+      {offer.isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
@@ -62,7 +62,7 @@ export function PlaceCard(props: Props) {
             <span className="visually-hidden">To bookmarks</span>
           </button>
         </div>
-        <Rating rate={offer.rate} classname="place-card" />
+        <Rating rating={offer.rating} classname="place-card" />
         <h2 className="place-card__name">
           <Link to={link}>{offer.title}</Link>
         </h2>
