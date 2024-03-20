@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { PrivateCheck } from '..';
@@ -18,10 +19,21 @@ type Props = {
 };
 
 export function App(props: Props): JSX.Element {
+  const [activeCardId, setActiveCardId] = useState<string>('');
+
   return (
     <Routes>
       <Route path={AppRoutesEnum.HOME} element={<Layout />}>
-        <Route index element={<MainPage {...props} />} />
+        <Route
+          index
+          element={
+            <MainPage
+              {...props}
+              activeCardId={activeCardId}
+              setActiveCardId={setActiveCardId}
+            />
+          }
+        />
         <Route path={AppRoutesEnum.LOGIN} element={<LoginPage />} />
         <Route
           path={AppRoutesEnum.FAVORITES}
@@ -33,7 +45,7 @@ export function App(props: Props): JSX.Element {
         />
         <Route
           path={`${AppRoutesEnum.OFFER}/:id`}
-          element={<OfferPage offers={props.offers} />}
+          element={<OfferPage {...props} activeCardId={activeCardId} />}
         />
       </Route>
       <Route path={AppRoutesEnum.ROUTE_STAR} element={<NotFoundPage />} />

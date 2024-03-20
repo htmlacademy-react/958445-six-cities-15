@@ -1,18 +1,18 @@
 type Props = Readonly<{
   rating: number;
-  classname: string;
+  className: string;
   withValue?: boolean;
 }>;
 
-export function Rating({ rating, withValue = false, classname }: Props) {
+export function Rating({ rating, withValue = false, className }: Props) {
   return (
-    <div className={`${classname}__rating rating`}>
-      <div className={`${classname}__stars rating__stars`}>
+    <div className={`${className}__rating rating`}>
+      <div className={`${className}__stars rating__stars`}>
         <span style={{ width: `${rating * 20}%` }}></span>
         <span className="visually-hidden">Rating</span>
       </div>
       {withValue && (
-        <span className={`${classname}__rating-value rating__value`}>
+        <span className={`${className}__rating-value rating__value`}>
           {rating}
         </span>
       )}

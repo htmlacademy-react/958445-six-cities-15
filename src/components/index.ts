@@ -1,3 +1,4 @@
+export { Map } from './map/map';
 export { App } from './app/app';
 export { Form } from './form/form';
 export { Rating } from './rating/rating';

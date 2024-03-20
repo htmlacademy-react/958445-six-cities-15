@@ -1,19 +1,29 @@
 import { Helmet } from 'react-helmet-async';
-import { Fragment, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { Fragment, useEffect, useMemo, useState } from 'react';
 
-import type { Offer } from '../../types';
+import type { City, Offer } from '../../types';
 import { NotFoundPage } from '../not-found/not-found';
-import { PlaceCard, Rating, Reviews } from '../../components';
+import { Map, PlaceCard, Rating, Reviews } from '../../components';
 
-type Props = Readonly<{
+type Props = {
+  city: City;
+  activeCardId: string;
   offers: ReadonlyArray<Offer>;
-}>;
+};
 
-export function OfferPage({ offers }: Props): JSX.Element {
+export function OfferPage({ city, offers, activeCardId }: Props): JSX.Element {
   const { id } = useParams();
   const navigate = useNavigate();
   const [offer, setOffer] = useState<null | Offer>(null);
+  const points = useMemo(
+    () =>
+      offers.map((item) => ({
+        id: item.id,
+        location: item.location,
+      })),
+    [offers]
+  );
 
   useEffect(() => {
     if (id?.length) {
@@ -93,7 +103,7 @@ export function OfferPage({ offers }: Props): JSX.Element {
                 <span className="visually-hidden">To bookmarks</span>
               </button>
             </div>
-            <Rating withValue rating={offer.rating} classname="offer" />
+            <Rating withValue rating={offer.rating} className="offer" />
             <ul className="offer__features">
               <li className="offer__feature offer__feature--entire">
                 Apartment
@@ -155,7 +165,12 @@ export function OfferPage({ offers }: Props): JSX.Element {
             <Reviews />
           </div>
         </div>
-        <section className="offer__map map"></section>
+        <Map
+          city={city}
+          points={points}
+          className="offer"
+          selectedPointId={activeCardId}
+        />
       </section>
       <div className="container">
         <section className="near-places places">

@@ -62,7 +62,7 @@ export function PlaceCard(props: Props) {
             <span className="visually-hidden">To bookmarks</span>
           </button>
         </div>
-        <Rating rating={offer.rating} classname="place-card" />
+        <Rating rating={offer.rating} className="place-card" />
         <h2 className="place-card__name">
           <Link to={link}>{offer.title}</Link>
         </h2>

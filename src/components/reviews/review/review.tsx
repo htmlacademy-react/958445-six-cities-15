@@ -26,7 +26,7 @@ export function Review({ review }: Props) {
         <span className="reviews__user-name">{review.user.name}</span>
       </div>
       <div className="reviews__info">
-        <Rating rating={review.rating} classname="reviews" />
+        <Rating rating={review.rating} className="reviews" />
         <p className="reviews__text">{review.comment}</p>
         <time className="reviews__time" dateTime={review.date}>
           {date}
