@@ -12,7 +12,9 @@ export function Rating({ rating, withValue = false, classname }: Props) {
         <span className="visually-hidden">Rating</span>
       </div>
       {withValue && (
-        <span className="offer__rating-value rating__value">{rating}</span>
+        <span className={`${classname}__rating-value rating__value`}>
+          {rating}
+        </span>
       )}
     </div>
   );
