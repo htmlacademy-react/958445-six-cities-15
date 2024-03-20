@@ -1,8 +1,8 @@
 export type Review = Readonly<{
   id: string;
-  rate: number;
   date: string;
   text: string;
+  rating: number;
   avatar: string;
   username: string;
 }>;
