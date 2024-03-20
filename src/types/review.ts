@@ -1,8 +1,9 @@
+import type { User } from './user';
+
 export type Review = Readonly<{
   id: string;
+  user: User;
   date: string;
-  text: string;
   rating: number;
-  avatar: string;
-  username: string;
+  comment: string;
 }>;
