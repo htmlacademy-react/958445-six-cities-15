@@ -1,1 +1,2 @@
-export { offers } from './offers';
+export { CITIES } from './cities';
+export { OFFERS } from './offers';

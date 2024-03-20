@@ -9,24 +9,23 @@ type Props = Readonly<{
   offer: Offer;
   isActive?: boolean;
   className?: string;
-  handleMouseMove?: (evtName: string, offer: Offer) => void;
+  onMouseEnter?: (id: string) => void;
 }>;
 
 export function PlaceCard(props: Props) {
-  const { offer, isActive, handleMouseMove } = props;
+  const { offer, isActive, onMouseEnter } = props;
   const link = `${AppRoutesEnum.OFFER}/${offer.id}`;
   const handleMouseEvent: MouseEventHandler<HTMLElement> = useCallback(
-    (evt) => handleMouseMove?.(evt.type, offer),
-    [offer, handleMouseMove]
+    () => onMouseEnter?.(offer.id),
+    [offer, onMouseEnter]
   );
 
   return (
     <article
-      onMouseLeave={handleMouseEvent}
       onMouseEnter={handleMouseEvent}
       className={`${props.className}__card place-card`}
     >
-      {offer.premium && (
+      {offer.isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
@@ -64,12 +63,12 @@ export function PlaceCard(props: Props) {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: `${offer.rate * 20}%` }}></span>
+            <span style={{ width: `${offer.rating * 20}%` }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={link}>{offer.name}</Link>
+          <Link to={link}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">Apartment</p>
       </div>

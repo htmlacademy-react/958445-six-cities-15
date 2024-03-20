@@ -1,14 +1,26 @@
-import { Fragment } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { Fragment, useMemo, useState } from 'react';
 
-import type { Offer } from '../../types';
 import { Offers } from '../../components';
+import type { City, Offer } from '../../types';
+import { Map } from '../../components/map/map';
 
 type Props = {
+  city: City;
   offers: ReadonlyArray<Offer>;
 };
 
-export function MainPage({ offers }: Props): JSX.Element {
+export function MainPage({ city, offers }: Props): JSX.Element {
+  const [activeCardid, setActiveIdCard] = useState<string>('');
+  const points = useMemo(
+    () =>
+      offers.map((item) => ({
+        id: item.id,
+        location: item.location,
+      })),
+    [offers]
+  );
+
   return (
     <Fragment>
       <Helmet>
@@ -82,10 +94,10 @@ export function MainPage({ offers }: Props): JSX.Element {
                 </li>
               </ul>
             </form>
-            <Offers offers={offers} />
+            <Offers offers={offers} setActiveCard={setActiveIdCard} />
           </section>
           <div className="cities__right-section">
-            <section className="cities__map map"></section>
+            <Map city={city} points={points} selectedPointId={activeCardid} />
           </div>
         </div>
       </div>
