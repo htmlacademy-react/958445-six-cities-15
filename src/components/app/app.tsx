@@ -45,7 +45,13 @@ export function App(props: Props): JSX.Element {
         />
         <Route
           path={`${AppRoutesEnum.OFFER}/:id`}
-          element={<OfferPage {...props} activeCardId={activeCardId} />}
+          element={
+            <OfferPage
+              {...props}
+              activeCardId={activeCardId}
+              setActiveCardId={setActiveCardId}
+            />
+          }
         />
       </Route>
       <Route path={AppRoutesEnum.ROUTE_STAR} element={<NotFoundPage />} />

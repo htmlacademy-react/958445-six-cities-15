@@ -100,7 +100,12 @@ export function MainPage({
                 </li>
               </ul>
             </form>
-            <Offers offers={offers} setActiveCard={setActiveCardId} />
+            <Offers
+              isTabs
+              offers={offers}
+              className="cities"
+              setActiveCard={setActiveCardId}
+            />
           </section>
           <div className="cities__right-section">
             <Map
