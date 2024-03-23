@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
+import { Fragment, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Fragment, useEffect, useMemo, useState } from 'react';
 
 import type { City, Offer } from '../../types';
 import { NotFoundPage } from '../not-found/not-found';
@@ -22,14 +22,6 @@ export function OfferPage({
   const { id } = useParams();
   const navigate = useNavigate();
   const [offer, setOffer] = useState<null | Offer>(null);
-  const points = useMemo(
-    () =>
-      offers.map((item) => ({
-        id: item.id,
-        location: item.location,
-      })),
-    [offers]
-  );
 
   useEffect(() => {
     if (id?.length) {
@@ -173,7 +165,7 @@ export function OfferPage({
         </div>
         <Map
           city={city}
-          points={points}
+          points={offers}
           className="offer"
           selectedPointId={activeCardId}
         />

@@ -1,4 +1,4 @@
-import { Fragment, useMemo } from 'react';
+import { Fragment } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import { Offers } from '../../components';
@@ -18,15 +18,6 @@ export function MainPage({
   activeCardId,
   setActiveCardId,
 }: Props): JSX.Element {
-  const points = useMemo(
-    () =>
-      offers.map((item) => ({
-        id: item.id,
-        location: item.location,
-      })),
-    [offers]
-  );
-
   return (
     <Fragment>
       <Helmet>
@@ -110,7 +101,7 @@ export function MainPage({
           <div className="cities__right-section">
             <Map
               city={city}
-              points={points}
+              points={offers}
               className="cities"
               selectedPointId={activeCardId}
             />
