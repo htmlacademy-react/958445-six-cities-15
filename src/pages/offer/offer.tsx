@@ -2,15 +2,23 @@ import { Helmet } from 'react-helmet-async';
 import { Fragment, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import type { Offer } from '../../types';
-import { Form, PlaceCard } from '../../components';
+import type { City, Offer } from '../../types';
 import { NotFoundPage } from '../not-found/not-found';
+import { Map, Offers, Rating, Reviews } from '../../components';
 
-type Props = Readonly<{
+type Props = {
+  city: City;
+  activeCardId: string;
   offers: ReadonlyArray<Offer>;
-}>;
+  setActiveCardId?: (id: string) => void;
+};
 
-export function OfferPage({ offers }: Props): JSX.Element {
+export function OfferPage({
+  city,
+  offers,
+  activeCardId,
+  setActiveCardId,
+}: Props): JSX.Element {
   const { id } = useParams();
   const navigate = useNavigate();
   const [offer, setOffer] = useState<null | Offer>(null);
@@ -93,15 +101,7 @@ export function OfferPage({ offers }: Props): JSX.Element {
                 <span className="visually-hidden">To bookmarks</span>
               </button>
             </div>
-            <div className="offer__rating rating">
-              <div className="offer__stars rating__stars">
-                <span style={{ width: '80%' }}></span>
-                <span className="visually-hidden">Rating</span>
-              </div>
-              <span className="offer__rating-value rating__value">
-                {offer.rating}
-              </span>
-            </div>
+            <Rating withValue rating={offer.rating} className="offer" />
             <ul className="offer__features">
               <li className="offer__feature offer__feature--entire">
                 Apartment
@@ -160,58 +160,27 @@ export function OfferPage({ offers }: Props): JSX.Element {
                 </p>
               </div>
             </div>
-            <section className="offer__reviews reviews">
-              <h2 className="reviews__title">
-                Reviews &middot; <span className="reviews__amount">1</span>
-              </h2>
-              <ul className="reviews__list">
-                <li className="reviews__item">
-                  <div className="reviews__user user">
-                    <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                      <img
-                        width="54"
-                        height="54"
-                        alt="Reviews avatar"
-                        src="img/avatar-max.jpg"
-                        className="reviews__avatar user__avatar"
-                      />
-                    </div>
-                    <span className="reviews__user-name">Max</span>
-                  </div>
-                  <div className="reviews__info">
-                    <div className="reviews__rating rating">
-                      <div className="reviews__stars rating__stars">
-                        <span style={{ width: '80%' }}></span>
-                        <span className="visually-hidden">Rating</span>
-                      </div>
-                    </div>
-                    <p className="reviews__text">
-                      A quiet cozy and picturesque that hides behind a a river
-                      by the unique lightness of Amsterdam. The building is
-                      green and from 18th century.
-                    </p>
-                    <time className="reviews__time" dateTime="2019-04-24">
-                      April 2019
-                    </time>
-                  </div>
-                </li>
-              </ul>
-              <Form />
-            </section>
+            <Reviews />
           </div>
         </div>
-        <section className="offer__map map"></section>
+        <Map
+          city={city}
+          points={offers}
+          className="offer"
+          selectedPointId={activeCardId}
+        />
       </section>
       <div className="container">
         <section className="near-places places">
           <h2 className="near-places__title">
             Other places in the neighbourhood
           </h2>
-          <div className="near-places__list places__list">
-            {offers.slice(0, 3).map((item) => (
-              <PlaceCard offer={item} key={item.id} className="near-places" />
-            ))}
-          </div>
+          <Offers
+            isTabs
+            className="near-places"
+            setActiveCard={setActiveCardId}
+            offers={offers.filter((item) => item.id !== offer.id)}
+          />
         </section>
       </div>
     </Fragment>

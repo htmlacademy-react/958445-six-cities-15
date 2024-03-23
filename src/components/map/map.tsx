@@ -10,6 +10,7 @@ type Point = Readonly<Pick<Offer, 'id' | 'location'>>;
 
 type Props = Readonly<{
   city: City;
+  className: string;
   selectedPointId: string;
   points: ReadonlyArray<Point>;
 }>;
@@ -27,7 +28,7 @@ const currentCustomIcon = new Icon({
 });
 
 export function Map(props: Props) {
-  const { city, points, selectedPointId } = props;
+  const { city, points, className, selectedPointId } = props;
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
@@ -54,7 +55,7 @@ export function Map(props: Props) {
   }, [map, points, selectedPointId]);
 
   return (
-    <section className="cities__map map">
+    <section className={`${className}__map map`}>
       <div style={{ height: '100%' }} ref={mapRef}></div>
     </section>
   );
