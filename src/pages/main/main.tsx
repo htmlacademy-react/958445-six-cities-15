@@ -2,9 +2,9 @@ import { Fragment, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import { CITIES, OFFERS } from '../../mocks';
-import { Locations, Map, Offers } from '../../components';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loadCities, setCity, setOffers } from '../../store/action';
+import { Locations, Map, Offers, SortDropdown } from '../../components';
 
 type Props = {
   activeCardId: string;
@@ -44,7 +44,7 @@ export function MainPage({
       <h1 className="visually-hidden">Cities</h1>
       {city && (
         <div className="tabs">
-          <Locations activeCity={city} />
+          <Locations cities={cities} activeCity={city} />
         </div>
       )}
       <div className="cities">
@@ -54,32 +54,7 @@ export function MainPage({
             <b className="places__found">
               {offers.length} places to stay in {city?.name}
             </b>
-            <form className="places__sorting" action="#" method="get">
-              <span className="places__sorting-caption">Sort by</span>
-              <span className="places__sorting-type" tabIndex={0}>
-                Popular
-                <svg className="places__sorting-arrow" width="7" height="4">
-                  <use xlinkHref="#icon-arrow-select"></use>
-                </svg>
-              </span>
-              <ul className="places__options places__options--custom places__options--opened">
-                <li
-                  className="places__option places__option--active"
-                  tabIndex={0}
-                >
-                  Popular
-                </li>
-                <li className="places__option" tabIndex={0}>
-                  Price: low to high
-                </li>
-                <li className="places__option" tabIndex={0}>
-                  Price: high to low
-                </li>
-                <li className="places__option" tabIndex={0}>
-                  Top rated first
-                </li>
-              </ul>
-            </form>
+            <SortDropdown />
             <Offers
               isTabs
               offers={offers}

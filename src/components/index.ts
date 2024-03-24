@@ -8,4 +8,5 @@ export { Reviews } from './reviews/reviews';
 export { Locations } from './locations/locations';
 export { Favorites } from './favorites/favorites';
 export { PlaceCard } from './place-card/place-card';
+export { SortDropdown } from './sort-dropdown/sort-dropdown';
 export { PrivateCheck } from './private-check/private-check';
