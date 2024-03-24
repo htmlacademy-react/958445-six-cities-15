@@ -4,13 +4,13 @@ import { Helmet } from 'react-helmet-async';
 import { Locations, Map, Offers, SortDropdown } from '../../components';
 import { City, Offer } from '../../types';
 
-type Props = {
+type Props = Readonly<{
   city: City;
   cities: City[];
   offers: Offer[];
   activeCardId: string;
   setActiveCardId?: (id: string) => void;
-};
+}>;
 
 export function MainPage(props: Props): JSX.Element {
   const { city, cities, offers, activeCardId, setActiveCardId } = props;

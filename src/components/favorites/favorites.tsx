@@ -1,9 +1,9 @@
 import type { Offer } from '../../types';
 import { PlaceCard } from '../place-card/place-card';
 
-type Props = {
+type Props = Readonly<{
   offers: Offer[];
-};
+}>;
 
 export function Favorites({ offers }: Props) {
   return (
