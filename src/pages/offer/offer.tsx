@@ -2,23 +2,22 @@ import { Helmet } from 'react-helmet-async';
 import { Fragment, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import type { City, Offer } from '../../types';
+import type { Offer } from '../../types';
+import { useAppSelector } from '../../hooks';
 import { NotFoundPage } from '../not-found/not-found';
 import { Map, Offers, Rating, Reviews } from '../../components';
 
 type Props = {
-  city: City;
   activeCardId: string;
-  offers: ReadonlyArray<Offer>;
   setActiveCardId?: (id: string) => void;
 };
 
 export function OfferPage({
-  city,
-  offers,
   activeCardId,
   setActiveCardId,
 }: Props): JSX.Element {
+  const city = useAppSelector((state) => state.city);
+  const offers = useAppSelector((state) => state.offers);
   const { id } = useParams();
   const navigate = useNavigate();
   const [offer, setOffer] = useState<null | Offer>(null);

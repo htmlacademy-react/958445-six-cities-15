@@ -1,23 +1,21 @@
 import { Fragment } from 'react';
 import { Helmet } from 'react-helmet-async';
 
-import { Offers } from '../../components';
-import type { City, Offer } from '../../types';
-import { Map } from '../../components/map/map';
+import { useAppSelector } from '../../hooks';
+import { Map, Offers } from '../../components';
 
 type Props = {
-  city: City;
   activeCardId: string;
-  offers: ReadonlyArray<Offer>;
   setActiveCardId?: (id: string) => void;
 };
 
 export function MainPage({
-  city,
-  offers,
   activeCardId,
   setActiveCardId,
 }: Props): JSX.Element {
+  const city = useAppSelector((state) => state.city);
+  const offers = useAppSelector((state) => state.offers);
+
   return (
     <Fragment>
       <Helmet>

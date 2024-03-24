@@ -3,7 +3,6 @@ import { Route, Routes } from 'react-router-dom';
 
 import { PrivateCheck } from '..';
 import { Layout } from '../layout/layout';
-import type { City, Offer } from '../../types';
 import { AppRoutesEnum, AuthorizationStatusesEnum } from '../../consts';
 import {
   MainPage,
@@ -13,12 +12,7 @@ import {
   FavoritesPage,
 } from '../../pages';
 
-type Props = {
-  city: City;
-  offers: ReadonlyArray<Offer>;
-};
-
-export function App(props: Props): JSX.Element {
+export function App(): JSX.Element {
   const [activeCardId, setActiveCardId] = useState<string>('');
 
   return (
@@ -28,7 +22,6 @@ export function App(props: Props): JSX.Element {
           index
           element={
             <MainPage
-              {...props}
               activeCardId={activeCardId}
               setActiveCardId={setActiveCardId}
             />
@@ -39,7 +32,7 @@ export function App(props: Props): JSX.Element {
           path={AppRoutesEnum.FAVORITES}
           element={
             <PrivateCheck authorizationStatus={AuthorizationStatusesEnum.AUTH}>
-              <FavoritesPage {...props} />
+              <FavoritesPage />
             </PrivateCheck>
           }
         />
@@ -47,7 +40,6 @@ export function App(props: Props): JSX.Element {
           path={`${AppRoutesEnum.OFFER}/:id`}
           element={
             <OfferPage
-              {...props}
               activeCardId={activeCardId}
               setActiveCardId={setActiveCardId}
             />
