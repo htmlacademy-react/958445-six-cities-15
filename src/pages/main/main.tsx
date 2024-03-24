@@ -45,6 +45,7 @@ export function MainPage(props: Props): JSX.Element {
             <div className="cities__right-section">
               <Map
                 city={city}
+                key={city.name}
                 points={offers}
                 className="cities"
                 selectedPointId={activeCardId}

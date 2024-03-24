@@ -18,6 +18,7 @@ export function OfferPage(props: Props): JSX.Element {
   const { id } = useParams();
   const navigate = useNavigate();
   const [offer, setOffer] = useState<null | Offer>(null);
+  const nearPlaces = offers.filter((item) => item.id !== offer?.id).slice(0, 3);
 
   useEffect(() => {
     if (id?.length) {
@@ -162,8 +163,8 @@ export function OfferPage(props: Props): JSX.Element {
         {city && (
           <Map
             city={city}
-            points={offers}
             className="offer"
+            points={[...nearPlaces, offer]}
             selectedPointId={activeCardId}
           />
         )}
@@ -177,7 +178,7 @@ export function OfferPage(props: Props): JSX.Element {
             isTabs
             className="near-places"
             setActiveCard={setActiveCardId}
-            offers={offers.filter((item) => item.id !== offer.id)}
+            offers={nearPlaces}
           />
         </section>
       </div>
