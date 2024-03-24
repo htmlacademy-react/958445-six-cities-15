@@ -1,6 +1,6 @@
 import { City } from '../types';
 
-export const CITIES: ReadonlyArray<City> = [
+export const CITIES: City[] = [
   {
     zoom: 10,
     lat: 52.374,

@@ -4,9 +4,9 @@ import type { Offer } from '../../types';
 import { PlaceCard } from '../place-card/place-card';
 
 type Props = {
+  offers: Offer[];
   isTabs?: boolean;
   className: string;
-  offers: ReadonlyArray<Offer>;
   setActiveCard?: (id: string) => void;
 };
 

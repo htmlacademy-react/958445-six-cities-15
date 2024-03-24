@@ -10,9 +10,9 @@ type Point = Readonly<Pick<Offer, 'id' | 'location'>>;
 
 type Props = Readonly<{
   city: City;
+  points: Point[];
   className: string;
   selectedPointId: string;
-  points: ReadonlyArray<Point>;
 }>;
 
 const defaultCustomIcon = new Icon({

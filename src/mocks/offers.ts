@@ -2,7 +2,7 @@ import faker from 'faker';
 
 import type { Offer } from '../types';
 
-export const OFFERS: ReadonlyArray<Offer> = [
+export const OFFERS: Offer[] = [
   {
     rating: 4.2,
     price: 120,
