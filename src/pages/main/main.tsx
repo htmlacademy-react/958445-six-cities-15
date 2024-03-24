@@ -2,8 +2,8 @@ import { Fragment, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import { CITIES, OFFERS } from '../../mocks';
+import { setCity, setOffers } from '../../store/action';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { loadCities, setCity, setOffers } from '../../store/action';
 import { Locations, Map, Offers, SortDropdown } from '../../components';
 
 type Props = {
@@ -18,15 +18,10 @@ export function MainPage({
   const dispatch = useAppDispatch();
   const city = useAppSelector((state) => state.city);
   const offers = useAppSelector((state) => state.offers);
-  const cities = useAppSelector((state) => state.cities);
 
   useEffect(() => {
-    dispatch(loadCities(CITIES));
+    dispatch(setCity(CITIES[0]));
   }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(setCity(cities[0]));
-  }, [cities, dispatch]);
 
   useEffect(() => {
     if (city) {
@@ -44,7 +39,7 @@ export function MainPage({
       <h1 className="visually-hidden">Cities</h1>
       {city && (
         <div className="tabs">
-          <Locations cities={cities} activeCity={city} />
+          <Locations cities={CITIES} activeCity={city} />
         </div>
       )}
       <div className="cities">
