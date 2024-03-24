@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet-async';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import type { City, Offer } from '../../types';
@@ -18,7 +18,10 @@ export function OfferPage(props: Props): JSX.Element {
   const { id } = useParams();
   const navigate = useNavigate();
   const [offer, setOffer] = useState<null | Offer>(null);
-  const nearPlaces = offers.filter((item) => item.id !== offer?.id).slice(0, 3);
+  const nearPlaces = useMemo(
+    () => offers.filter((item) => item.id !== offer?.id).slice(0, 3),
+    [offer?.id, offers]
+  );
 
   useEffect(() => {
     if (id?.length) {
@@ -164,8 +167,8 @@ export function OfferPage(props: Props): JSX.Element {
           <Map
             city={city}
             className="offer"
-            points={[...nearPlaces, offer]}
             selectedPointId={activeCardId}
+            points={[...nearPlaces, offer]}
           />
         )}
       </section>
@@ -176,9 +179,9 @@ export function OfferPage(props: Props): JSX.Element {
           </h2>
           <Offers
             isTabs
+            offers={nearPlaces}
             className="near-places"
             setActiveCard={setActiveCardId}
-            offers={nearPlaces}
           />
         </section>
       </div>

@@ -21,11 +21,9 @@ export function MainPage(props: Props): JSX.Element {
         <title>Main</title>
       </Helmet>
       <h1 className="visually-hidden">Cities</h1>
-      {city && (
-        <div className="tabs">
-          <Locations cities={cities} activeCity={city} />
-        </div>
-      )}
+      <div className="tabs">
+        {city && <Locations cities={cities} activeCity={city} />}
+      </div>
       <div className="cities">
         <div className="cities__places-container container">
           <section className="cities__places places">
@@ -41,8 +39,8 @@ export function MainPage(props: Props): JSX.Element {
               setActiveCard={setActiveCardId}
             />
           </section>
-          {city && (
-            <div className="cities__right-section">
+          <div className="cities__right-section">
+            {city && (
               <Map
                 city={city}
                 key={city.name}
@@ -50,8 +48,8 @@ export function MainPage(props: Props): JSX.Element {
                 className="cities"
                 selectedPointId={activeCardId}
               />
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </Fragment>
