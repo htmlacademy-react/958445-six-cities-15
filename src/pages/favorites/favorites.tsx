@@ -1,8 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 
-import { CITIES } from '../../mocks';
 import type { Offer } from '../../types';
-import { Favorites, Locations } from '../../components';
+import { Favorites } from '../../components';
 
 type Props = Readonly<{
   offers: Offer[];
@@ -19,9 +18,11 @@ export function FavoritesPage(props: Props): JSX.Element {
         <ul className="favorites__list">
           <li className="favorites__locations-items">
             <div className="favorites__locations locations locations--current">
-              {CITIES.map((item) => (
-                <Locations.Item key={item.name} city={item} />
-              ))}
+              <div className="locations__item">
+                <a className="locations__item-link" href="#">
+                  <span>Amsterdam</span>
+                </a>
+              </div>
             </div>
             <Favorites {...props} />
           </li>
