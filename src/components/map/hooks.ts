@@ -5,7 +5,7 @@ import type { City } from '../../types';
 
 export function useMap(
   mapRef: MutableRefObject<HTMLElement | null>,
-  city: City
+  { location }: City
 ): Map | null {
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef<boolean>(false);
@@ -14,10 +14,10 @@ export function useMap(
     if (mapRef.current !== null && !isRenderedRef.current) {
       const instance = new Map(mapRef.current, {
         center: {
-          lat: city.lat,
-          lng: city.lng,
+          lat: location.latitude,
+          lng: location.longitude,
         },
-        zoom: city.zoom,
+        zoom: location.zoom,
       });
 
       const layer = new TileLayer(
@@ -33,7 +33,7 @@ export function useMap(
       setMap(instance);
       isRenderedRef.current = true;
     }
-  }, [mapRef, city]);
+  }, [mapRef, location]);
 
   return map;
 }

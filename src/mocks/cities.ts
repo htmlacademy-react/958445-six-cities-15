@@ -2,39 +2,51 @@ import { City } from '../types';
 
 export const CITIES: City[] = [
   {
-    zoom: 10,
-    lat: 52.374,
-    lng: 4.88969,
-    title: 'Paris',
+    name: 'Paris',
+    location: {
+      zoom: 10,
+      latitude: 52.374,
+      longitude: 4.88969,
+    },
   },
   {
-    zoom: 10,
-    lat: 52.374,
-    lng: 4.88969,
-    title: 'Cologne',
+    name: 'Cologne',
+    location: {
+      zoom: 10,
+      latitude: 52.374,
+      longitude: 4.88969,
+    },
   },
   {
-    zoom: 10,
-    lat: 52.374,
-    lng: 4.88969,
-    title: 'Brussels',
+    name: 'Brussels',
+    location: {
+      zoom: 10,
+      latitude: 52.374,
+      longitude: 4.88969,
+    },
   },
   {
-    zoom: 10,
-    lat: 52.374,
-    lng: 4.88969,
-    title: 'Amsterdam',
+    name: 'Amsterdam',
+    location: {
+      zoom: 10,
+      latitude: 52.374,
+      longitude: 4.88969,
+    },
   },
   {
-    zoom: 10,
-    lat: 52.374,
-    lng: 4.88969,
-    title: 'Hamburg',
+    name: 'Hamburg',
+    location: {
+      zoom: 10,
+      latitude: 52.374,
+      longitude: 4.88969,
+    },
   },
   {
-    zoom: 10,
-    lat: 52.374,
-    lng: 4.88969,
-    title: 'Dusseldorf',
+    name: 'Dusseldorf',
+    location: {
+      zoom: 10,
+      latitude: 52.374,
+      longitude: 4.88969,
+    },
   },
 ];

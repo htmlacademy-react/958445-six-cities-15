@@ -1,10 +1,12 @@
 import { Helmet } from 'react-helmet-async';
 
-import { Favorites } from '../../components';
+import { Favorites, Locations } from '../../components';
 import { useAppSelector } from '../../hooks';
+import { useMemo } from 'react';
 
 export function FavoritesPage(): JSX.Element {
   const offers = useAppSelector((state) => state.offers);
+  const cities = useMemo(() => offers.map((item) => item.city), [offers]);
 
   return (
     <div className="page__favorites-container container">
@@ -16,11 +18,9 @@ export function FavoritesPage(): JSX.Element {
         <ul className="favorites__list">
           <li className="favorites__locations-items">
             <div className="favorites__locations locations locations--current">
-              <div className="locations__item">
-                <a className="locations__item-link" href="#">
-                  <span>Amsterdam</span>
-                </a>
-              </div>
+              {cities.map((item) => (
+                <Locations.Item key={item.name} name={item.name} />
+              ))}
             </div>
             <Favorites offers={offers} />
           </li>
