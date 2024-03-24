@@ -1,8 +1,10 @@
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 
-import { useAppSelector } from '../../hooks';
+import { CITIES, OFFERS } from '../../mocks';
 import { Locations, Map, Offers } from '../../components';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { loadCities, setCity, setOffers } from '../../store/action';
 
 type Props = {
   activeCardId: string;
@@ -13,8 +15,26 @@ export function MainPage({
   activeCardId,
   setActiveCardId,
 }: Props): JSX.Element {
+  const dispatch = useAppDispatch();
   const city = useAppSelector((state) => state.city);
   const offers = useAppSelector((state) => state.offers);
+  const cities = useAppSelector((state) => state.cities);
+
+  useEffect(() => {
+    dispatch(loadCities(CITIES));
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(setCity(cities[0]));
+  }, [cities, dispatch]);
+
+  useEffect(() => {
+    if (city) {
+      dispatch(
+        setOffers(OFFERS.filter((item) => item.city.name === city.name))
+      );
+    }
+  }, [city, dispatch]);
 
   return (
     <Fragment>
@@ -22,14 +42,18 @@ export function MainPage({
         <title>Main</title>
       </Helmet>
       <h1 className="visually-hidden">Cities</h1>
-      <div className="tabs">
-        <Locations activeCity={city} />
-      </div>
+      {city && (
+        <div className="tabs">
+          <Locations activeCity={city} />
+        </div>
+      )}
       <div className="cities">
         <div className="cities__places-container container">
           <section className="cities__places places">
             <h2 className="visually-hidden">Places</h2>
-            <b className="places__found">312 places to stay in Amsterdam</b>
+            <b className="places__found">
+              {offers.length} places to stay in {city?.name}
+            </b>
             <form className="places__sorting" action="#" method="get">
               <span className="places__sorting-caption">Sort by</span>
               <span className="places__sorting-type" tabIndex={0}>
@@ -63,14 +87,16 @@ export function MainPage({
               setActiveCard={setActiveCardId}
             />
           </section>
-          <div className="cities__right-section">
-            <Map
-              city={city}
-              points={offers}
-              className="cities"
-              selectedPointId={activeCardId}
-            />
-          </div>
+          {city && (
+            <div className="cities__right-section">
+              <Map
+                city={city}
+                points={offers}
+                className="cities"
+                selectedPointId={activeCardId}
+              />
+            </div>
+          )}
         </div>
       </div>
     </Fragment>

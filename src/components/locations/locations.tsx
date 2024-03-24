@@ -1,16 +1,18 @@
 import { Item } from './item/item';
 import { City } from '../../types';
-import { CITIES } from '../../mocks';
+import { useAppSelector } from '../../hooks';
 
 type Props = Readonly<{
   activeCity: City;
 }>;
 
 export function Locations(props: Props): JSX.Element {
+  const cities = useAppSelector((state) => state.cities);
+
   return (
     <section className="locations container">
       <ul className="locations__list tabs__list">
-        {CITIES.map((item) => (
+        {cities.map((item) => (
           <Item
             city={item}
             key={item.name}

@@ -8,13 +8,12 @@ import { AppRoutesEnum } from '../../consts';
 
 type Props = Readonly<{
   offer: Offer;
-  isActive?: boolean;
   className?: string;
   onMouseEnter?: (id: string) => void;
 }>;
 
 export function PlaceCard(props: Props) {
-  const { offer, isActive, onMouseEnter } = props;
+  const { offer, onMouseEnter } = props;
   const link = `${AppRoutesEnum.OFFER}/${offer.id}`;
   const handleMouseEvent: MouseEventHandler<HTMLElement> = useCallback(
     () => onMouseEnter?.(offer.id),
@@ -53,7 +52,7 @@ export function PlaceCard(props: Props) {
           <button
             type="button"
             className={cn('place-card__bookmark-button button', {
-              ['place-card__bookmark-button--active']: isActive,
+              ['place-card__bookmark-button--active']: offer.isFavorite,
             })}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
@@ -66,7 +65,9 @@ export function PlaceCard(props: Props) {
         <h2 className="place-card__name">
           <Link to={link}>{offer.title}</Link>
         </h2>
-        <p className="place-card__type">Apartment</p>
+        <p className="place-card__type">
+          {offer.type.charAt(0).toUpperCase() + offer.type.slice(1)}
+        </p>
       </div>
     </article>
   );

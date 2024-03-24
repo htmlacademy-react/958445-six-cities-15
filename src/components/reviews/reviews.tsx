@@ -2,10 +2,10 @@ import { Form } from '..';
 import { Review } from './review/review';
 import { useAppSelector } from '../../hooks';
 
-export function Reviews() {
+export function Reviews(): null | JSX.Element {
   const reviews = useAppSelector((state) => state.reviews);
 
-  return (
+  return reviews.length ? (
     <section className="offer__reviews reviews">
       <h2 className="reviews__title">
         Reviews &middot;{' '}
@@ -18,5 +18,5 @@ export function Reviews() {
       </ul>
       <Form />
     </section>
-  );
+  ) : null;
 }

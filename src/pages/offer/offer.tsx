@@ -162,12 +162,14 @@ export function OfferPage({
             <Reviews />
           </div>
         </div>
-        <Map
-          city={city}
-          points={offers}
-          className="offer"
-          selectedPointId={activeCardId}
-        />
+        {city && (
+          <Map
+            city={city}
+            points={offers}
+            className="offer"
+            selectedPointId={activeCardId}
+          />
+        )}
       </section>
       <div className="container">
         <section className="near-places places">
