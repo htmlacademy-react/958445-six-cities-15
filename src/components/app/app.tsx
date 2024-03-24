@@ -1,8 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { PrivateCheck } from '..';
 import { Layout } from '../layout/layout';
+import { CITIES, OFFERS } from '../../mocks';
+import { setOffers } from '../../store/action';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AppRoutesEnum, AuthorizationStatusesEnum } from '../../consts';
 import {
   MainPage,
@@ -13,7 +16,14 @@ import {
 } from '../../pages';
 
 export function App(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const city = useAppSelector((state) => state.city);
+  const offers = useAppSelector((state) => state.offers);
   const [activeCardId, setActiveCardId] = useState<string>('');
+
+  useEffect(() => {
+    dispatch(setOffers(OFFERS.filter((item) => item.city.name === city.name)));
+  }, [city, dispatch]);
 
   return (
     <Routes>
@@ -22,6 +32,9 @@ export function App(): JSX.Element {
           index
           element={
             <MainPage
+              city={city}
+              offers={offers}
+              cities={CITIES}
               activeCardId={activeCardId}
               setActiveCardId={setActiveCardId}
             />
@@ -32,7 +45,7 @@ export function App(): JSX.Element {
           path={AppRoutesEnum.FAVORITES}
           element={
             <PrivateCheck authorizationStatus={AuthorizationStatusesEnum.AUTH}>
-              <FavoritesPage />
+              <FavoritesPage offers={offers} />
             </PrivateCheck>
           }
         />
@@ -40,6 +53,8 @@ export function App(): JSX.Element {
           path={`${AppRoutesEnum.OFFER}/:id`}
           element={
             <OfferPage
+              city={city}
+              offers={offers}
               activeCardId={activeCardId}
               setActiveCardId={setActiveCardId}
             />

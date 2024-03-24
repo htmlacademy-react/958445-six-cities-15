@@ -1,12 +1,13 @@
 import { createReducer } from '@reduxjs/toolkit';
 
-import { setCity, setOffers } from './action';
 import { State } from '../types';
+import { CITIES } from '../mocks';
+import { setCity, setOffers } from './action';
 
 const initialState: State = {
   offers: [],
-  city: null,
   reviews: [],
+  city: CITIES[0],
 };
 
 export const reducer = createReducer(initialState, (builder) => {

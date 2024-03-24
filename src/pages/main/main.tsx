@@ -1,35 +1,19 @@
-import { Fragment, useEffect } from 'react';
+import { Fragment } from 'react';
 import { Helmet } from 'react-helmet-async';
 
-import { CITIES, OFFERS } from '../../mocks';
-import { setCity, setOffers } from '../../store/action';
-import { useAppDispatch, useAppSelector } from '../../hooks';
 import { Locations, Map, Offers, SortDropdown } from '../../components';
+import { City, Offer } from '../../types';
 
 type Props = {
+  city: City;
+  cities: City[];
+  offers: Offer[];
   activeCardId: string;
   setActiveCardId?: (id: string) => void;
 };
 
-export function MainPage({
-  activeCardId,
-  setActiveCardId,
-}: Props): JSX.Element {
-  const dispatch = useAppDispatch();
-  const city = useAppSelector((state) => state.city);
-  const offers = useAppSelector((state) => state.offers);
-
-  useEffect(() => {
-    dispatch(setCity(CITIES[0]));
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (city) {
-      dispatch(
-        setOffers(OFFERS.filter((item) => item.city.name === city.name))
-      );
-    }
-  }, [city, dispatch]);
+export function MainPage(props: Props): JSX.Element {
+  const { city, cities, offers, activeCardId, setActiveCardId } = props;
 
   return (
     <Fragment>
@@ -39,7 +23,7 @@ export function MainPage({
       <h1 className="visually-hidden">Cities</h1>
       {city && (
         <div className="tabs">
-          <Locations cities={CITIES} activeCity={city} />
+          <Locations cities={cities} activeCity={city} />
         </div>
       )}
       <div className="cities">
