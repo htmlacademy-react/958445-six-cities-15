@@ -12,9 +12,9 @@ export function Locations(props: Props): JSX.Element {
       <ul className="locations__list tabs__list">
         {CITIES.map((item) => (
           <Item
+            city={item}
             key={item.name}
-            name={item.name}
-            active={props.activeCity.name === item.name}
+            isActive={props.activeCity.name === item.name}
           />
         ))}
       </ul>
