@@ -3,12 +3,12 @@ import cn from 'classnames';
 import type { Offer } from '../../types';
 import { PlaceCard } from '../place-card/place-card';
 
-type Props = {
+type Props = Readonly<{
+  offers: Offer[];
   isTabs?: boolean;
   className: string;
-  offers: ReadonlyArray<Offer>;
   setActiveCard?: (id: string) => void;
-};
+}>;
 
 export function Offers({ offers, isTabs, className, setActiveCard }: Props) {
   return (

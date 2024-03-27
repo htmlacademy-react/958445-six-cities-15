@@ -1,40 +1,52 @@
 import { City } from '../types';
 
-export const CITIES: ReadonlyArray<City> = [
+export const CITIES: City[] = [
   {
-    zoom: 10,
-    lat: 52.374,
-    lng: 4.88969,
-    title: 'Paris',
+    name: 'Paris',
+    location: {
+      zoom: 13,
+      latitude: 48.85661,
+      longitude: 2.351499,
+    },
   },
   {
-    zoom: 10,
-    lat: 52.374,
-    lng: 4.88969,
-    title: 'Cologne',
+    name: 'Cologne',
+    location: {
+      zoom: 13,
+      latitude: 50.938361,
+      longitude: 6.959974,
+    },
   },
   {
-    zoom: 10,
-    lat: 52.374,
-    lng: 4.88969,
-    title: 'Brussels',
+    name: 'Brussels',
+    location: {
+      zoom: 13,
+      latitude: 50.846557,
+      longitude: 4.351697,
+    },
   },
   {
-    zoom: 10,
-    lat: 52.374,
-    lng: 4.88969,
-    title: 'Amsterdam',
+    name: 'Amsterdam',
+    location: {
+      zoom: 13,
+      latitude: 52.37454,
+      longitude: 4.897976,
+    },
   },
   {
-    zoom: 10,
-    lat: 52.374,
-    lng: 4.88969,
-    title: 'Hamburg',
+    name: 'Hamburg',
+    location: {
+      zoom: 13,
+      latitude: 53.550341,
+      longitude: 10.000654,
+    },
   },
   {
-    zoom: 10,
-    lat: 52.374,
-    lng: 4.88969,
-    title: 'Dusseldorf',
+    name: 'Dusseldorf',
+    location: {
+      zoom: 13,
+      latitude: 51.225402,
+      longitude: 6.776314,
+    },
   },
 ];

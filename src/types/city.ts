@@ -1,6 +1,10 @@
-export type City = Readonly<{
-  lat: number;
-  lng: number;
+export type Location = Readonly<{
   zoom: number;
-  title: string;
+  latitude: number;
+  longitude: number;
+}>;
+
+export type City = Readonly<{
+  name: string;
+  location: Location;
 }>;

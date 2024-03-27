@@ -1,13 +1,13 @@
 import { Helmet } from 'react-helmet-async';
 
-import { Offer } from '../../types';
+import type { Offer } from '../../types';
 import { Favorites } from '../../components';
 
-type Props = {
-  offers: ReadonlyArray<Offer>;
-};
+type Props = Readonly<{
+  offers: Offer[];
+}>;
 
-export function FavoritesPage({ offers }: Props): JSX.Element {
+export function FavoritesPage(props: Props): JSX.Element {
   return (
     <div className="page__favorites-container container">
       <Helmet>
@@ -24,7 +24,7 @@ export function FavoritesPage({ offers }: Props): JSX.Element {
                 </a>
               </div>
             </div>
-            <Favorites offers={offers} />
+            <Favorites {...props} />
           </li>
         </ul>
       </section>

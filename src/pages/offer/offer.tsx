@@ -1,27 +1,26 @@
 import { Helmet } from 'react-helmet-async';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import type { City, Offer } from '../../types';
 import { NotFoundPage } from '../not-found/not-found';
 import { Map, Offers, Rating, Reviews } from '../../components';
 
-type Props = {
+type Props = Readonly<{
   city: City;
-  activeCardId: string;
-  offers: ReadonlyArray<Offer>;
-  setActiveCardId?: (id: string) => void;
-};
+  offers: Offer[];
+}>;
 
-export function OfferPage({
-  city,
-  offers,
-  activeCardId,
-  setActiveCardId,
-}: Props): JSX.Element {
+export function OfferPage(props: Props): JSX.Element {
+  const { city, offers } = props;
   const { id } = useParams();
   const navigate = useNavigate();
   const [offer, setOffer] = useState<null | Offer>(null);
+  const [activeCardId, setActiveCardId] = useState<string>(offer?.id ?? '');
+  const nearPlaces = useMemo(
+    () => offers.filter((item) => item.id !== offer?.id).slice(0, 3),
+    [offer?.id, offers]
+  );
 
   useEffect(() => {
     if (id?.length) {
@@ -165,9 +164,9 @@ export function OfferPage({
         </div>
         <Map
           city={city}
-          points={offers}
           className="offer"
           selectedPointId={activeCardId}
+          points={[...nearPlaces, offer]}
         />
       </section>
       <div className="container">
@@ -177,9 +176,9 @@ export function OfferPage({
           </h2>
           <Offers
             isTabs
+            offers={nearPlaces}
             className="near-places"
             setActiveCard={setActiveCardId}
-            offers={offers.filter((item) => item.id !== offer.id)}
           />
         </section>
       </div>

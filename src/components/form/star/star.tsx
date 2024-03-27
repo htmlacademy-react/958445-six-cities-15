@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 
-export type Props = Readonly<{
+type Props = Readonly<{
   value: number;
   title: string;
   formValue: number;

@@ -1,9 +1,9 @@
-import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { PrivateCheck } from '..';
+import { CITIES } from '../../mocks';
 import { Layout } from '../layout/layout';
-import type { City, Offer } from '../../types';
+import { useAppSelector } from '../../hooks';
 import { AppRoutesEnum, AuthorizationStatusesEnum } from '../../consts';
 import {
   MainPage,
@@ -13,13 +13,9 @@ import {
   FavoritesPage,
 } from '../../pages';
 
-type Props = {
-  city: City;
-  offers: ReadonlyArray<Offer>;
-};
-
-export function App(props: Props): JSX.Element {
-  const [activeCardId, setActiveCardId] = useState<string>('');
+export function App(): JSX.Element {
+  const city = useAppSelector((state) => state.city);
+  const offers = useAppSelector((state) => state.offers);
 
   return (
     <Routes>
@@ -28,9 +24,9 @@ export function App(props: Props): JSX.Element {
           index
           element={
             <MainPage
-              {...props}
-              activeCardId={activeCardId}
-              setActiveCardId={setActiveCardId}
+              city={city}
+              cities={CITIES}
+              offers={offers.filter((item) => item.city.name === city.name)}
             />
           }
         />
@@ -39,7 +35,7 @@ export function App(props: Props): JSX.Element {
           path={AppRoutesEnum.FAVORITES}
           element={
             <PrivateCheck authorizationStatus={AuthorizationStatusesEnum.AUTH}>
-              <FavoritesPage {...props} />
+              <FavoritesPage offers={offers} />
             </PrivateCheck>
           }
         />
@@ -47,9 +43,8 @@ export function App(props: Props): JSX.Element {
           path={`${AppRoutesEnum.OFFER}/:id`}
           element={
             <OfferPage
-              {...props}
-              activeCardId={activeCardId}
-              setActiveCardId={setActiveCardId}
+              city={city}
+              offers={offers.filter((item) => item.city.name === city.name)}
             />
           }
         />
