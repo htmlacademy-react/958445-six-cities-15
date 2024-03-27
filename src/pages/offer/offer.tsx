@@ -8,20 +8,14 @@ import { Map, Offers, Rating, Reviews } from '../../components';
 
 type Props = {
   city: City;
-  activeCardId: string;
   offers: ReadonlyArray<Offer>;
-  setActiveCardId?: (id: string) => void;
 };
 
-export function OfferPage({
-  city,
-  offers,
-  activeCardId,
-  setActiveCardId,
-}: Props): JSX.Element {
+export function OfferPage({ city, offers }: Props): JSX.Element {
   const { id } = useParams();
   const navigate = useNavigate();
   const [offer, setOffer] = useState<null | Offer>(null);
+  const [activeCardId, setActiveCardId] = useState<string>(offer?.id ?? '');
 
   useEffect(() => {
     if (id?.length) {
