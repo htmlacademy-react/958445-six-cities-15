@@ -1,8 +1,9 @@
 import { useState, Fragment } from 'react';
 import { Helmet } from 'react-helmet-async';
 
-import { Locations, Map, Offers, SortDropdown } from '../../components';
 import { City, Offer } from '../../types';
+import { SortTypesEnum } from '../../consts';
+import { Locations, Map, Offers, SortDropdown } from '../../components';
 
 type Props = Readonly<{
   city: City;
@@ -12,7 +13,8 @@ type Props = Readonly<{
 
 export function MainPage(props: Props): JSX.Element {
   const { city, cities, offers } = props;
-  const [activeCardId, setActiveCardId] = useState<string>('');
+  const [activeCardId, setActiveCardId] = useState('');
+  const [sortType, setSortType] = useState(SortTypesEnum.POPULAR);
 
   return (
     <Fragment>
@@ -21,20 +23,21 @@ export function MainPage(props: Props): JSX.Element {
       </Helmet>
       <h1 className="visually-hidden">Cities</h1>
       <div className="tabs">
-        {city && <Locations cities={cities} activeCity={city} />}
+        <Locations cities={cities} activeCity={city} />
       </div>
       <div className="cities">
         <div className="cities__places-container container">
           <section className="cities__places places">
             <h2 className="visually-hidden">Places</h2>
             <b className="places__found">
-              {offers.length} places to stay in {city?.name}
+              {offers.length} places to stay in {city.name}
             </b>
-            <SortDropdown />
+            <SortDropdown sortType={sortType} setSortType={setSortType} />
             <Offers
               isTabs
               offers={offers}
               className="cities"
+              sortType={sortType}
               setActiveCard={setActiveCardId}
             />
           </section>
