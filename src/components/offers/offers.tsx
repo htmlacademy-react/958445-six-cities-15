@@ -1,12 +1,14 @@
 import cn from 'classnames';
 
 import type { Offer } from '../../types';
+import type { SortTypesEnum } from '../../consts';
 import { PlaceCard } from '../place-card/place-card';
 
 type Props = Readonly<{
   offers: Offer[];
   isTabs?: boolean;
   className: string;
+  sortType?: SortTypesEnum;
   setActiveCard?: (id: string) => void;
 }>;
 
