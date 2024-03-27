@@ -16,7 +16,7 @@ export function OfferPage(props: Props): JSX.Element {
   const { id } = useParams();
   const navigate = useNavigate();
   const [offer, setOffer] = useState<null | Offer>(null);
-  const [activeCardId, setActiveCardId] = useState<string>('');
+  const [activeCardId, setActiveCardId] = useState<string>(offer?.id ?? '');
   const nearPlaces = useMemo(
     () => offers.filter((item) => item.id !== offer?.id).slice(0, 3),
     [offer?.id, offers]
