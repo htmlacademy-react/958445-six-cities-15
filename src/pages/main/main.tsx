@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { useState, Fragment } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import { Locations, Map, Offers, SortDropdown } from '../../components';
@@ -8,12 +8,11 @@ type Props = Readonly<{
   city: City;
   cities: City[];
   offers: Offer[];
-  activeCardId: string;
-  setActiveCardId?: (id: string) => void;
 }>;
 
 export function MainPage(props: Props): JSX.Element {
-  const { city, cities, offers, activeCardId, setActiveCardId } = props;
+  const { city, cities, offers } = props;
+  const [activeCardId, setActiveCardId] = useState<string>('');
 
   return (
     <Fragment>

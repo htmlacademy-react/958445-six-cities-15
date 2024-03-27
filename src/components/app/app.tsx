@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { PrivateCheck } from '..';
@@ -19,7 +19,6 @@ export function App(): JSX.Element {
   const dispatch = useAppDispatch();
   const city = useAppSelector((state) => state.city);
   const offers = useAppSelector((state) => state.offers);
-  const [activeCardId, setActiveCardId] = useState<string>('');
 
   useEffect(() => {
     dispatch(setOffers(OFFERS.filter((item) => item.city.name === city.name)));
@@ -30,15 +29,7 @@ export function App(): JSX.Element {
       <Route path={AppRoutesEnum.HOME} element={<Layout />}>
         <Route
           index
-          element={
-            <MainPage
-              city={city}
-              offers={offers}
-              cities={CITIES}
-              activeCardId={activeCardId}
-              setActiveCardId={setActiveCardId}
-            />
-          }
+          element={<MainPage city={city} offers={offers} cities={CITIES} />}
         />
         <Route path={AppRoutesEnum.LOGIN} element={<LoginPage />} />
         <Route
@@ -51,14 +42,7 @@ export function App(): JSX.Element {
         />
         <Route
           path={`${AppRoutesEnum.OFFER}/:id`}
-          element={
-            <OfferPage
-              city={city}
-              offers={offers}
-              activeCardId={activeCardId}
-              setActiveCardId={setActiveCardId}
-            />
-          }
+          element={<OfferPage city={city} offers={offers} />}
         />
       </Route>
       <Route path={AppRoutesEnum.ROUTE_STAR} element={<NotFoundPage />} />

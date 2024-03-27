@@ -9,15 +9,14 @@ import { Map, Offers, Rating, Reviews } from '../../components';
 type Props = Readonly<{
   city: City;
   offers: Offer[];
-  activeCardId: string;
-  setActiveCardId?: (id: string) => void;
 }>;
 
 export function OfferPage(props: Props): JSX.Element {
-  const { city, offers, activeCardId, setActiveCardId } = props;
+  const { city, offers } = props;
   const { id } = useParams();
   const navigate = useNavigate();
   const [offer, setOffer] = useState<null | Offer>(null);
+  const [activeCardId, setActiveCardId] = useState<string>('');
   const nearPlaces = useMemo(
     () => offers.filter((item) => item.id !== offer?.id).slice(0, 3),
     [offer?.id, offers]
