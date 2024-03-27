@@ -5,22 +5,10 @@ import { SortTypesEnum } from '../../consts';
 
 type Props = Readonly<{
   sortType: SortTypesEnum;
-  setSortType: (sortType: number) => void;
+  setSortType: (sortType: SortTypesEnum) => void;
 }>;
 
-const labels = [
-  'Popular',
-  'Price: low to high',
-  'Price: high to low',
-  'Top rated first',
-];
-
-const sortTypes = (
-  Object.keys(SortTypesEnum) as Array<keyof typeof SortTypesEnum>
-).map((key, index) => ({
-  label: labels[index],
-  value: SortTypesEnum[key],
-}));
+const sortTypes = Object.values(SortTypesEnum) as Array<SortTypesEnum>;
 
 export function SortDropdown({ sortType, setSortType }: Props): JSX.Element {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -33,7 +21,7 @@ export function SortDropdown({ sortType, setSortType }: Props): JSX.Element {
         className="places__sorting-type"
         onClick={() => setShowDropdown(!showDropdown)}
       >
-        {sortTypes.find((item) => item.value === sortType)?.label}
+        {sortTypes.find((item) => item === sortType)}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
@@ -42,14 +30,14 @@ export function SortDropdown({ sortType, setSortType }: Props): JSX.Element {
         <ul className="places__options places__options--custom places__options--opened">
           {sortTypes.map((type) => (
             <li
-              key={type.value}
-              onClick={() => setSortType(type.value)}
-              className={cn('places__option', {
-                ['places__option--active']: type.value === sortType,
-              })}
+              key={type}
               tabIndex={0}
+              onClick={() => setSortType(type)}
+              className={cn('places__option', {
+                ['places__option--active']: type === sortType,
+              })}
             >
-              {type.label}
+              {type}
             </li>
           ))}
         </ul>

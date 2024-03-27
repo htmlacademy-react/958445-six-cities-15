@@ -12,8 +12,8 @@ export enum AppRoutesEnum {
 }
 
 export enum SortTypesEnum {
-  POPULAR = 0,
-  PRICE_TO_HIGH = 1,
-  PRICE_TO_LOW = 2,
-  RATED_FIRST = 3,
+  POPULAR = 'Popular',
+  PRICE_TO_HIGH = 'Price: low to high',
+  PRICE_TO_LOW = 'Price: high to low',
+  RATED_FIRST = 'Top rated first',
 }
