@@ -162,14 +162,12 @@ export function OfferPage(props: Props): JSX.Element {
             <Reviews />
           </div>
         </div>
-        {city && (
-          <Map
-            city={city}
-            className="offer"
-            selectedPointId={activeCardId}
-            points={[...nearPlaces, offer]}
-          />
-        )}
+        <Map
+          city={city}
+          className="offer"
+          selectedPointId={activeCardId}
+          points={[...nearPlaces, offer]}
+        />
       </section>
       <div className="container">
         <section className="near-places places">

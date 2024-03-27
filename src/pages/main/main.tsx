@@ -39,15 +39,13 @@ export function MainPage(props: Props): JSX.Element {
             />
           </section>
           <div className="cities__right-section">
-            {city && (
-              <Map
-                city={city}
-                key={city.name}
-                points={offers}
-                className="cities"
-                selectedPointId={activeCardId}
-              />
-            )}
+            <Map
+              city={city}
+              key={city.name}
+              points={offers}
+              className="cities"
+              selectedPointId={activeCardId}
+            />
           </div>
         </div>
       </div>
