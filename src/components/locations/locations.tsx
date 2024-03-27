@@ -1,5 +1,5 @@
-import { Item } from './item/item';
 import { City } from '../../types';
+import { LocationsItem } from './item/item';
 
 type Props = Readonly<{
   cities: City[];
@@ -11,7 +11,7 @@ export function Locations(props: Props): JSX.Element {
     <section className="locations container">
       <ul className="locations__list tabs__list">
         {props.cities.map((item) => (
-          <Item
+          <LocationsItem
             city={item}
             key={item.name}
             isActive={props.activeCity.name === item.name}
@@ -22,4 +22,4 @@ export function Locations(props: Props): JSX.Element {
   );
 }
 
-Locations.Item = Item;
+Locations.Item = LocationsItem;

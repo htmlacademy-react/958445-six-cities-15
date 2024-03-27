@@ -11,7 +11,7 @@ type Props = Readonly<{
   className?: string;
 }>;
 
-export function Item(props: Props): JSX.Element {
+export function LocationsItem(props: Props): JSX.Element {
   const { city, isActive, className } = props;
   const dispatch = useAppDispatch();
   const handleCityClick = useCallback(() => {
