@@ -14,13 +14,14 @@ export function SortDropdown({ sortType, setSortType }: Props): JSX.Element {
   const [showDropdown, setShowDropdown] = useState(false);
 
   return (
-    <form className="places__sorting" action="#" method="get">
+    <form
+      action="#"
+      method="get"
+      className="places__sorting"
+      onClick={() => setShowDropdown(!showDropdown)}
+    >
       <span className="places__sorting-caption">Sort by</span>
-      <span
-        tabIndex={0}
-        className="places__sorting-type"
-        onClick={() => setShowDropdown(!showDropdown)}
-      >
+      <span tabIndex={0} className="places__sorting-type">
         {sortTypes.find((item) => item === sortType)}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>

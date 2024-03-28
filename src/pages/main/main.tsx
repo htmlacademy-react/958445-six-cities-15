@@ -1,18 +1,17 @@
 import { useState, Fragment } from 'react';
 import { Helmet } from 'react-helmet-async';
 
-import { City, Offer } from '../../types';
+import { CITIES } from '../../mocks';
 import { SortTypesEnum } from '../../consts';
+import { useAppSelector } from '../../hooks';
 import { Locations, Map, Offers, SortDropdown } from '../../components';
 
-type Props = Readonly<{
-  city: City;
-  cities: City[];
-  offers: Offer[];
-}>;
+export function MainPage(): JSX.Element {
+  const city = useAppSelector((state) => state.city);
+  const offers = useAppSelector((state) => state.offers).filter(
+    (item) => item.city.name === city.name
+  );
 
-export function MainPage(props: Props): JSX.Element {
-  const { city, cities, offers } = props;
   const [activeCardId, setActiveCardId] = useState('');
   const [sortType, setSortType] = useState(SortTypesEnum.POPULAR);
 
@@ -23,7 +22,7 @@ export function MainPage(props: Props): JSX.Element {
       </Helmet>
       <h1 className="visually-hidden">Cities</h1>
       <div className="tabs">
-        <Locations cities={cities} activeCity={city} />
+        <Locations cities={CITIES} activeCity={city} />
       </div>
       <div className="cities">
         <div className="cities__places-container container">
