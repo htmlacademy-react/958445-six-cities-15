@@ -14,8 +14,8 @@ export function SortType({ isActive, type, setSortType }: Props) {
 
   return (
     <li
-      tabIndex={0}
       key={type}
+      tabIndex={0}
       onClick={setSorting}
       className={cn('places__option', {
         ['places__option--active']: isActive,
