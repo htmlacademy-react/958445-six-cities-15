@@ -12,18 +12,13 @@ const sortTypes = Object.values(SortTypesEnum) as Array<SortTypesEnum>;
 
 export function SortDropdown({ sortType, setSortType }: Props): JSX.Element {
   const [showDropdown, setShowDropdown] = useState(false);
-  const toggleDropdown = useCallback(
+  const setShow = useCallback(
     () => setShowDropdown(!showDropdown),
     [showDropdown]
   );
 
   return (
-    <form
-      action="#"
-      method="get"
-      onClick={toggleDropdown}
-      className="places__sorting"
-    >
+    <form action="#" method="get" onClick={setShow} className="places__sorting">
       <span className="places__sorting-caption">Sort by</span>
       <span tabIndex={0} className="places__sorting-type">
         {sortTypes.find((item) => item === sortType)}

@@ -10,16 +10,13 @@ type Props = {
 };
 
 export function SortType({ isActive, type, setSortType }: Props) {
-  const onChangeSorting = useCallback(
-    () => setSortType(type),
-    [setSortType, type]
-  );
+  const setSorting = useCallback(() => setSortType(type), [setSortType, type]);
 
   return (
     <li
       tabIndex={0}
       key={type}
-      onClick={onChangeSorting}
+      onClick={setSorting}
       className={cn('places__option', {
         ['places__option--active']: isActive,
       })}
