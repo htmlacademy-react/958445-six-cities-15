@@ -1,10 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
 
 import { PrivateCheck } from '..';
-import { CITIES } from '../../mocks';
 import { Layout } from '../layout/layout';
-import { useAppSelector } from '../../hooks';
-import { AppRoutesEnum, AuthorizationStatusesEnum } from '../../consts';
+import { AppRoutesEnum } from '../../consts';
 import {
   MainPage,
   LoginPage,
@@ -12,42 +10,31 @@ import {
   NotFoundPage,
   FavoritesPage,
 } from '../../pages';
+import { useLayoutEffect } from 'react';
+import { useAppDispatch } from '../../hooks';
+import { loadOffersAction } from '../../store/api-actions';
 
 export function App(): JSX.Element {
-  const city = useAppSelector((state) => state.city);
-  const offers = useAppSelector((state) => state.offers);
+  const dispatch = useAppDispatch();
+
+  useLayoutEffect(() => {
+    dispatch(loadOffersAction());
+  }, [dispatch]);
 
   return (
     <Routes>
       <Route path={AppRoutesEnum.HOME} element={<Layout />}>
-        <Route
-          index
-          element={
-            <MainPage
-              city={city}
-              cities={CITIES}
-              offers={offers.filter((item) => item.city.name === city.name)}
-            />
-          }
-        />
+        <Route index element={<MainPage />} />
         <Route path={AppRoutesEnum.LOGIN} element={<LoginPage />} />
         <Route
           path={AppRoutesEnum.FAVORITES}
           element={
-            <PrivateCheck authorizationStatus={AuthorizationStatusesEnum.AUTH}>
-              <FavoritesPage offers={offers} />
+            <PrivateCheck>
+              <FavoritesPage />
             </PrivateCheck>
           }
         />
-        <Route
-          path={`${AppRoutesEnum.OFFER}/:id`}
-          element={
-            <OfferPage
-              city={city}
-              offers={offers.filter((item) => item.city.name === city.name)}
-            />
-          }
-        />
+        <Route path={`${AppRoutesEnum.OFFER}/:id`} element={<OfferPage />} />
       </Route>
       <Route path={AppRoutesEnum.ROUTE_STAR} element={<NotFoundPage />} />
     </Routes>

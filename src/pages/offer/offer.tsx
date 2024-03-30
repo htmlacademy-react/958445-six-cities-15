@@ -2,19 +2,16 @@ import { Helmet } from 'react-helmet-async';
 import { Fragment, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import type { City, Offer } from '../../types';
+import type { Offer } from '../../types';
 import { NotFoundPage } from '../not-found/not-found';
+import { useAppSelector, useOffersByCity } from '../../hooks';
 import { Map, Offers, Rating, Reviews } from '../../components';
 
-type Props = Readonly<{
-  city: City;
-  offers: Offer[];
-}>;
-
-export function OfferPage(props: Props): JSX.Element {
-  const { city, offers } = props;
+export function OfferPage(): JSX.Element {
   const { id } = useParams();
   const navigate = useNavigate();
+  const offers = useOffersByCity();
+  const city = useAppSelector((state) => state.city);
   const [offer, setOffer] = useState<null | Offer>(null);
   const [activeCardId, setActiveCardId] = useState<string>(offer?.id ?? '');
   const nearPlaces = useMemo(

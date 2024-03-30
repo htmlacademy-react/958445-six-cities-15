@@ -1,17 +1,12 @@
 import { useState, Fragment } from 'react';
 import { Helmet } from 'react-helmet-async';
 
+import { useAppSelector, useOffersByCity } from '../../hooks';
 import { Locations, Map, Offers, SortDropdown } from '../../components';
-import { City, Offer } from '../../types';
 
-type Props = Readonly<{
-  city: City;
-  cities: City[];
-  offers: Offer[];
-}>;
-
-export function MainPage(props: Props): JSX.Element {
-  const { city, cities, offers } = props;
+export function MainPage(): JSX.Element {
+  const offers = useOffersByCity();
+  const city = useAppSelector((state) => state.city);
   const [activeCardId, setActiveCardId] = useState<string>('');
 
   return (
@@ -20,9 +15,7 @@ export function MainPage(props: Props): JSX.Element {
         <title>Main</title>
       </Helmet>
       <h1 className="visually-hidden">Cities</h1>
-      <div className="tabs">
-        {city && <Locations cities={cities} activeCity={city} />}
-      </div>
+      <div className="tabs">{city && <Locations activeCity={city} />}</div>
       <div className="cities">
         <div className="cities__places-container container">
           <section className="cities__places places">

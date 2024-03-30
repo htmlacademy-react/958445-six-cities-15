@@ -1,13 +1,11 @@
 import { Helmet } from 'react-helmet-async';
 
-import type { Offer } from '../../types';
 import { Favorites } from '../../components';
+import { useAppSelector } from '../../hooks';
 
-type Props = Readonly<{
-  offers: Offer[];
-}>;
+export function FavoritesPage(): JSX.Element {
+  const offers = useAppSelector((state) => state.offers);
 
-export function FavoritesPage(props: Props): JSX.Element {
   return (
     <div className="page__favorites-container container">
       <Helmet>
@@ -24,7 +22,7 @@ export function FavoritesPage(props: Props): JSX.Element {
                 </a>
               </div>
             </div>
-            <Favorites {...props} />
+            <Favorites offers={offers} />
           </li>
         </ul>
       </section>
