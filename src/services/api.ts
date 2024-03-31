@@ -2,7 +2,7 @@ import axios, { InternalAxiosRequestConfig } from 'axios';
 
 import { getToken } from './token';
 
-const TIMEOUT = 10;
+const TIMEOUT = 5000;
 const BACKEND_URL = 'https://15.design.htmlacademy.pro/six-cities';
 
 export const createApi = () => {
