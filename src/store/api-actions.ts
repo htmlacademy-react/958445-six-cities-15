@@ -1,9 +1,16 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AppDispatch, Offer, State, User } from '../types';
 import { AxiosInstance } from 'axios';
-import { ApiRoutesEnum, AuthorizationStatusesEnum } from '../consts';
-import { login, logout, loadOffers, checkAuth } from './action';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+
 import { clearToken, setToken } from '../services/token';
+import { AppDispatch, Offer, State, User } from '../types';
+import { ApiRoutesEnum, AuthorizationStatusesEnum } from '../consts';
+import {
+  login,
+  logout,
+  loadOffers,
+  checkAuth,
+  setDataLoadingStatus,
+} from './action';
 
 export const checkAuthAction = createAsyncThunk<
   void,
@@ -13,13 +20,12 @@ export const checkAuthAction = createAsyncThunk<
     state: State;
     extra: AxiosInstance;
   }
->('user/checkAuth', async (_arg, { dispatch, extra: api }) => {
-  try {
-    await api.get(ApiRoutesEnum.LOGIN);
-    dispatch(checkAuth(AuthorizationStatusesEnum.AUTH));
-  } catch {
-    dispatch(checkAuth(AuthorizationStatusesEnum.NO_AUTH));
-  }
+>('user/checkAuth', (_arg, { dispatch, extra: api }) => {
+  dispatch(setDataLoadingStatus(true));
+  api
+    .get(ApiRoutesEnum.LOGIN)
+    .then(() => dispatch(checkAuth(AuthorizationStatusesEnum.AUTH)))
+    .catch(() => dispatch(checkAuth(AuthorizationStatusesEnum.NO_AUTH)));
 });
 
 export const loginAction = createAsyncThunk<
@@ -65,8 +71,12 @@ export const loadOffersAction = createAsyncThunk<
     state: State;
     extra: AxiosInstance;
   }
->('offers/loadOffers', async (_arg, { dispatch, extra: api }) => {
-  const { data } = await api.get<Offer[]>(ApiRoutesEnum.OFFERS);
-
-  dispatch(loadOffers(data));
+>('offers/loadOffers', (_arg, { dispatch, extra: api }) => {
+  dispatch(setDataLoadingStatus(true));
+  api
+    .get<Offer[]>(ApiRoutesEnum.OFFERS)
+    .then(({ data }) => {
+      dispatch(loadOffers(data));
+    })
+    .finally(() => dispatch(setDataLoadingStatus(false)));
 });

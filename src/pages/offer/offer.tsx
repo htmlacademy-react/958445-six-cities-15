@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
+import { useParams } from 'react-router-dom';
 import { Fragment, useEffect, useMemo, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
 
 import type { Offer } from '../../types';
 import { NotFoundPage } from '../not-found/not-found';
@@ -9,7 +9,6 @@ import { Map, Offers, Rating, Reviews } from '../../components';
 
 export function OfferPage(): JSX.Element {
   const { id } = useParams();
-  const navigate = useNavigate();
   const offers = useOffersByCity();
   const city = useAppSelector((state) => state.city);
   const [offer, setOffer] = useState<null | Offer>(null);
@@ -27,7 +26,7 @@ export function OfferPage(): JSX.Element {
         setOffer(offerData);
       }
     }
-  }, [id, navigate, offers]);
+  }, [id, offers]);
 
   return offer ? (
     <Fragment>

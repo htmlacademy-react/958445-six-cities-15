@@ -1,8 +1,10 @@
-import { Route, Routes } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 
-import { PrivateCheck } from '..';
 import { Layout } from '../layout/layout';
-import { AppRoutesEnum } from '../../consts';
+import { PrivateCheck, Spinner } from '..';
+import { useAppSelector } from '../../hooks';
+import { AppRoutesEnum, AuthorizationStatusesEnum } from '../../consts';
 import {
   MainPage,
   LoginPage,
@@ -10,16 +12,26 @@ import {
   NotFoundPage,
   FavoritesPage,
 } from '../../pages';
-import { useLayoutEffect } from 'react';
-import { useAppDispatch } from '../../hooks';
-import { loadOffersAction } from '../../store/api-actions';
 
 export function App(): JSX.Element {
-  const dispatch = useAppDispatch();
+  const nvigate = useNavigate();
+  const isDataLoading = useAppSelector((state) => state.isDataLoading);
+  const authorizationStatus = useAppSelector(
+    (state) => state.authorizationStatus
+  );
 
-  useLayoutEffect(() => {
-    dispatch(loadOffersAction());
-  }, [dispatch]);
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatusesEnum.NO_AUTH) {
+      nvigate(AppRoutesEnum.LOGIN);
+    }
+  }, [authorizationStatus, nvigate]);
+
+  if (
+    authorizationStatus === AuthorizationStatusesEnum.UNKNOWN ||
+    isDataLoading
+  ) {
+    return <Spinner />;
+  }
 
   return (
     <Routes>
