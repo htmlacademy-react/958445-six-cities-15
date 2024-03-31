@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import { Layout } from '../layout/layout';
 import { PrivateCheck, Spinner } from '..';
@@ -14,17 +13,10 @@ import {
 } from '../../pages';
 
 export function App(): JSX.Element {
-  const nvigate = useNavigate();
   const isDataLoading = useAppSelector((state) => state.isDataLoading);
   const authorizationStatus = useAppSelector(
     (state) => state.authorizationStatus
   );
-
-  useEffect(() => {
-    if (authorizationStatus === AuthorizationStatusesEnum.NO_AUTH) {
-      nvigate(AppRoutesEnum.LOGIN);
-    }
-  }, [authorizationStatus, nvigate]);
 
   if (
     authorizationStatus === AuthorizationStatusesEnum.UNKNOWN ||
