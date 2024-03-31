@@ -12,6 +12,11 @@ import {
   setDataLoadingStatus,
 } from './action';
 
+type AuthData = {
+  login: string;
+  password: string;
+};
+
 export const checkAuthAction = createAsyncThunk<
   void,
   undefined,
@@ -30,23 +35,28 @@ export const checkAuthAction = createAsyncThunk<
 
 export const loginAction = createAsyncThunk<
   void,
-  undefined,
+  AuthData,
   {
     dispatch: AppDispatch;
     state: State;
     extra: AxiosInstance;
   }
->('user/login', async (_arg, { dispatch, extra: api }) => {
-  const { data } = await api.post<User>(ApiRoutesEnum.LOGIN, {
-    password: 'password1',
-    email: 'Oliver.conner@gmail.com',
-  });
+>('user/login', ({ login: email, password }, { dispatch, extra: api }) => {
+  api
+    .post<User>(ApiRoutesEnum.LOGIN, {
+      email,
+      password,
+    })
+    .then(({ data }) => {
+      setToken(data.token);
 
-  setToken(data.token);
-
-  dispatch(
-    login({ user: data, authorizationStatus: AuthorizationStatusesEnum.AUTH })
-  );
+      dispatch(
+        login({
+          user: data,
+          authorizationStatus: AuthorizationStatusesEnum.AUTH,
+        })
+      );
+    });
 });
 
 export const logoutAction = createAsyncThunk<
