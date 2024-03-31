@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import { SortType } from './sort-type';
+import { SortType } from './sort-type/sort-type';
 import { SortTypesEnum } from '../../consts';
 
 type Props = {
