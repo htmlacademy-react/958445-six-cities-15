@@ -3,13 +3,14 @@ import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 
 import { removeError } from '../../store/action';
+import { getErrors } from '../../store/selectors';
 import { loginAction } from '../../store/api-actions';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 
 export function LoginPage(): JSX.Element {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const errors = useAppSelector((state) => state.errors);
+  const errors = useAppSelector(getErrors);
   const loginRef = useRef<null | HTMLInputElement>(null);
   const passwordRef = useRef<null | HTMLInputElement>(null);
 

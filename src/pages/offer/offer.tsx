@@ -4,6 +4,7 @@ import { Fragment, useCallback, useEffect, useState } from 'react';
 
 import { api } from '../../store';
 import { ApiRoutesEnum } from '../../consts';
+import { getCity } from '../../store/selectors';
 import { NotFoundPage } from '../not-found/not-found';
 import { useAppSelector, useOffersByCity } from '../../hooks';
 import { Map, Offers, Rating, Reviews } from '../../components';
@@ -12,7 +13,7 @@ import type { Review, ShortOfferType, FullOfferType } from '../../types';
 export function OfferPage(): JSX.Element {
   const { id } = useParams();
   const offers = useOffersByCity();
-  const city = useAppSelector((state) => state.city);
+  const city = useAppSelector(getCity);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [offer, setOffer] = useState<null | FullOfferType>(null);
   const [nearPlaces, setNearPlaces] = useState<ShortOfferType[]>([]);

@@ -4,6 +4,7 @@ import { Layout } from '../layout/layout';
 import { PrivateCheck, Spinner } from '..';
 import { useAppSelector } from '../../hooks';
 import { AppRoutesEnum, AuthorizationStatusesEnum } from '../../consts';
+import { getAuthorizationStatus, getIsLoading } from '../../store/selectors';
 import {
   MainPage,
   LoginPage,
@@ -13,10 +14,8 @@ import {
 } from '../../pages';
 
 export function App(): JSX.Element {
-  const isDataLoading = useAppSelector((state) => state.isDataLoading);
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus
-  );
+  const isDataLoading = useAppSelector(getIsLoading);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   if (
     authorizationStatus === AuthorizationStatusesEnum.UNKNOWN ||

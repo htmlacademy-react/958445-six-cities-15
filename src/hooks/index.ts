@@ -4,14 +4,15 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, State } from '../types';
 import { ShortOfferType } from '../types/offer';
 import { AuthorizationStatusesEnum } from '../consts';
+import { getAuthorizationStatus, getCity, getOffers } from '../store/selectors';
 
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 
 export const useAppSelector: TypedUseSelectorHook<State> = useSelector;
 
 export const useOffersByCity = () => {
-  const city = useAppSelector((state) => state.city);
-  const offers = useAppSelector((state) => state.offers);
+  const city = useAppSelector(getCity);
+  const offers = useAppSelector(getOffers);
 
   return useMemo(
     (): ShortOfferType[] =>
@@ -21,9 +22,7 @@ export const useOffersByCity = () => {
 };
 
 export const useIsAuthorized = () => {
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus
-  );
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   return authorizationStatus === AuthorizationStatusesEnum.AUTH;
 };

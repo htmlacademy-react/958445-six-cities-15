@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 
 import { AppRoutesEnum } from '../../consts';
+import { getCurentUser } from '../../store/selectors';
 import { logoutAction } from '../../store/api-actions';
 import { useAppDispatch, useAppSelector, useIsAuthorized } from '../../hooks';
 
@@ -11,7 +12,7 @@ type Props = Readonly<{
 export function Header({ withNav = false }: Props): JSX.Element {
   const dispatch = useAppDispatch();
   const isAuthorized = useIsAuthorized();
-  const currentUser = useAppSelector((state) => state.curentUser);
+  const currentUser = useAppSelector(getCurentUser);
   const signOut = () => {
     dispatch(logoutAction());
   };

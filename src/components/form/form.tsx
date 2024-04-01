@@ -1,4 +1,4 @@
-import { FormEvent, useCallback, useMemo, useState } from 'react';
+import { FormEvent, useCallback, useState } from 'react';
 
 import { Star } from './star/star';
 import { Review } from '../../types';
@@ -34,19 +34,6 @@ export function Form(props: Props) {
   }: React.ChangeEvent<HTMLTextAreaElement>) => {
     setForm((prev) => ({ ...prev, comment: target.value }));
   };
-  const stars = useMemo(
-    () =>
-      STARS_VALUES.map((item) => (
-        <Star
-          key={item.value}
-          title={item.title}
-          value={item.value}
-          formValue={form.rating}
-          handleChange={onChangeRating}
-        />
-      )).reverse(),
-    [form.rating, onChangeRating]
-  );
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     props.handleSubmit(form);
@@ -63,7 +50,17 @@ export function Form(props: Props) {
       <label htmlFor="review" className="reviews__label form__label">
         Your review
       </label>
-      <div className="reviews__rating-form form__rating">{stars}</div>
+      <div className="reviews__rating-form form__rating">
+        {STARS_VALUES.map((item) => (
+          <Star
+            key={item.value}
+            title={item.title}
+            value={item.value}
+            formValue={form.rating}
+            handleChange={onChangeRating}
+          />
+        )).reverse()}
+      </div>
       <textarea
         id="review"
         name="review"
