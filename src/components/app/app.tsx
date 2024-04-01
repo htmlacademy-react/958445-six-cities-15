@@ -1,7 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
 
-import { PrivateCheck } from '..';
 import { Layout } from '../layout/layout';
+import { PrivateCheck, Spinner } from '..';
+import { useAppSelector } from '../../hooks';
 import { AppRoutesEnum, AuthorizationStatusesEnum } from '../../consts';
 import {
   MainPage,
@@ -12,6 +13,18 @@ import {
 } from '../../pages';
 
 export function App(): JSX.Element {
+  const isDataLoading = useAppSelector((state) => state.isDataLoading);
+  const authorizationStatus = useAppSelector(
+    (state) => state.authorizationStatus
+  );
+
+  if (
+    authorizationStatus === AuthorizationStatusesEnum.UNKNOWN ||
+    isDataLoading
+  ) {
+    return <Spinner />;
+  }
+
   return (
     <Routes>
       <Route path={AppRoutesEnum.HOME} element={<Layout />}>
@@ -20,7 +33,7 @@ export function App(): JSX.Element {
         <Route
           path={AppRoutesEnum.FAVORITES}
           element={
-            <PrivateCheck authorizationStatus={AuthorizationStatusesEnum.AUTH}>
+            <PrivateCheck>
               <FavoritesPage />
             </PrivateCheck>
           }

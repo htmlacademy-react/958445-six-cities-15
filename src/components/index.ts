@@ -4,6 +4,7 @@ export { Form } from './form/form';
 export { Rating } from './rating/rating';
 export { Header } from './header/header';
 export { Offers } from './offers/offers';
+export { Spinner } from './spinner/spinner';
 export { Reviews } from './reviews/reviews';
 export { Locations } from './locations/locations';
 export { Favorites } from './favorites/favorites';

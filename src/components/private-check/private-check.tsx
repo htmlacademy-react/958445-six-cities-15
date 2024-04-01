@@ -1,14 +1,17 @@
 import { Navigate } from 'react-router-dom';
 
+import { useAppSelector } from '../../hooks';
 import { AppRoutesEnum, AuthorizationStatusesEnum } from '../../consts';
 
 type PrivateRouteProps = {
   children: JSX.Element;
-  authorizationStatus: AuthorizationStatusesEnum;
 };
 
 export function PrivateCheck(props: PrivateRouteProps): JSX.Element {
-  const { children, authorizationStatus } = props;
+  const { children } = props;
+  const authorizationStatus = useAppSelector(
+    (state) => state.authorizationStatus
+  );
 
   return authorizationStatus === AuthorizationStatusesEnum.AUTH ? (
     children

@@ -1,18 +1,14 @@
 import { useState, Fragment } from 'react';
 import { Helmet } from 'react-helmet-async';
 
-import { CITIES } from '../../mocks';
 import { SortTypesEnum } from '../../consts';
-import { useAppSelector } from '../../hooks';
+import { useAppSelector, useOffersByCity } from '../../hooks';
 import { Locations, Map, Offers, SortDropdown } from '../../components';
 
 export function MainPage(): JSX.Element {
+  const offers = useOffersByCity();
   const city = useAppSelector((state) => state.city);
-  const offers = useAppSelector((state) => state.offers).filter(
-    (item) => item.city.name === city.name
-  );
-
-  const [activeCardId, setActiveCardId] = useState('');
+  const [activeCardId, setActiveCardId] = useState<string>('');
   const [sortType, setSortType] = useState(SortTypesEnum.POPULAR);
 
   return (
@@ -22,7 +18,7 @@ export function MainPage(): JSX.Element {
       </Helmet>
       <h1 className="visually-hidden">Cities</h1>
       <div className="tabs">
-        <Locations cities={CITIES} activeCity={city} />
+        <Locations activeCity={city} />
       </div>
       <div className="cities">
         <div className="cities__places-container container">

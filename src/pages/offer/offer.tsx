@@ -1,19 +1,16 @@
 import { Helmet } from 'react-helmet-async';
+import { useParams } from 'react-router-dom';
 import { Fragment, useEffect, useMemo, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
 
 import type { Offer } from '../../types';
-import { useAppSelector } from '../../hooks';
 import { NotFoundPage } from '../not-found/not-found';
+import { useAppSelector, useOffersByCity } from '../../hooks';
 import { Map, Offers, Rating, Reviews } from '../../components';
 
 export function OfferPage(): JSX.Element {
-  const city = useAppSelector((state) => state.city);
-  const offers = useAppSelector((state) => state.offers).filter(
-    (item) => item.city.name === city.name
-  );
   const { id } = useParams();
-  const navigate = useNavigate();
+  const offers = useOffersByCity();
+  const city = useAppSelector((state) => state.city);
   const [offer, setOffer] = useState<null | Offer>(null);
   const [activeCardId, setActiveCardId] = useState<string>(offer?.id ?? '');
   const nearPlaces = useMemo(
@@ -29,7 +26,7 @@ export function OfferPage(): JSX.Element {
         setOffer(offerData);
       }
     }
-  }, [id, navigate, offers]);
+  }, [id, offers]);
 
   return offer ? (
     <Fragment>
