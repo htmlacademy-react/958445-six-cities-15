@@ -1,7 +1,8 @@
 import { useMemo } from 'react';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
-import { AppDispatch, Offer, State } from '../types';
+import { AppDispatch, State } from '../types';
+import { ShortOfferType } from '../types/offer';
 import { AuthorizationStatusesEnum } from '../consts';
 
 export const useAppDispatch = () => useDispatch<AppDispatch>();
@@ -13,7 +14,8 @@ export const useOffersByCity = () => {
   const offers = useAppSelector((state) => state.offers);
 
   return useMemo(
-    (): Offer[] => offers.filter((item) => item.city.name === city.name),
+    (): ShortOfferType[] =>
+      offers.filter((item) => item.city.name === city.name),
     [city.name, offers]
   );
 };

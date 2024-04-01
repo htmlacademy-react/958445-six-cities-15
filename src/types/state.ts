@@ -1,12 +1,14 @@
+import { City } from '.';
 import { store } from '../store';
-import { City, Offer, User } from '.';
+import type { FullUserType } from './user';
+import type { ShortOfferType } from './offer';
 import { AuthorizationStatusesEnum } from '../consts';
 
 export type State = Readonly<{
   city: City;
-  offers: Offer[];
   isDataLoading: boolean;
-  curentUser: null | User;
+  offers: ShortOfferType[];
+  curentUser: null | FullUserType;
   errors: Record<string, string[]>;
   authorizationStatus: AuthorizationStatusesEnum;
 }>;

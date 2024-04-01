@@ -1,8 +1,8 @@
-import type { Offer } from '../../types';
+import type { ShortOfferType } from '../../types';
 import { PlaceCard } from '../place-card/place-card';
 
 type Props = Readonly<{
-  offers: Offer[];
+  offers: ShortOfferType[];
 }>;
 
 export function Favorites({ offers }: Props) {

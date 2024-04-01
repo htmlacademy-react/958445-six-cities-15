@@ -1,6 +1,7 @@
-import { City, Location } from './city';
+import type { ShortUserType } from './user';
+import type { City, Location } from './city';
 
-export type Offer = Readonly<{
+export type ShortOfferType = Readonly<{
   id: string;
   city: City;
   type: string;
@@ -12,3 +13,13 @@ export type Offer = Readonly<{
   isFavorite: boolean;
   previewImage: string;
 }>;
+
+export type FullOfferType = ShortOfferType &
+  Readonly<{
+    goods: string[];
+    bedrooms: number;
+    images: string[];
+    maxAdults: number;
+    host: ShortUserType;
+    description: string;
+  }>;

@@ -1,12 +1,12 @@
 import { useMemo } from 'react';
 
-import type { Offer } from '../../types';
 import { SortTypesEnum } from '../../consts';
+import type { ShortOfferType } from '../../types';
 
 export function useSortOffers(
-  offers: Offer[],
+  offers: ShortOfferType[],
   sortType?: SortTypesEnum
-): Offer[] {
+): ShortOfferType[] {
   return useMemo(() => {
     switch (sortType) {
       case SortTypesEnum.POPULAR:

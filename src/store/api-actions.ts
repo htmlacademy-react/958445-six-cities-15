@@ -2,7 +2,13 @@ import { AxiosError, AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { clearToken, setToken } from '../services/token';
-import { User, Error, Offer, State, AppDispatch } from '../types';
+import {
+  Error,
+  State,
+  AppDispatch,
+  FullUserType,
+  ShortOfferType,
+} from '../types';
 import {
   ApiRoutesEnum,
   AppRoutesEnum,
@@ -51,7 +57,7 @@ export const loginAction = createAsyncThunk<
   'user/login',
   ({ navigate, login: email, password }, { dispatch, extra: api }) => {
     api
-      .post<User>(ApiRoutesEnum.LOGIN, {
+      .post<FullUserType>(ApiRoutesEnum.LOGIN, {
         email,
         password,
       })
@@ -99,7 +105,7 @@ export const loadOffersAction = createAsyncThunk<
 >('offers/loadOffers', (_arg, { dispatch, extra: api }) => {
   dispatch(setDataLoadingStatus(true));
   api
-    .get<Offer[]>(ApiRoutesEnum.OFFERS)
+    .get<ShortOfferType[]>(ApiRoutesEnum.OFFERS)
     .then(({ data }) => {
       dispatch(loadOffers(data));
     })
