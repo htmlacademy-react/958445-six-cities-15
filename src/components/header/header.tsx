@@ -1,12 +1,25 @@
+import { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 
-import { AppRoutesEnum } from '../../consts';
+import { logoutAction } from '../../store/api-actions';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { AppRoutesEnum, AuthorizationStatusesEnum } from '../../consts';
 
 type Props = Readonly<{
   withNav?: boolean;
 }>;
 
 export function Header({ withNav = false }: Props): JSX.Element {
+  const dispatch = useAppDispatch();
+  const currentUser = useAppSelector((state) => state.curentUser);
+  const signOut = useCallback(() => {
+    dispatch(logoutAction());
+  }, [dispatch]);
+  const authorizationStatus = useAppSelector(
+    (state) => state.authorizationStatus
+  );
+  const isAuthorized = authorizationStatus === AuthorizationStatusesEnum.AUTH;
+
   return (
     <header className="header">
       <div className="container">
@@ -29,21 +42,28 @@ export function Header({ withNav = false }: Props): JSX.Element {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <a
+                  <Link
+                    to={AppRoutesEnum.LOGIN}
                     className="header__nav-link header__nav-link--profile"
-                    href="#"
                   >
                     <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__user-name user__name">
-                      Oliver.conner@gmail.com
-                    </span>
-                  </a>
+
+                    {isAuthorized ? (
+                      <span className="header__user-name user__name">
+                        {currentUser?.email}
+                      </span>
+                    ) : (
+                      <span className="header__login">Sign in</span>
+                    )}
+                  </Link>
                 </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
+                {isAuthorized && (
+                  <li className="header__nav-item">
+                    <a className="header__nav-link" onClick={signOut}>
+                      <span className="header__signout">Sign out</span>
+                    </a>
+                  </li>
+                )}
               </ul>
             </nav>
           )}
