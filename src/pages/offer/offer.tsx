@@ -2,12 +2,35 @@ import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import { Fragment, useEffect, useMemo, useState } from 'react';
 
+<<<<<<< HEAD
 import type { Offer } from '../../types';
+||||||| 67929b7
+import type { City, Offer } from '../../types';
+=======
+import type { Offer } from '../../types';
+import { useAppSelector } from '../../hooks';
+>>>>>>> 03d87f77cc8a82ef31c67e97c638323814b96fff
 import { NotFoundPage } from '../not-found/not-found';
 import { useAppSelector, useOffersByCity } from '../../hooks';
 import { Map, Offers, Rating, Reviews } from '../../components';
 
+<<<<<<< HEAD
 export function OfferPage(): JSX.Element {
+||||||| 67929b7
+type Props = Readonly<{
+  city: City;
+  offers: Offer[];
+}>;
+
+export function OfferPage(props: Props): JSX.Element {
+  const { city, offers } = props;
+=======
+export function OfferPage(): JSX.Element {
+  const city = useAppSelector((state) => state.city);
+  const offers = useAppSelector((state) => state.offers).filter(
+    (item) => item.city.name === city.name
+  );
+>>>>>>> 03d87f77cc8a82ef31c67e97c638323814b96fff
   const { id } = useParams();
   const offers = useOffersByCity();
   const city = useAppSelector((state) => state.city);

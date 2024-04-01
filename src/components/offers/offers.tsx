@@ -4,6 +4,7 @@ import { useSortOffers } from './hooks';
 import type { Offer } from '../../types';
 import { SortTypesEnum } from '../../consts';
 import { PlaceCard } from '../place-card/place-card';
+import { useSortOffers } from './hooks';
 
 type Props = {
   offers: Offer[];
