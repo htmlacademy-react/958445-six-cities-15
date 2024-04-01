@@ -1,25 +1,22 @@
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
-import { Fragment, useEffect, useMemo, useState } from 'react';
+import { Fragment, useCallback, useEffect, useState } from 'react';
 
 import { api } from '../../store';
 import { ApiRoutesEnum } from '../../consts';
 import { NotFoundPage } from '../not-found/not-found';
-import type { Review, ShortOfferType } from '../../types';
 import { useAppSelector, useOffersByCity } from '../../hooks';
 import { Map, Offers, Rating, Reviews } from '../../components';
+import type { Review, ShortOfferType, FullOfferType } from '../../types';
 
 export function OfferPage(): JSX.Element {
   const { id } = useParams();
   const offers = useOffersByCity();
   const city = useAppSelector((state) => state.city);
-  const [offer, setOffer] = useState<null | ShortOfferType>(null);
-  const [activeCardId, setActiveCardId] = useState<string>(offer?.id ?? '');
-  const nearPlaces = useMemo(
-    () => offers.filter((item) => item.id !== offer?.id).slice(0, 3),
-    [offer?.id, offers]
-  );
   const [reviews, setReviews] = useState<Review[]>([]);
+  const [offer, setOffer] = useState<null | FullOfferType>(null);
+  const [nearPlaces, setNearPlaces] = useState<ShortOfferType[]>([]);
+  const [activeCardId, setActiveCardId] = useState<string>(offer?.id ?? '');
 
   useEffect(() => {
     api
@@ -28,14 +25,25 @@ export function OfferPage(): JSX.Element {
   }, [id]);
 
   useEffect(() => {
-    if (id?.length) {
-      const offerData = offers.find((item) => item.id === id);
+    if (id) {
+      api
+        .get<FullOfferType>(`${ApiRoutesEnum.OFFERS}/${id}`)
+        .then(({ data }) => setOffer(data));
 
-      if (offerData) {
-        setOffer(offerData);
-      }
+      api
+        .get<ShortOfferType[]>(`${ApiRoutesEnum.OFFERS}/${id}/nearby`)
+        .then(({ data }) => setNearPlaces(data));
     }
   }, [id, offers]);
+
+  const sendReview = useCallback(
+    (review: Pick<Review, 'comment' | 'rating'>) => {
+      api
+        .post<Review>(`${ApiRoutesEnum.COMMENTS}/${id}`, review)
+        .then(({ data }) => setReviews((prev) => [...prev, data]));
+    },
+    [id]
+  );
 
   return offer ? (
     <Fragment>
@@ -108,13 +116,13 @@ export function OfferPage(): JSX.Element {
             <Rating withValue rating={offer.rating} className="offer" />
             <ul className="offer__features">
               <li className="offer__feature offer__feature--entire">
-                Apartment
+                {offer.type}
               </li>
               <li className="offer__feature offer__feature--bedrooms">
-                3 Bedrooms
+                {offer.bedrooms} Bedrooms
               </li>
               <li className="offer__feature offer__feature--adults">
-                Max 4 adults
+                Max {offer.maxAdults} adults
               </li>
             </ul>
             <div className="offer__price">
@@ -124,16 +132,11 @@ export function OfferPage(): JSX.Element {
             <div className="offer__inside">
               <h2 className="offer__inside-title">What&apos;s inside</h2>
               <ul className="offer__inside-list">
-                <li className="offer__inside-item">Wi-Fi</li>
-                <li className="offer__inside-item">Washing machine</li>
-                <li className="offer__inside-item">Towels</li>
-                <li className="offer__inside-item">Heating</li>
-                <li className="offer__inside-item">Coffee machine</li>
-                <li className="offer__inside-item">Baby seat</li>
-                <li className="offer__inside-item">Kitchen</li>
-                <li className="offer__inside-item">Dishwasher</li>
-                <li className="offer__inside-item">Cabel TV</li>
-                <li className="offer__inside-item">Fridge</li>
+                {offer.goods.map((item) => (
+                  <li key={item} className="offer__inside-item">
+                    {item}
+                  </li>
+                ))}
               </ul>
             </div>
             <div className="offer__host">
@@ -144,27 +147,20 @@ export function OfferPage(): JSX.Element {
                     width="74"
                     height="74"
                     alt="Host avatar"
-                    src="img/avatar-angelina.jpg"
+                    src={offer.host.avatarUrl}
                     className="offer__avatar user__avatar"
                   />
                 </div>
-                <span className="offer__user-name">Angelina</span>
-                <span className="offer__user-status">Pro</span>
+                <span className="offer__user-name">{offer.host.name}</span>
+                {offer.host.isPro && (
+                  <span className="offer__user-status">Pro</span>
+                )}
               </div>
               <div className="offer__description">
-                <p className="offer__text">
-                  A quiet cozy and picturesque that hides behind a a river by
-                  the unique lightness of Amsterdam. The building is green and
-                  from 18th century.
-                </p>
-                <p className="offer__text">
-                  An independent House, strategically located between Rembrand
-                  Square and National Opera, but where the bustle of the city
-                  comes to rest in this alley flowery and colorful.
-                </p>
+                <p className="offer__text">{offer.description}</p>
               </div>
             </div>
-            <Reviews reviews={reviews} />
+            <Reviews reviews={reviews} handleSubmit={sendReview} />
           </div>
         </div>
         <Map

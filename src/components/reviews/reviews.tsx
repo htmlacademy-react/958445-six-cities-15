@@ -5,9 +5,10 @@ import { ReviewItem } from './review-item/review-item';
 
 type Props = {
   reviews: Review[];
+  handleSubmit: (value: Pick<Review, 'comment' | 'rating'>) => void;
 };
 
-export function Reviews({ reviews }: Props): null | JSX.Element {
+export function Reviews({ reviews, handleSubmit }: Props): null | JSX.Element {
   const isAuthorized = useIsAuthorized();
 
   return (
@@ -23,7 +24,7 @@ export function Reviews({ reviews }: Props): null | JSX.Element {
           ))}
         </ul>
       )}
-      {isAuthorized && <Form />}
+      {isAuthorized && <Form handleSubmit={handleSubmit} />}
     </section>
   );
 }

@@ -23,7 +23,6 @@ export enum SortTypesEnum {
 
 export enum ApiRoutesEnum {
   LOGIN = '/login',
-  OFFER = '/offer',
   LOGOUT = '/logout',
   OFFERS = '/offers',
   COMMENTS = '/comments',
