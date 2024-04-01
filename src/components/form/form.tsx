@@ -29,12 +29,11 @@ export function Form(props: Props) {
     },
     []
   );
-  const onChangeReview = useCallback(
-    ({ target }: React.ChangeEvent<HTMLTextAreaElement>) => {
-      setForm((prev) => ({ ...prev, comment: target.value }));
-    },
-    []
-  );
+  const onChangeReview = ({
+    target,
+  }: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setForm((prev) => ({ ...prev, comment: target.value }));
+  };
   const stars = useMemo(
     () =>
       STARS_VALUES.map((item) => (
@@ -48,14 +47,11 @@ export function Form(props: Props) {
       )).reverse(),
     [form.rating, onChangeRating]
   );
-  const handleSubmit = useCallback(
-    (evt: FormEvent<HTMLFormElement>) => {
-      evt.preventDefault();
-      props.handleSubmit(form);
-      setForm(INITIAL_REVIEW);
-    },
-    [form, props]
-  );
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    props.handleSubmit(form);
+    setForm(INITIAL_REVIEW);
+  };
 
   return (
     <form

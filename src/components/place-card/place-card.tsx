@@ -1,6 +1,6 @@
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
-import { MouseEventHandler, useCallback } from 'react';
+import { MouseEventHandler } from 'react';
 
 import { Rating } from '..';
 import { AppRoutesEnum } from '../../consts';
@@ -15,10 +15,8 @@ type Props = Readonly<{
 export function PlaceCard(props: Props) {
   const { offer, onMouseEnter } = props;
   const link = `${AppRoutesEnum.OFFER}/${offer.id}`;
-  const handleMouseEvent: MouseEventHandler<HTMLElement> = useCallback(
-    () => onMouseEnter?.(offer.id),
-    [offer, onMouseEnter]
-  );
+  const handleMouseEvent: MouseEventHandler<HTMLElement> = () =>
+    onMouseEnter?.(offer.id);
 
   return (
     <article

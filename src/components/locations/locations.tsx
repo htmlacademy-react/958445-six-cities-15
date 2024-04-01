@@ -21,5 +21,3 @@ export function Locations(props: Props): JSX.Element {
     </section>
   );
 }
-
-Locations.Item = LocationsItem;

@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 
 import { AppRoutesEnum } from '../../consts';
@@ -13,9 +12,9 @@ export function Header({ withNav = false }: Props): JSX.Element {
   const dispatch = useAppDispatch();
   const isAuthorized = useIsAuthorized();
   const currentUser = useAppSelector((state) => state.curentUser);
-  const signOut = useCallback(() => {
+  const signOut = () => {
     dispatch(logoutAction());
-  }, [dispatch]);
+  };
 
   return (
     <header className="header">

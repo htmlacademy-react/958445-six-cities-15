@@ -1,5 +1,4 @@
 import cn from 'classnames';
-import { useCallback } from 'react';
 
 import type { City } from '../../../types';
 import { useAppDispatch } from '../../../hooks';
@@ -14,9 +13,9 @@ type Props = Readonly<{
 export function LocationsItem(props: Props): JSX.Element {
   const { city, isActive, className } = props;
   const dispatch = useAppDispatch();
-  const handleCityClick = useCallback(() => {
+  const handleCityClick = () => {
     dispatch(setCity(city));
-  }, [dispatch, city]);
+  };
 
   return (
     <li className="locations__item">

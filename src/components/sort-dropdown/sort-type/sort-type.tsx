@@ -1,5 +1,4 @@
 import cn from 'classnames';
-import { useCallback } from 'react';
 
 import type { SortTypesEnum } from '../../../consts';
 
@@ -10,7 +9,7 @@ type Props = {
 };
 
 export function SortType({ isActive, type, setSortType }: Props) {
-  const setSorting = useCallback(() => setSortType(type), [setSortType, type]);
+  const setSorting = () => setSortType(type);
 
   return (
     <li
