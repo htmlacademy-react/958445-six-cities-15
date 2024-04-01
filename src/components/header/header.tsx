@@ -1,9 +1,9 @@
+import { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 
+import { logoutAction } from '../../store/api-actions';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AppRoutesEnum, AuthorizationStatusesEnum } from '../../consts';
-import { useCallback } from 'react';
-import { logoutAction } from '../../store/api-actions';
 
 type Props = Readonly<{
   withNav?: boolean;
@@ -12,7 +12,9 @@ type Props = Readonly<{
 export function Header({ withNav = false }: Props): JSX.Element {
   const dispatch = useAppDispatch();
   const currentUser = useAppSelector((state) => state.curentUser);
-  const signOut = useCallback(() => dispatch(logoutAction()), [dispatch]);
+  const signOut = useCallback(() => {
+    dispatch(logoutAction());
+  }, [dispatch]);
   const authorizationStatus = useAppSelector(
     (state) => state.authorizationStatus
   );
@@ -57,7 +59,7 @@ export function Header({ withNav = false }: Props): JSX.Element {
                 </li>
                 {isAuthorized && (
                   <li className="header__nav-item">
-                    <a className="header__nav-link" onClick={void signOut}>
+                    <a className="header__nav-link" onClick={signOut}>
                       <span className="header__signout">Sign out</span>
                     </a>
                   </li>

@@ -1,20 +1,26 @@
-import { AxiosInstance } from 'axios';
+import { AxiosError, AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { clearToken, setToken } from '../services/token';
-import { AppDispatch, Offer, State, User } from '../types';
-import { ApiRoutesEnum, AuthorizationStatusesEnum } from '../consts';
+import { AppDispatch, Error, Offer, State, User } from '../types';
+import {
+  ApiRoutesEnum,
+  AppRoutesEnum,
+  AuthorizationStatusesEnum,
+} from '../consts';
 import {
   login,
   logout,
   loadOffers,
   checkAuth,
   setDataLoadingStatus,
+  addError,
 } from './action';
 
 type AuthData = {
   login: string;
   password: string;
+  navigate: (value: string) => void;
 };
 
 export const checkAuthAction = createAsyncThunk<
@@ -41,23 +47,32 @@ export const loginAction = createAsyncThunk<
     state: State;
     extra: AxiosInstance;
   }
->('user/login', ({ login: email, password }, { dispatch, extra: api }) => {
-  api
-    .post<User>(ApiRoutesEnum.LOGIN, {
-      email,
-      password,
-    })
-    .then(({ data }) => {
-      setToken(data.token);
+>(
+  'user/login',
+  ({ navigate, login: email, password }, { dispatch, extra: api }) => {
+    api
+      .post<User>(ApiRoutesEnum.LOGIN, {
+        email,
+        password,
+      })
+      .then(({ data }) => {
+        setToken(data.token);
 
-      dispatch(
-        login({
-          user: data,
-          authorizationStatus: AuthorizationStatusesEnum.AUTH,
-        })
-      );
-    });
-});
+        navigate(AppRoutesEnum.HOME);
+        dispatch(
+          login({
+            user: data,
+            authorizationStatus: AuthorizationStatusesEnum.AUTH,
+          })
+        );
+      })
+      .catch((error: AxiosError<{ details: Error[] }>) => {
+        error?.response?.data.details.map(({ property, messages }) =>
+          dispatch(addError({ property, messages }))
+        );
+      });
+  }
+);
 
 export const logoutAction = createAsyncThunk<
   void,

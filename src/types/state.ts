@@ -8,6 +8,7 @@ export type State = Readonly<{
   reviews: Review[];
   isDataLoading: boolean;
   curentUser: null | User;
+  errors: Record<string, string[]>;
   authorizationStatus: AuthorizationStatusesEnum;
 }>;
 export type AppDispatch = typeof store.dispatch;

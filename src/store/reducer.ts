@@ -8,11 +8,14 @@ import {
   checkAuth,
   loadOffers,
   setDataLoadingStatus,
+  addError,
+  removeError,
 } from './action';
 import { AuthorizationStatusesEnum, CITIES } from '../consts';
 
 const initialState: State = {
   offers: [],
+  errors: {},
   reviews: [],
   city: CITIES[0],
   curentUser: null,
@@ -39,5 +42,11 @@ export const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(setDataLoadingStatus, (state, action) => {
     state.isDataLoading = action.payload;
+  });
+  builder.addCase(addError, (state, action) => {
+    state.errors = { [action.payload.property]: action.payload.messages };
+  });
+  builder.addCase(removeError, (state, action) => {
+    delete state.errors[action.payload];
   });
 });
