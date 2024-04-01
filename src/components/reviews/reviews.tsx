@@ -1,22 +1,29 @@
 import { Form } from '..';
-import { Review } from './review/review';
-import { useAppSelector } from '../../hooks';
+import type { Review } from '../../types';
+import { useIsAuthorized } from '../../hooks';
+import { ReviewItem } from './review-item/review-item';
 
-export function Reviews(): null | JSX.Element {
-  const reviews = useAppSelector((state) => state.reviews);
+type Props = {
+  reviews: Review[];
+};
 
-  return reviews.length ? (
+export function Reviews({ reviews }: Props): null | JSX.Element {
+  const isAuthorized = useIsAuthorized();
+
+  return (
     <section className="offer__reviews reviews">
       <h2 className="reviews__title">
         Reviews &middot;{' '}
         <span className="reviews__amount">{reviews.length}</span>
       </h2>
-      <ul className="reviews__list">
-        {reviews.map((review) => (
-          <Review key={review.id} review={review} />
-        ))}
-      </ul>
-      <Form />
+      {reviews.length && (
+        <ul className="reviews__list">
+          {reviews.map((review) => (
+            <ReviewItem key={review.id} review={review} />
+          ))}
+        </ul>
+      )}
+      {isAuthorized && <Form />}
     </section>
-  ) : null;
+  );
 }

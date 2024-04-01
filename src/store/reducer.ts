@@ -16,7 +16,6 @@ import { AuthorizationStatusesEnum, CITIES } from '../consts';
 const initialState: State = {
   offers: [],
   errors: {},
-  reviews: [],
   city: CITIES[0],
   curentUser: null,
   isDataLoading: false,

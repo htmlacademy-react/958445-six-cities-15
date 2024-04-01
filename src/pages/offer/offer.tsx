@@ -2,7 +2,9 @@ import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import { Fragment, useEffect, useMemo, useState } from 'react';
 
-import type { Offer } from '../../types';
+import { api } from '../../store';
+import { ApiRoutesEnum } from '../../consts';
+import type { Review, Offer } from '../../types';
 import { NotFoundPage } from '../not-found/not-found';
 import { useAppSelector, useOffersByCity } from '../../hooks';
 import { Map, Offers, Rating, Reviews } from '../../components';
@@ -17,6 +19,13 @@ export function OfferPage(): JSX.Element {
     () => offers.filter((item) => item.id !== offer?.id).slice(0, 3),
     [offer?.id, offers]
   );
+  const [reviews, setReviews] = useState<Review[]>([]);
+
+  useEffect(() => {
+    api
+      .get<Review[]>(`${ApiRoutesEnum.COMMENTS}/${id}`)
+      .then(({ data }) => setReviews(data));
+  }, [id]);
 
   useEffect(() => {
     if (id?.length) {
@@ -155,7 +164,7 @@ export function OfferPage(): JSX.Element {
                 </p>
               </div>
             </div>
-            <Reviews />
+            <Reviews reviews={reviews} />
           </div>
         </div>
         <Map

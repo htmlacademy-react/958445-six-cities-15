@@ -2,7 +2,7 @@ import { AxiosError, AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { clearToken, setToken } from '../services/token';
-import { AppDispatch, Error, Offer, State, User } from '../types';
+import { User, Error, Offer, State, AppDispatch } from '../types';
 import {
   ApiRoutesEnum,
   AppRoutesEnum,
@@ -11,10 +11,10 @@ import {
 import {
   login,
   logout,
-  loadOffers,
-  checkAuth,
-  setDataLoadingStatus,
   addError,
+  checkAuth,
+  loadOffers,
+  setDataLoadingStatus,
 } from './action';
 
 type AuthData = {

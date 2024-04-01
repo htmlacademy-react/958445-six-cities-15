@@ -26,6 +26,7 @@ export enum ApiRoutesEnum {
   OFFER = '/offer',
   LOGOUT = '/logout',
   OFFERS = '/offers',
+  COMMENTS = '/comments',
 }
 
 export const CITIES: City[] = [
