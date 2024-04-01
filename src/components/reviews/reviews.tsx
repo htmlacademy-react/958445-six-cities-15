@@ -1,12 +1,13 @@
-import { Form } from '..';
-import type { Review } from '../../types';
-import { useIsAuthorized } from '../../hooks';
-import { ReviewItem } from './review-item/review-item';
 import { memo } from 'react';
 
+import { Form } from '..';
+import { Review } from '../review/review';
+import { useIsAuthorized } from '../../hooks';
+import type { Review as ReviewType } from '../../types';
+
 type Props = {
-  reviews: Review[];
-  handleSubmit: (value: Pick<Review, 'comment' | 'rating'>) => void;
+  reviews: ReviewType[];
+  handleSubmit: (value: Pick<ReviewType, 'comment' | 'rating'>) => void;
 };
 
 export const Reviews = memo(
@@ -22,7 +23,7 @@ export const Reviews = memo(
         {reviews.length && (
           <ul className="reviews__list">
             {reviews.map((review) => (
-              <ReviewItem key={review.id} review={review} />
+              <Review key={review.id} review={review} />
             ))}
           </ul>
         )}

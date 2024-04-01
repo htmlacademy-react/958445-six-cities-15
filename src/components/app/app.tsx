@@ -4,7 +4,12 @@ import { Layout } from '../layout/layout';
 import { PrivateCheck, Spinner } from '..';
 import { useAppSelector } from '../../hooks';
 import { AppRoutesEnum, AuthorizationStatusesEnum } from '../../consts';
-import { getAuthorizationStatus, getIsLoading } from '../../store/selectors';
+import {
+  getAuthorizationStatus,
+  getCity,
+  getIsLoading,
+  getOffers,
+} from '../../store/selectors';
 import {
   MainPage,
   LoginPage,
@@ -14,6 +19,10 @@ import {
 } from '../../pages';
 
 export function App(): JSX.Element {
+  const city = useAppSelector(getCity);
+  const offers = useAppSelector(getOffers).filter(
+    (item) => item.city.name === city.name
+  );
   const isDataLoading = useAppSelector(getIsLoading);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
@@ -27,7 +36,7 @@ export function App(): JSX.Element {
   return (
     <Routes>
       <Route path={AppRoutesEnum.HOME} element={<Layout />}>
-        <Route index element={<MainPage />} />
+        <Route index element={<MainPage offers={offers} />} />
         <Route path={AppRoutesEnum.LOGIN} element={<LoginPage />} />
         <Route
           path={AppRoutesEnum.FAVORITES}
@@ -37,7 +46,10 @@ export function App(): JSX.Element {
             </PrivateCheck>
           }
         />
-        <Route path={`${AppRoutesEnum.OFFER}/:id`} element={<OfferPage />} />
+        <Route
+          path={`${AppRoutesEnum.OFFER}/:id`}
+          element={<OfferPage offers={offers} />}
+        />
       </Route>
       <Route path={AppRoutesEnum.ROUTE_STAR} element={<NotFoundPage />} />
     </Routes>

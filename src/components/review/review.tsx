@@ -1,11 +1,11 @@
-import { Rating } from '../..';
-import type { Review } from '../../../types';
+import { Rating } from '..';
+import type { Review as ReviewType } from '../../types';
 
 type Props = Readonly<{
-  review: Review;
+  review: ReviewType;
 }>;
 
-export function ReviewItem({ review }: Props) {
+export function Review({ review }: Props) {
   const date = new Date(review.date).toLocaleString('en', {
     month: 'long',
     year: 'numeric',

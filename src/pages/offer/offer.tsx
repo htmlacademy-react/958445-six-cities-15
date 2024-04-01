@@ -4,15 +4,19 @@ import { Fragment, useCallback, useEffect, useState } from 'react';
 
 import { api } from '../../store';
 import { ApiRoutesEnum } from '../../consts';
+import { useAppSelector } from '../../hooks';
 import { getCity } from '../../store/selectors';
 import { NotFoundPage } from '../not-found/not-found';
-import { useAppSelector, useOffersByCity } from '../../hooks';
 import { Map, Offers, Rating, Reviews } from '../../components';
 import type { Review, ShortOfferType, FullOfferType } from '../../types';
 
-export function OfferPage(): JSX.Element {
+type Props = {
+  offers: ShortOfferType[];
+};
+
+export function OfferPage(props: Props): JSX.Element {
   const { id } = useParams();
-  const offers = useOffersByCity();
+  const { offers } = props;
   const city = useAppSelector(getCity);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [offer, setOffer] = useState<null | FullOfferType>(null);
