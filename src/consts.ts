@@ -10,3 +10,10 @@ export enum AppRoutesEnum {
   OFFER = '/offer',
   FAVORITES = '/favorites',
 }
+
+export enum SortTypesEnum {
+  POPULAR = 'Popular',
+  PRICE_TO_HIGH = 'Price: low to high',
+  PRICE_TO_LOW = 'Price: high to low',
+  RATED_FIRST = 'Top rated first',
+}
