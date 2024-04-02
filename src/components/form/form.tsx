@@ -1,6 +1,7 @@
-import { useCallback, useMemo, useState } from 'react';
+import { FormEvent, useCallback, useMemo, useState } from 'react';
 
 import { Star } from './star/star';
+import { Review } from '../../types';
 
 const STARS_VALUES = [
   { value: 1, title: 'terribly' },
@@ -9,12 +10,19 @@ const STARS_VALUES = [
   { value: 4, title: 'good' },
   { value: 5, title: 'perfect' },
 ];
+const INITIAL_REVIEW = {
+  rating: 0,
+  comment: '',
+};
 
-export function Form() {
-  const [form, setForm] = useState({
-    rating: 0,
-    review: '',
-  });
+type Props = {
+  handleSubmit: (value: Pick<Review, 'comment' | 'rating'>) => void;
+};
+
+export function Form(props: Props) {
+  const [form, setForm] = useState(INITIAL_REVIEW);
+  const isValidReview = form.rating > 0 && form.comment.trim().length >= 50;
+
   const onChangeRating = useCallback(
     ({ target }: React.ChangeEvent<HTMLInputElement>) => {
       setForm((prev) => ({ ...prev, rating: Number(target.value) }));
@@ -23,7 +31,7 @@ export function Form() {
   );
   const onChangeReview = useCallback(
     ({ target }: React.ChangeEvent<HTMLTextAreaElement>) => {
-      setForm((prev) => ({ ...prev, review: target.value }));
+      setForm((prev) => ({ ...prev, comment: target.value }));
     },
     []
   );
@@ -40,10 +48,22 @@ export function Form() {
       )).reverse(),
     [form.rating, onChangeRating]
   );
-  const isValidReview = form.rating > 0 && form.review.trim().length >= 50;
+  const handleSubmit = useCallback(
+    (evt: FormEvent<HTMLFormElement>) => {
+      evt.preventDefault();
+      props.handleSubmit(form);
+      setForm(INITIAL_REVIEW);
+    },
+    [form, props]
+  );
 
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form
+      action="#"
+      method="post"
+      onSubmit={handleSubmit}
+      className="reviews__form form"
+    >
       <label htmlFor="review" className="reviews__label form__label">
         Your review
       </label>
@@ -51,7 +71,7 @@ export function Form() {
       <textarea
         id="review"
         name="review"
-        value={form.review}
+        value={form.comment}
         onChange={onChangeReview}
         className="reviews__textarea form__textarea"
         placeholder="Tell how was your stay, what you like and what can be improved"

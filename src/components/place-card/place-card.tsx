@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 import { MouseEventHandler, useCallback } from 'react';
 
 import { Rating } from '..';
-import type { Offer } from '../../types';
 import { AppRoutesEnum } from '../../consts';
+import type { ShortOfferType } from '../../types';
 
 type Props = Readonly<{
-  offer: Offer;
   className?: string;
+  offer: ShortOfferType;
   onMouseEnter?: (id: string) => void;
 }>;
 

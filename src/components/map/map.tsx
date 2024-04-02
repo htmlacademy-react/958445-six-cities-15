@@ -3,10 +3,10 @@ import { useEffect, useRef } from 'react';
 import { Icon, Marker, layerGroup } from 'leaflet';
 
 import { useMap } from './hooks';
-import type { City, Offer } from '../../types';
+import type { City, ShortOfferType } from '../../types';
 import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from './consts';
 
-type Point = Readonly<Pick<Offer, 'id' | 'location'>>;
+type Point = Readonly<Pick<ShortOfferType, 'id' | 'location'>>;
 
 type Props = Readonly<{
   city: City;

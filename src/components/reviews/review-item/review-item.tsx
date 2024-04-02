@@ -5,7 +5,7 @@ type Props = Readonly<{
   review: Review;
 }>;
 
-export function Review({ review }: Props) {
+export function ReviewItem({ review }: Props) {
   const date = new Date(review.date).toLocaleString('en', {
     month: 'long',
     year: 'numeric',

@@ -1,7 +1,11 @@
-export type User = Readonly<{
+export type ShortUserType = Readonly<{
   name: string;
-  token: string;
-  email: string;
   isPro: boolean;
   avatarUrl: string;
 }>;
+
+export type FullUserType = ShortUserType &
+  Readonly<{
+    token: string;
+    email: string;
+  }>;

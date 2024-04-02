@@ -1,9 +1,9 @@
 import { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 
+import { AppRoutesEnum } from '../../consts';
 import { logoutAction } from '../../store/api-actions';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { AppRoutesEnum, AuthorizationStatusesEnum } from '../../consts';
+import { useAppDispatch, useAppSelector, useIsAuthorized } from '../../hooks';
 
 type Props = Readonly<{
   withNav?: boolean;
@@ -11,14 +11,11 @@ type Props = Readonly<{
 
 export function Header({ withNav = false }: Props): JSX.Element {
   const dispatch = useAppDispatch();
+  const isAuthorized = useIsAuthorized();
   const currentUser = useAppSelector((state) => state.curentUser);
   const signOut = useCallback(() => {
     dispatch(logoutAction());
   }, [dispatch]);
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus
-  );
-  const isAuthorized = authorizationStatus === AuthorizationStatusesEnum.AUTH;
 
   return (
     <header className="header">

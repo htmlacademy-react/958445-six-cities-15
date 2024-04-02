@@ -1,14 +1,14 @@
 import cn from 'classnames';
 
 import { useSortOffers } from './hooks';
-import type { Offer } from '../../types';
 import { SortTypesEnum } from '../../consts';
+import type { ShortOfferType } from '../../types';
 import { PlaceCard } from '../place-card/place-card';
 
 type Props = {
-  offers: Offer[];
   isTabs?: boolean;
   className: string;
+  offers: ShortOfferType[];
   sortType?: SortTypesEnum;
   setActiveCard?: (id: string) => void;
 };

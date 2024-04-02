@@ -1,9 +1,9 @@
-import type { User } from './user';
+import type { FullUserType } from './user';
 
 export type Review = Readonly<{
   id: string;
-  user: User;
   date: string;
   rating: number;
   comment: string;
+  user: FullUserType;
 }>;
