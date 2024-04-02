@@ -1,26 +1,23 @@
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
-import { Fragment, useCallback, useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 
 import { api } from '../../store';
+import type { Review } from '../../types';
 import { ApiRoutesEnum } from '../../consts';
 import { useAppSelector } from '../../hooks';
 import { getCity } from '../../store/selectors';
 import { NotFoundPage } from '../not-found/not-found';
 import { Map, Offers, Rating, Reviews } from '../../components';
-import type { Review, ShortOfferType, FullOfferType } from '../../types';
+import { useNearPlaces, useOffers, useSendReview } from './hooks';
 
-type Props = {
-  offers: ShortOfferType[];
-};
-
-export function OfferPage(props: Props): JSX.Element {
+export function OfferPage(): JSX.Element {
   const { id } = useParams();
-  const { offers } = props;
+  const offer = useOffers(id);
+  const nearPlaces = useNearPlaces(id);
   const city = useAppSelector(getCity);
   const [reviews, setReviews] = useState<Review[]>([]);
-  const [offer, setOffer] = useState<null | FullOfferType>(null);
-  const [nearPlaces, setNearPlaces] = useState<ShortOfferType[]>([]);
+  const sendReview = useSendReview(setReviews, id);
   const [activeCardId, setActiveCardId] = useState<string>(offer?.id ?? '');
 
   useEffect(() => {
@@ -28,27 +25,6 @@ export function OfferPage(props: Props): JSX.Element {
       .get<Review[]>(`${ApiRoutesEnum.COMMENTS}/${id}`)
       .then(({ data }) => setReviews(data));
   }, [id]);
-
-  useEffect(() => {
-    if (id) {
-      api
-        .get<FullOfferType>(`${ApiRoutesEnum.OFFERS}/${id}`)
-        .then(({ data }) => setOffer(data));
-
-      api
-        .get<ShortOfferType[]>(`${ApiRoutesEnum.OFFERS}/${id}/nearby`)
-        .then(({ data }) => setNearPlaces(data));
-    }
-  }, [id, offers]);
-
-  const sendReview = useCallback(
-    (review: Pick<Review, 'comment' | 'rating'>) => {
-      api
-        .post<Review>(`${ApiRoutesEnum.COMMENTS}/${id}`, review)
-        .then(({ data }) => setReviews((prev) => [...prev, data]));
-    },
-    [id]
-  );
 
   return offer ? (
     <Fragment>
