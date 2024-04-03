@@ -1,10 +1,10 @@
-import cn from 'classnames';
 import { Link } from 'react-router-dom';
 import { MouseEventHandler } from 'react';
 
 import { Rating } from '..';
 import { AppRoutesEnum } from '../../consts';
 import type { ShortOfferType } from '../../types';
+import { Bookmark } from '../bookmark/bookmark';
 
 type Props = Readonly<{
   className?: string;
@@ -47,17 +47,7 @@ export function PlaceCard(props: Props) {
             <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button
-            type="button"
-            className={cn('place-card__bookmark-button button', {
-              ['place-card__bookmark-button--active']: offer.isFavorite,
-            })}
-          >
-            <svg className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">To bookmarks</span>
-          </button>
+          <Bookmark className="place-card" isActive={offer.isFavorite} />
         </div>
         <Rating rating={offer.rating} className="place-card" />
         <h2 className="place-card__name">

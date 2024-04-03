@@ -6,6 +6,7 @@ export { Header } from './header/header';
 export { Offers } from './offers/offers';
 export { Spinner } from './spinner/spinner';
 export { Reviews } from './reviews/reviews';
+export { Bookmark } from './bookmark/bookmark';
 export { Locations } from './locations/locations';
 export { Favorites } from './favorites/favorites';
 export { PlaceCard } from './place-card/place-card';

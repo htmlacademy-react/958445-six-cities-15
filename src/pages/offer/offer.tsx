@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 import { getCity } from '../../store/city/selectors';
 import { NotFoundPage } from '../not-found/not-found';
-import { Map, Offers, Rating, Reviews } from '../../components';
+import { Map, Offers, Rating, Reviews, Bookmark } from '../../components';
 import { useNearPlaces, useOffers, useReviews, useSendReview } from './hooks';
 
 export function OfferPage(): JSX.Element {
@@ -78,12 +78,11 @@ export function OfferPage(): JSX.Element {
             )}
             <div className="offer__name-wrapper">
               <h1 className="offer__name">{offer.title}</h1>
-              <button className="offer__bookmark-button button" type="button">
-                <svg className="offer__bookmark-icon" width="31" height="33">
-                  <use xlinkHref="#icon-bookmark"></use>
-                </svg>
-                <span className="visually-hidden">To bookmarks</span>
-              </button>
+              <Bookmark
+                size="BIG"
+                className="offer"
+                isActive={offer.isFavorite}
+              />
             </div>
             <Rating withValue rating={offer.rating} className="offer" />
             <ul className="offer__features">
