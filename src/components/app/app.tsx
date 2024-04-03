@@ -4,9 +4,10 @@ import { Route, Routes } from 'react-router-dom';
 import { Layout } from '../layout/layout';
 import { PrivateCheck, Spinner } from '..';
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getAuthorizationStatus } from '../../store/user/selectors';
+import { getIsOffersDataLoading } from '../../store/offers/selectors';
 import { AppRoutesEnum, AuthorizationStatusesEnum } from '../../consts';
 import { checkAuthAction, loadOffersAction } from '../../store/api-actions';
-import { getIsLoading, getAuthorizationStatus } from '../../store/selectors';
 import {
   MainPage,
   LoginPage,
@@ -17,7 +18,7 @@ import {
 
 export function App(): JSX.Element {
   const dispatch = useAppDispatch();
-  const isDataLoading = useAppSelector(getIsLoading);
+  const isDataLoading = useAppSelector(getIsOffersDataLoading);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   useEffect(() => {

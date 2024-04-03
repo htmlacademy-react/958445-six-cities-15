@@ -1,26 +1,17 @@
 import { FormEvent, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
-import { removeError } from '../../store/action';
-import { getErrors } from '../../store/selectors';
 import { loginAction } from '../../store/api-actions';
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getAuthorizationStatus } from '../../store/user/selectors';
+import { AppRoutesEnum, AuthorizationStatusesEnum } from '../../consts';
 
 export function LoginPage(): JSX.Element {
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const errors = useAppSelector(getErrors);
   const loginRef = useRef<null | HTMLInputElement>(null);
   const passwordRef = useRef<null | HTMLInputElement>(null);
-
-  const handleChange = (
-    evt: FormEvent<HTMLFormElement> & { target: HTMLFormElement }
-  ) => {
-    if (evt.target.name) {
-      dispatch(removeError(evt.target.name));
-    }
-  };
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -28,7 +19,6 @@ export function LoginPage(): JSX.Element {
     if (loginRef.current !== null && passwordRef.current !== null) {
       dispatch(
         loginAction({
-          navigate,
           login: loginRef.current.value,
           password: passwordRef.current.value,
         })
@@ -36,7 +26,9 @@ export function LoginPage(): JSX.Element {
     }
   };
 
-  return (
+  return authorizationStatus === AuthorizationStatusesEnum.AUTH ? (
+    <Navigate to={AppRoutesEnum.HOME} />
+  ) : (
     <div className="page__login-container container">
       <Helmet>
         <title>Login</title>
@@ -46,7 +38,6 @@ export function LoginPage(): JSX.Element {
         <form
           action="#"
           method="post"
-          onChange={handleChange}
           onSubmit={handleSubmit}
           className="login__form form"
         >
@@ -60,12 +51,6 @@ export function LoginPage(): JSX.Element {
               placeholder="Email"
               className="login__input form__input"
             />
-            {errors['email']?.map((item) => (
-              <>
-                - <span key={item}>{item}</span>
-                <br />
-              </>
-            ))}
           </div>
           <div className="login__input-wrapper form__input-wrapper">
             <label className="visually-hidden">Password</label>
@@ -77,12 +62,6 @@ export function LoginPage(): JSX.Element {
               placeholder="Password"
               className="login__input form__input"
             />
-            {errors['password']?.map((item) => (
-              <>
-                - <span key={item}>{item}</span>
-                <br />
-              </>
-            ))}
           </div>
           <button className="login__submit form__submit button" type="submit">
             Sign in

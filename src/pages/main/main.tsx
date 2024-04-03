@@ -3,8 +3,9 @@ import { Helmet } from 'react-helmet-async';
 
 import { SortTypesEnum } from '../../consts';
 import { useAppSelector } from '../../hooks';
-import { getCity, getOffers } from '../../store/selectors';
 import { Locations, Map, Offers, SortDropdown } from '../../components';
+import { getCity } from '../../store/city/selectors';
+import { getOffers } from '../../store/offers/selectors';
 
 export function MainPage(): JSX.Element {
   const city = useAppSelector(getCity);

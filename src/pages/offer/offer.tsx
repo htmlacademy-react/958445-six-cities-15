@@ -3,10 +3,10 @@ import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 
 import { useAppSelector } from '../../hooks';
-import { getCity } from '../../store/selectors';
 import { NotFoundPage } from '../not-found/not-found';
 import { Map, Offers, Rating, Reviews } from '../../components';
 import { useNearPlaces, useOffers, useReviews, useSendReview } from './hooks';
+import { getCity } from '../../store/city/selectors';
 
 export function OfferPage(): JSX.Element {
   const { id } = useParams();

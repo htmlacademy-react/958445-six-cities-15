@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 
 import { AppRoutesEnum } from '../../consts';
-import { getCurentUser } from '../../store/selectors';
 import { logoutAction } from '../../store/api-actions';
+import { getCurentUser } from '../../store/user/selectors';
 import { useAppDispatch, useAppSelector, useIsAuthorized } from '../../hooks';
 
 export function Nav() {
