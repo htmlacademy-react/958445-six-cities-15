@@ -8,6 +8,7 @@ import type {
   FullUserType,
   ShortOfferType,
 } from '../types';
+import { clearToken, setToken } from '../services/token';
 
 type AuthData = {
   login: string;
@@ -42,6 +43,8 @@ export const loginAction = createAsyncThunk<
     password,
   });
 
+  setToken(data.token);
+
   return data;
 });
 
@@ -55,6 +58,8 @@ export const logoutAction = createAsyncThunk<
   }
 >('user/logout', async (_arg, { extra: api }) => {
   await api.delete(ApiRoutesEnum.LOGOUT);
+
+  clearToken();
 });
 
 export const loadOffersAction = createAsyncThunk<
