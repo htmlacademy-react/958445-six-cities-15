@@ -1,14 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { NameSpace } from '../../consts';
-import type { ShortOfferType } from '../../types';
 import { loadOffersAction } from '../api-actions';
+import type { ShortOfferType } from '../../types';
 
-const initialState: { offers: ShortOfferType[]; isOffersDataLoading: boolean } =
-  {
-    offers: [],
-    isOffersDataLoading: false,
-  };
+const initialState: {
+  offers: ShortOfferType[];
+  isOffersDataLoading: boolean;
+} = {
+  offers: [],
+  isOffersDataLoading: false,
+};
 
 export const offers = createSlice({
   name: NameSpace.Offers,

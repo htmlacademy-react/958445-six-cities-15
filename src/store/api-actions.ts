@@ -1,8 +1,13 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { State, AppDispatch, FullUserType, ShortOfferType } from '../types';
 import { ApiRoutesEnum } from '../consts';
+import type {
+  State,
+  AppDispatch,
+  FullUserType,
+  ShortOfferType,
+} from '../types';
 
 type AuthData = {
   login: string;

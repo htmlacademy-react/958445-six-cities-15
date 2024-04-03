@@ -18,8 +18,8 @@ export function Nav() {
       <ul className="header__nav-list">
         <li className="header__nav-item user">
           <Link
-            to={AppRoutesEnum.LOGIN}
             className="header__nav-link header__nav-link--profile"
+            to={isAuthorized ? AppRoutesEnum.HOME : AppRoutesEnum.LOGIN}
           >
             <div className="header__avatar-wrapper user__avatar-wrapper"></div>
 
