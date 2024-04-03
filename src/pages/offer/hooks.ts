@@ -1,13 +1,8 @@
-import {
-  Dispatch,
-  useState,
-  useEffect,
-  useCallback,
-  SetStateAction,
-} from 'react';
+import { Dispatch, useState, useEffect, SetStateAction } from 'react';
 
 import { api } from '../../store';
 import { ApiRoutesEnum } from '../../consts';
+
 import type { FullOfferType, Review, ShortOfferType } from '../../types';
 
 export function useOffers(id?: string) {
@@ -42,14 +37,27 @@ export function useSendReview(
   setReviews: Dispatch<SetStateAction<Review[]>>,
   id?: string
 ) {
-  return useCallback(
-    (review: Pick<Review, 'comment' | 'rating'>) => {
-      if (id) {
-        api
-          .post<Review>(`${ApiRoutesEnum.COMMENTS}/${id}`, review)
-          .then(({ data }) => setReviews((prev) => [...prev, data]));
-      }
-    },
-    [id, setReviews]
-  );
+  return (review: Pick<Review, 'comment' | 'rating'>) => {
+    if (id) {
+      api
+        .post<Review>(`${ApiRoutesEnum.COMMENTS}/${id}`, review)
+        .then(({ data }) => setReviews((prev) => [...prev, data]));
+    }
+  };
+}
+
+export function useReviews(
+  id?: string
+): [Review[], Dispatch<SetStateAction<Review[]>>] {
+  const [reviews, setReviews] = useState<Review[]>([]);
+
+  useEffect(() => {
+    if (id) {
+      api.get<Review[]>(`${ApiRoutesEnum.COMMENTS}/${id}`).then(({ data }) => {
+        setReviews(data);
+      });
+    }
+  }, [id]);
+
+  return [reviews, setReviews];
 }

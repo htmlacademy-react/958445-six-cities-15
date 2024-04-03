@@ -6,10 +6,6 @@ import { HelmetProvider } from 'react-helmet-async';
 
 import { store } from './store';
 import { App } from './components';
-import { checkAuthAction, loadOffersAction } from './store/api-actions';
-
-store.dispatch(checkAuthAction());
-store.dispatch(loadOffersAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

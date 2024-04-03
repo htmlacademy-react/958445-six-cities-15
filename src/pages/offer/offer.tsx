@@ -1,30 +1,21 @@
+import { Fragment, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
-import { Fragment, useEffect, useState } from 'react';
 
-import { api } from '../../store';
-import type { Review } from '../../types';
-import { ApiRoutesEnum } from '../../consts';
 import { useAppSelector } from '../../hooks';
 import { getCity } from '../../store/selectors';
 import { NotFoundPage } from '../not-found/not-found';
 import { Map, Offers, Rating, Reviews } from '../../components';
-import { useNearPlaces, useOffers, useSendReview } from './hooks';
+import { useNearPlaces, useOffers, useReviews, useSendReview } from './hooks';
 
 export function OfferPage(): JSX.Element {
   const { id } = useParams();
   const offer = useOffers(id);
   const nearPlaces = useNearPlaces(id);
   const city = useAppSelector(getCity);
-  const [reviews, setReviews] = useState<Review[]>([]);
+  const [reviews, setReviews] = useReviews(id);
   const sendReview = useSendReview(setReviews, id);
   const [activeCardId, setActiveCardId] = useState<string>(offer?.id ?? '');
-
-  useEffect(() => {
-    api
-      .get<Review[]>(`${ApiRoutesEnum.COMMENTS}/${id}`)
-      .then(({ data }) => setReviews(data));
-  }, [id]);
 
   return offer ? (
     <Fragment>

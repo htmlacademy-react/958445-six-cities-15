@@ -42,7 +42,8 @@ export const checkAuthAction = createAsyncThunk<
   api
     .get(ApiRoutesEnum.LOGIN)
     .then(() => dispatch(checkAuth(AuthorizationStatusesEnum.AUTH)))
-    .catch(() => dispatch(checkAuth(AuthorizationStatusesEnum.NO_AUTH)));
+    .catch(() => dispatch(checkAuth(AuthorizationStatusesEnum.NO_AUTH)))
+    .finally(() => dispatch(setDataLoadingStatus(false)));
 });
 
 export const loginAction = createAsyncThunk<
