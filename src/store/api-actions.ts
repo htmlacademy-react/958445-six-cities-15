@@ -70,3 +70,13 @@ export const loadOffersAction = createAsyncThunk<
 
   return data;
 });
+
+export const loadFavoritesAction = createAsyncThunk<
+  ShortOfferType[],
+  undefined,
+  { dispatch: AppDispatch; state: State; extra: AxiosInstance }
+>('offers/loadFavorites', async (_arg, { extra: api }) => {
+  const { data } = await api.get<ShortOfferType[]>(ApiRoutesEnum.FAVORITES);
+
+  return data;
+});

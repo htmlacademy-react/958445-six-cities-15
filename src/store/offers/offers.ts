@@ -1,14 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { NameSpace } from '../../consts';
-import { loadOffersAction } from '../api-actions';
 import type { ShortOfferType } from '../../types';
+import { loadFavoritesAction, loadOffersAction } from '../api-actions';
 
 const initialState: {
   offers: ShortOfferType[];
+  favorites: ShortOfferType[];
   isOffersDataLoading: boolean;
 } = {
   offers: [],
+  favorites: [],
   isOffersDataLoading: false,
 };
 
@@ -18,6 +20,9 @@ export const offers = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
+      .addCase(loadFavoritesAction.fulfilled, (state, action) => {
+        state.favorites = action.payload;
+      })
       .addCase(loadOffersAction.pending, (state) => {
         state.isOffersDataLoading = true;
       })

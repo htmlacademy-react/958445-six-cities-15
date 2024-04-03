@@ -20,7 +20,7 @@ export const Reviews = memo(
           Reviews &middot;{' '}
           <span className="reviews__amount">{reviews.length}</span>
         </h2>
-        {reviews.length && (
+        {reviews.length > 0 && (
           <ul className="reviews__list">
             {reviews.map((review) => (
               <Review key={review.id} review={review} />

@@ -23,7 +23,7 @@ export function MainPage(): JSX.Element {
         <Locations activeCity={city} />
       </div>
       <div className="cities">
-        {offers.length ? (
+        {offers.length > 0 ? (
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
