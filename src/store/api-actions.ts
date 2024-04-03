@@ -71,12 +71,24 @@ export const loadOffersAction = createAsyncThunk<
   return data;
 });
 
+export const setIsFavoriteAction = createAsyncThunk<
+  ShortOfferType,
+  { offerId: string; status: boolean },
+  { dispatch: AppDispatch; state: State; extra: AxiosInstance }
+>('offers/addFavorite', async ({ offerId, status }, { extra: api }) => {
+  const { data } = await api.post<ShortOfferType>(
+    `${ApiRoutesEnum.FAVORITE}/${offerId}/${status ? 1 : 0}`
+  );
+
+  return data;
+});
+
 export const loadFavoritesAction = createAsyncThunk<
   ShortOfferType[],
   undefined,
   { dispatch: AppDispatch; state: State; extra: AxiosInstance }
 >('offers/loadFavorites', async (_arg, { extra: api }) => {
-  const { data } = await api.get<ShortOfferType[]>(ApiRoutesEnum.FAVORITES);
+  const { data } = await api.get<ShortOfferType[]>(ApiRoutesEnum.FAVORITE);
 
   return data;
 });

@@ -1,10 +1,13 @@
-import { Link } from 'react-router-dom';
-import { MouseEventHandler } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { MouseEventHandler, useEffect, useState } from 'react';
 
 import { Rating } from '..';
 import { AppRoutesEnum } from '../../consts';
-import type { ShortOfferType } from '../../types';
 import { Bookmark } from '../bookmark/bookmark';
+import type { ShortOfferType } from '../../types';
+import { useAppDispatch, useAppSelector, useIsAuthorized } from '../../hooks';
+import { setIsFavoriteAction } from '../../store/api-actions';
+import { getFavorites } from '../../store/offers/selectors';
 
 type Props = Readonly<{
   className?: string;
@@ -14,9 +17,26 @@ type Props = Readonly<{
 
 export function PlaceCard(props: Props) {
   const { offer, onMouseEnter } = props;
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const isAuthorized = useIsAuthorized();
+  const favorites = useAppSelector(getFavorites);
   const link = `${AppRoutesEnum.OFFER}/${offer.id}`;
+  const [isFavorite, setIsFavorite] = useState(offer.isFavorite);
   const handleMouseEvent: MouseEventHandler<HTMLElement> = () =>
     onMouseEnter?.(offer.id);
+
+  const onClick = () => {
+    if (isAuthorized) {
+      dispatch(setIsFavoriteAction({ offerId: offer.id, status: !isFavorite }));
+    } else {
+      navigate(AppRoutesEnum.LOGIN);
+    }
+  };
+
+  useEffect(() => {
+    setIsFavorite(favorites.some((item) => item.id === offer.id));
+  }, [favorites, offer.id]);
 
   return (
     <article
@@ -47,7 +67,11 @@ export function PlaceCard(props: Props) {
             <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <Bookmark className="place-card" isActive={offer.isFavorite} />
+          <Bookmark
+            onClick={onClick}
+            isActive={isFavorite}
+            className="place-card"
+          />
         </div>
         <Rating rating={offer.rating} className="place-card" />
         <h2 className="place-card__name">

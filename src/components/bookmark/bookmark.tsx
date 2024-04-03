@@ -8,13 +8,20 @@ const SIZES = {
 type Props = {
   isActive: boolean;
   className: string;
+  onClick: () => void;
   size?: keyof typeof SIZES;
 };
 
-export function Bookmark({ size = 'SMALL', className, isActive }: Props) {
+export function Bookmark({
+  onClick,
+  isActive,
+  className,
+  size = 'SMALL',
+}: Props) {
   return (
     <button
       type="button"
+      onClick={onClick}
       className={cn(`${className}__bookmark-button button`, {
         [`${className}__bookmark-button--active`]: isActive,
       })}

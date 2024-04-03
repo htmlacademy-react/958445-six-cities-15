@@ -10,15 +10,15 @@ import { useAppDispatch, useAppSelector, useIsAuthorized } from '../../hooks';
 export function Nav() {
   const dispatch = useAppDispatch();
   const isAuthorized = useIsAuthorized();
+  const favorites = useAppSelector(getFavorites);
   const currentUser = useAppSelector(getCurentUser);
   const signOut = () => {
     dispatch(logoutAction());
   };
-  const favorites = useAppSelector(getFavorites);
 
   useEffect(() => {
     dispatch(loadFavoritesAction());
-  });
+  }, []);
 
   return (
     <nav className="header__nav">
