@@ -2,6 +2,7 @@ import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { ApiRoutesEnum } from '../consts';
+import { clearToken, setToken } from '../services/token';
 import type {
   State,
   AppDispatch,
@@ -42,6 +43,8 @@ export const loginAction = createAsyncThunk<
     password,
   });
 
+  setToken(data.token);
+
   return data;
 });
 
@@ -55,6 +58,8 @@ export const logoutAction = createAsyncThunk<
   }
 >('user/logout', async (_arg, { extra: api }) => {
   await api.delete(ApiRoutesEnum.LOGOUT);
+
+  clearToken();
 });
 
 export const loadOffersAction = createAsyncThunk<
