@@ -25,48 +25,15 @@ export function OfferPage(): JSX.Element {
       <section className="offer">
         <div className="offer__gallery-container container">
           <div className="offer__gallery">
-            <div className="offer__image-wrapper">
-              <img
-                src="img/room.jpg"
-                alt="Photo studio"
-                className="offer__image"
-              />
-            </div>
-            <div className="offer__image-wrapper">
-              <img
-                alt="Photo studio"
-                className="offer__image"
-                src="img/apartment-01.jpg"
-              />
-            </div>
-            <div className="offer__image-wrapper">
-              <img
-                alt="Photo studio"
-                className="offer__image"
-                src="img/apartment-02.jpg"
-              />
-            </div>
-            <div className="offer__image-wrapper">
-              <img
-                alt="Photo studio"
-                className="offer__image"
-                src="img/apartment-03.jpg"
-              />
-            </div>
-            <div className="offer__image-wrapper">
-              <img
-                alt="Photo studio"
-                src="img/studio-01.jpg"
-                className="offer__image"
-              />
-            </div>
-            <div className="offer__image-wrapper">
-              <img
-                alt="Photo studio"
-                className="offer__image"
-                src="img/apartment-01.jpg"
-              />
-            </div>
+            {offer.images.map((imageUrl) => (
+              <div key={imageUrl} className="offer__image-wrapper">
+                <img
+                  src={imageUrl}
+                  alt="Photo studio"
+                  className="offer__image"
+                />
+              </div>
+            ))}
           </div>
         </div>
         <div className="offer__container container">
@@ -78,11 +45,7 @@ export function OfferPage(): JSX.Element {
             )}
             <div className="offer__name-wrapper">
               <h1 className="offer__name">{offer.title}</h1>
-              <Bookmark
-                size="BIG"
-                className="offer"
-                isActive={offer.isFavorite}
-              />
+              <Bookmark size="BIG" offer={offer} className="offer" />
             </div>
             <Rating withValue rating={offer.rating} className="offer" />
             <ul className="offer__features">
