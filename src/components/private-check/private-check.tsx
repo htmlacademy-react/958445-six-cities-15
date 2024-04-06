@@ -1,8 +1,7 @@
 import { Navigate } from 'react-router-dom';
 
-import { useAppSelector } from '../../hooks';
-import { getAuthorizationStatus } from '../../store/user/selectors';
-import { AppRoutesEnum, AuthorizationStatusesEnum } from '../../consts';
+import { AppRoutesEnum } from '../../consts';
+import { useIsAuthorized } from '../../hooks';
 
 type PrivateRouteProps = {
   children: JSX.Element;
@@ -10,11 +9,7 @@ type PrivateRouteProps = {
 
 export function PrivateCheck(props: PrivateRouteProps): JSX.Element {
   const { children } = props;
-  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isAuthorized = useIsAuthorized();
 
-  return authorizationStatus === AuthorizationStatusesEnum.AUTH ? (
-    children
-  ) : (
-    <Navigate to={AppRoutesEnum.LOGIN} />
-  );
+  return isAuthorized ? children : <Navigate to={AppRoutesEnum.LOGIN} />;
 }
