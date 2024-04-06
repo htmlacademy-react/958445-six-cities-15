@@ -1,6 +1,6 @@
 import cn from 'classnames';
 
-import { sortOffers } from './utils';
+import { useSortOffers } from './hooks';
 import { SortTypesEnum } from '../../consts';
 import type { ShortOfferType } from '../../types';
 import { PlaceCard } from '../place-card/place-card';
@@ -15,7 +15,7 @@ type Props = {
 
 export function Offers(props: Props) {
   const { isTabs, sortType, className, setActiveCard } = props;
-  const offers = sortOffers(props.offers, sortType);
+  const offers = useSortOffers(props.offers, sortType);
 
   return (
     <div
