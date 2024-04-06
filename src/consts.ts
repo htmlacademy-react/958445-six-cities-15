@@ -1,4 +1,4 @@
-import { City } from './types';
+import { City as CityType } from './types';
 
 export enum AuthorizationStatusesEnum {
   AUTH = 'AUTH',
@@ -28,7 +28,7 @@ export enum ApiRoutesEnum {
   COMMENTS = '/comments',
 }
 
-export const CITIES: City[] = [
+export const CITIES: CityType[] = [
   {
     name: 'Paris',
     location: {
@@ -78,3 +78,9 @@ export const CITIES: City[] = [
     },
   },
 ];
+
+export enum NameSpace {
+  City = 'CITY',
+  User = 'USER',
+  Offers = 'OFFERS',
+}

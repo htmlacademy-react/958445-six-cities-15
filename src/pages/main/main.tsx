@@ -1,13 +1,15 @@
 import { useState, Fragment } from 'react';
 import { Helmet } from 'react-helmet-async';
 
+import { getSelectedOffers } from './utils';
 import { SortTypesEnum } from '../../consts';
-import { useAppSelector, useOffersByCity } from '../../hooks';
+import { useAppSelector } from '../../hooks';
+import { getCity } from '../../store/city/selectors';
 import { Locations, Map, Offers, SortDropdown } from '../../components';
 
 export function MainPage(): JSX.Element {
-  const offers = useOffersByCity();
-  const city = useAppSelector((state) => state.city);
+  const city = useAppSelector(getCity);
+  const offers = useAppSelector(getSelectedOffers);
   const [activeCardId, setActiveCardId] = useState<string>('');
   const [sortType, setSortType] = useState(SortTypesEnum.POPULAR);
 

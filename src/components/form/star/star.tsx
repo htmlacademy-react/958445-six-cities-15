@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, memo } from 'react';
 
 type Props = Readonly<{
   value: number;
@@ -7,7 +7,7 @@ type Props = Readonly<{
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }>;
 
-export function Star(props: Props) {
+export const Star = memo((props: Props) => {
   const { value, title, formValue, handleChange } = props;
   const id = `${value}-stars`;
 
@@ -33,4 +33,6 @@ export function Star(props: Props) {
       </label>
     </Fragment>
   );
-}
+});
+
+Star.displayName = 'Star';

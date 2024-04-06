@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
 import { SortTypesEnum } from '../../consts';
 import { SortType } from './sort-type/sort-type';
@@ -12,10 +12,7 @@ const sortTypes = Object.values(SortTypesEnum) as Array<SortTypesEnum>;
 
 export function SortDropdown({ sortType, setSortType }: Props): JSX.Element {
   const [showDropdown, setShowDropdown] = useState(false);
-  const setShow = useCallback(
-    () => setShowDropdown(!showDropdown),
-    [showDropdown]
-  );
+  const setShow = () => setShowDropdown(!showDropdown);
 
   return (
     <form action="#" method="get" onClick={setShow} className="places__sorting">

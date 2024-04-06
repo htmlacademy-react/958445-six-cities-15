@@ -1,9 +1,13 @@
+import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { Layout } from '../layout/layout';
 import { PrivateCheck, Spinner } from '..';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getAuthorizationStatus } from '../../store/user/selectors';
+import { getIsOffersDataLoading } from '../../store/offers/selectors';
 import { AppRoutesEnum, AuthorizationStatusesEnum } from '../../consts';
+import { checkAuthAction, loadOffersAction } from '../../store/api-actions';
 import {
   MainPage,
   LoginPage,
@@ -13,10 +17,17 @@ import {
 } from '../../pages';
 
 export function App(): JSX.Element {
-  const isDataLoading = useAppSelector((state) => state.isDataLoading);
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus
-  );
+  const dispatch = useAppDispatch();
+  const isDataLoading = useAppSelector(getIsOffersDataLoading);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+
+  useEffect(() => {
+    dispatch(checkAuthAction());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(loadOffersAction());
+  }, [dispatch]);
 
   if (
     authorizationStatus === AuthorizationStatusesEnum.UNKNOWN ||

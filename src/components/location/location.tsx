@@ -1,9 +1,8 @@
 import cn from 'classnames';
-import { useCallback } from 'react';
 
-import type { City } from '../../../types';
-import { useAppDispatch } from '../../../hooks';
-import { setCity } from '../../../store/action';
+import type { City } from '../../types';
+import { useAppDispatch } from '../../hooks';
+import { setCity } from '../../store/city/city';
 
 type Props = Readonly<{
   city: City;
@@ -11,12 +10,12 @@ type Props = Readonly<{
   className?: string;
 }>;
 
-export function LocationsItem(props: Props): JSX.Element {
+export function Location(props: Props): JSX.Element {
   const { city, isActive, className } = props;
   const dispatch = useAppDispatch();
-  const handleCityClick = useCallback(() => {
+  const handleCityClick = () => {
     dispatch(setCity(city));
-  }, [dispatch, city]);
+  };
 
   return (
     <li className="locations__item">

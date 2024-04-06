@@ -1,6 +1,6 @@
 import { City } from '../../types';
 import { CITIES } from '../../consts';
-import { LocationsItem } from './item/item';
+import { Location } from '../location/location';
 
 type Props = Readonly<{
   activeCity: City;
@@ -11,7 +11,7 @@ export function Locations(props: Props): JSX.Element {
     <section className="locations container">
       <ul className="locations__list tabs__list">
         {CITIES.map((item) => (
-          <LocationsItem
+          <Location
             city={item}
             key={item.name}
             isActive={props.activeCity.name === item.name}
@@ -21,5 +21,3 @@ export function Locations(props: Props): JSX.Element {
     </section>
   );
 }
-
-Locations.Item = LocationsItem;
