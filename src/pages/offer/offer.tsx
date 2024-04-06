@@ -2,11 +2,12 @@ import { Fragment, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 
+import { sendReviewHandler } from './utils';
 import { useAppSelector } from '../../hooks';
 import { getCity } from '../../store/city/selectors';
 import { NotFoundPage } from '../not-found/not-found';
+import { useNearPlaces, useOffers, useReviews } from './hooks';
 import { Map, Offers, Rating, Reviews } from '../../components';
-import { useNearPlaces, useOffers, useReviews, useSendReview } from './hooks';
 
 export function OfferPage(): JSX.Element {
   const { id } = useParams();
@@ -14,7 +15,7 @@ export function OfferPage(): JSX.Element {
   const nearPlaces = useNearPlaces(id);
   const city = useAppSelector(getCity);
   const [reviews, setReviews] = useReviews(id);
-  const sendReview = useSendReview(setReviews, id);
+  const sendReview = sendReviewHandler(setReviews, id);
   const [activeCardId, setActiveCardId] = useState<string>(offer?.id ?? '');
 
   return offer ? (

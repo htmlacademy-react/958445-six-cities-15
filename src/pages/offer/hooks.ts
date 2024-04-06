@@ -2,7 +2,6 @@ import { Dispatch, useState, useEffect, SetStateAction } from 'react';
 
 import { api } from '../../store';
 import { ApiRoutesEnum } from '../../consts';
-
 import type { FullOfferType, Review, ShortOfferType } from '../../types';
 
 export function useOffers(id?: string) {
@@ -31,19 +30,6 @@ export function useNearPlaces(id?: string) {
   }, [id]);
 
   return nearPlaces;
-}
-
-export function useSendReview(
-  setReviews: Dispatch<SetStateAction<Review[]>>,
-  id?: string
-) {
-  return (review: Pick<Review, 'comment' | 'rating'>) => {
-    if (id) {
-      api
-        .post<Review>(`${ApiRoutesEnum.COMMENTS}/${id}`, review)
-        .then(({ data }) => setReviews((prev) => [...prev, data]));
-    }
-  };
 }
 
 export function useReviews(
