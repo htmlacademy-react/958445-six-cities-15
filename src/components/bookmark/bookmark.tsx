@@ -1,12 +1,4 @@
 import cn from 'classnames';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-
-import { ShortOfferType } from '../../types';
-import { AppRoutesEnum } from '../../consts';
-import { getFavorites } from '../../store/offers/selectors';
-import { setIsFavoriteAction } from '../../store/api-actions';
-import { useAppDispatch, useAppSelector, useIsAuthorized } from '../../hooks';
 
 const SIZES = {
   BIG: { width: '31', height: '33' },
@@ -15,32 +7,21 @@ const SIZES = {
 
 type Props = {
   className: string;
+  isFavorite: boolean;
+  setIsFavorite: () => void;
   size?: keyof typeof SIZES;
-  offer: Pick<ShortOfferType, 'id' | 'isFavorite'>;
 };
 
-export function Bookmark({ offer, className, size = 'SMALL' }: Props) {
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const isAuthorized = useIsAuthorized();
-  const favorites = useAppSelector(getFavorites);
-  const [isFavorite, setIsFavorite] = useState(offer.isFavorite);
-  const onClick = () => {
-    if (isAuthorized) {
-      dispatch(setIsFavoriteAction({ offerId: offer.id, status: !isFavorite }));
-    } else {
-      navigate(AppRoutesEnum.LOGIN);
-    }
-  };
-
-  useEffect(() => {
-    setIsFavorite(favorites.some((item) => item.id === offer.id));
-  }, [favorites, offer.id]);
-
+export function Bookmark({
+  className,
+  isFavorite,
+  setIsFavorite,
+  size = 'SMALL',
+}: Props) {
   return (
     <button
       type="button"
-      onClick={onClick}
+      onClick={setIsFavorite}
       className={cn(`${className}__bookmark-button button`, {
         [`${className}__bookmark-button--active`]: isFavorite,
       })}

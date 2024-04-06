@@ -3,9 +3,9 @@ import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 
 import { sendReviewHandler } from './utils';
-import { useAppSelector } from '../../hooks';
 import { getCity } from '../../store/city/selectors';
 import { NotFoundPage } from '../not-found/not-found';
+import { useIsFavorite, useAppSelector } from '../../hooks';
 import { useNearPlaces, useOffers, useReviews } from './hooks';
 import { Map, Offers, Rating, Reviews, Bookmark } from '../../components';
 
@@ -16,6 +16,7 @@ export function OfferPage(): JSX.Element {
   const city = useAppSelector(getCity);
   const [reviews, setReviews] = useReviews(id);
   const sendReview = sendReviewHandler(setReviews, id);
+  const [isFavorite, setIsFavorite] = useIsFavorite(offer);
   const [activeCardId, setActiveCardId] = useState<string>(offer?.id ?? '');
 
   return offer ? (
@@ -46,7 +47,12 @@ export function OfferPage(): JSX.Element {
             )}
             <div className="offer__name-wrapper">
               <h1 className="offer__name">{offer.title}</h1>
-              <Bookmark size="BIG" offer={offer} className="offer" />
+              <Bookmark
+                size="BIG"
+                className="offer"
+                isFavorite={isFavorite}
+                setIsFavorite={setIsFavorite}
+              />
             </div>
             <Rating withValue rating={offer.rating} className="offer" />
             <ul className="offer__features">

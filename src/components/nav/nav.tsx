@@ -18,7 +18,7 @@ export function Nav() {
 
   useEffect(() => {
     dispatch(loadFavoritesAction());
-  }, []);
+  }, [dispatch]);
 
   return (
     <nav className="header__nav">
