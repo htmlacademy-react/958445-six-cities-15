@@ -1,17 +1,24 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import { AppRoutesEnum } from '../../consts';
-import { logoutAction } from '../../store/api-actions';
 import { getCurentUser } from '../../store/user/selectors';
+import { getFavorites } from '../../store/offers/selectors';
+import { loadFavoritesAction, logoutAction } from '../../store/api-actions';
 import { useAppDispatch, useAppSelector, useIsAuthorized } from '../../hooks';
 
 export function Nav() {
   const dispatch = useAppDispatch();
   const isAuthorized = useIsAuthorized();
+  const favorites = useAppSelector(getFavorites);
   const currentUser = useAppSelector(getCurentUser);
   const signOut = () => {
     dispatch(logoutAction());
   };
+
+  useEffect(() => {
+    dispatch(loadFavoritesAction());
+  }, [dispatch]);
 
   return (
     <nav className="header__nav">
@@ -24,9 +31,16 @@ export function Nav() {
             <div className="header__avatar-wrapper user__avatar-wrapper"></div>
 
             {isAuthorized ? (
-              <span className="header__user-name user__name">
-                {currentUser?.email}
-              </span>
+              <>
+                <span className="header__user-name user__name">
+                  {currentUser?.email}
+                </span>
+                {favorites.length > 0 && (
+                  <span className="header__favorite-count">
+                    {favorites.length}
+                  </span>
+                )}
+              </>
             ) : (
               <span className="header__login">Sign in</span>
             )}

@@ -1,6 +1,7 @@
 import { useState, Fragment } from 'react';
 import { Helmet } from 'react-helmet-async';
 
+import { OffersEmpty } from './empty/empty';
 import { getSelectedOffers } from './utils';
 import { SortTypesEnum } from '../../consts';
 import { useAppSelector } from '../../hooks';
@@ -23,31 +24,35 @@ export function MainPage(): JSX.Element {
         <Locations activeCity={city} />
       </div>
       <div className="cities">
-        <div className="cities__places-container container">
-          <section className="cities__places places">
-            <h2 className="visually-hidden">Places</h2>
-            <b className="places__found">
-              {offers.length} places to stay in {city.name}
-            </b>
-            <SortDropdown sortType={sortType} setSortType={setSortType} />
-            <Offers
-              isTabs
-              offers={offers}
-              className="cities"
-              sortType={sortType}
-              setActiveCard={setActiveCardId}
-            />
-          </section>
-          <div className="cities__right-section">
-            <Map
-              city={city}
-              key={city.name}
-              points={offers}
-              className="cities"
-              selectedPointId={activeCardId}
-            />
+        {offers.length > 0 ? (
+          <div className="cities__places-container container">
+            <section className="cities__places places">
+              <h2 className="visually-hidden">Places</h2>
+              <b className="places__found">
+                {offers.length} places to stay in {city.name}
+              </b>
+              <SortDropdown sortType={sortType} setSortType={setSortType} />
+              <Offers
+                isTabs
+                offers={offers}
+                className="cities"
+                sortType={sortType}
+                setActiveCard={setActiveCardId}
+              />
+            </section>
+            <div className="cities__right-section">
+              <Map
+                city={city}
+                key={city.name}
+                points={offers}
+                className="cities"
+                selectedPointId={activeCardId}
+              />
+            </div>
           </div>
-        </div>
+        ) : (
+          <OffersEmpty />
+        )}
       </div>
     </Fragment>
   );

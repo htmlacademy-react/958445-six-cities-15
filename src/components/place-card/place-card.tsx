@@ -1,9 +1,10 @@
-import cn from 'classnames';
 import { Link } from 'react-router-dom';
 import { MouseEventHandler } from 'react';
 
 import { Rating } from '..';
+import { useIsFavorite } from '../../hooks';
 import { AppRoutesEnum } from '../../consts';
+import { Bookmark } from '../bookmark/bookmark';
 import type { ShortOfferType } from '../../types';
 
 type Props = Readonly<{
@@ -15,6 +16,7 @@ type Props = Readonly<{
 export function PlaceCard(props: Props) {
   const { offer, onMouseEnter } = props;
   const link = `${AppRoutesEnum.OFFER}/${offer.id}`;
+  const [isFavorite, setIsFavorite] = useIsFavorite(offer);
   const handleMouseEvent: MouseEventHandler<HTMLElement> = () =>
     onMouseEnter?.(offer.id);
 
@@ -36,7 +38,7 @@ export function PlaceCard(props: Props) {
             width="260"
             height="200"
             alt="Place image"
-            src="img/apartment-01.jpg"
+            src={offer.previewImage}
             className="place-card__image"
           />
         </Link>
@@ -47,17 +49,11 @@ export function PlaceCard(props: Props) {
             <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button
-            type="button"
-            className={cn('place-card__bookmark-button button', {
-              ['place-card__bookmark-button--active']: offer.isFavorite,
-            })}
-          >
-            <svg className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">To bookmarks</span>
-          </button>
+          <Bookmark
+            className="place-card"
+            isFavorite={isFavorite}
+            setIsFavorite={setIsFavorite}
+          />
         </div>
         <Rating rating={offer.rating} className="place-card" />
         <h2 className="place-card__name">

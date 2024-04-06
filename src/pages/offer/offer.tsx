@@ -3,11 +3,11 @@ import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 
 import { sendReviewHandler } from './utils';
-import { useAppSelector } from '../../hooks';
 import { getCity } from '../../store/city/selectors';
 import { NotFoundPage } from '../not-found/not-found';
+import { useIsFavorite, useAppSelector } from '../../hooks';
 import { useNearPlaces, useOffers, useReviews } from './hooks';
-import { Map, Offers, Rating, Reviews } from '../../components';
+import { Map, Offers, Rating, Reviews, Bookmark } from '../../components';
 
 export function OfferPage(): JSX.Element {
   const { id } = useParams();
@@ -16,6 +16,7 @@ export function OfferPage(): JSX.Element {
   const city = useAppSelector(getCity);
   const [reviews, setReviews] = useReviews(id);
   const sendReview = sendReviewHandler(setReviews, id);
+  const [isFavorite, setIsFavorite] = useIsFavorite(offer);
   const [activeCardId, setActiveCardId] = useState<string>(offer?.id ?? '');
 
   return offer ? (
@@ -26,48 +27,15 @@ export function OfferPage(): JSX.Element {
       <section className="offer">
         <div className="offer__gallery-container container">
           <div className="offer__gallery">
-            <div className="offer__image-wrapper">
-              <img
-                src="img/room.jpg"
-                alt="Photo studio"
-                className="offer__image"
-              />
-            </div>
-            <div className="offer__image-wrapper">
-              <img
-                alt="Photo studio"
-                className="offer__image"
-                src="img/apartment-01.jpg"
-              />
-            </div>
-            <div className="offer__image-wrapper">
-              <img
-                alt="Photo studio"
-                className="offer__image"
-                src="img/apartment-02.jpg"
-              />
-            </div>
-            <div className="offer__image-wrapper">
-              <img
-                alt="Photo studio"
-                className="offer__image"
-                src="img/apartment-03.jpg"
-              />
-            </div>
-            <div className="offer__image-wrapper">
-              <img
-                alt="Photo studio"
-                src="img/studio-01.jpg"
-                className="offer__image"
-              />
-            </div>
-            <div className="offer__image-wrapper">
-              <img
-                alt="Photo studio"
-                className="offer__image"
-                src="img/apartment-01.jpg"
-              />
-            </div>
+            {offer.images.map((imageUrl) => (
+              <div key={imageUrl} className="offer__image-wrapper">
+                <img
+                  src={imageUrl}
+                  alt="Photo studio"
+                  className="offer__image"
+                />
+              </div>
+            ))}
           </div>
         </div>
         <div className="offer__container container">
@@ -79,12 +47,12 @@ export function OfferPage(): JSX.Element {
             )}
             <div className="offer__name-wrapper">
               <h1 className="offer__name">{offer.title}</h1>
-              <button className="offer__bookmark-button button" type="button">
-                <svg className="offer__bookmark-icon" width="31" height="33">
-                  <use xlinkHref="#icon-bookmark"></use>
-                </svg>
-                <span className="visually-hidden">To bookmarks</span>
-              </button>
+              <Bookmark
+                size="BIG"
+                className="offer"
+                isFavorite={isFavorite}
+                setIsFavorite={setIsFavorite}
+              />
             </div>
             <Rating withValue rating={offer.rating} className="offer" />
             <ul className="offer__features">
