@@ -2,16 +2,15 @@ import { FormEvent, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Navigate } from 'react-router-dom';
 
+import { AppRoutesEnum } from '../../consts';
 import { loginAction } from '../../store/api-actions';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getAuthorizationStatus } from '../../store/user/selectors';
-import { AppRoutesEnum, AuthorizationStatusesEnum } from '../../consts';
+import { useAppDispatch, useIsAuthorized } from '../../hooks';
 
 export function LoginPage(): JSX.Element {
   const dispatch = useAppDispatch();
+  const isAuthorized = useIsAuthorized();
   const loginRef = useRef<null | HTMLInputElement>(null);
   const passwordRef = useRef<null | HTMLInputElement>(null);
-  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -26,7 +25,7 @@ export function LoginPage(): JSX.Element {
     }
   };
 
-  return authorizationStatus === AuthorizationStatusesEnum.AUTH ? (
+  return isAuthorized ? (
     <Navigate to={AppRoutesEnum.HOME} />
   ) : (
     <div className="page__login-container container">

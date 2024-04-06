@@ -1,9 +1,9 @@
 import { Helmet } from 'react-helmet-async';
 
+import { CITIES } from '../../consts';
 import { Favorites } from '../../components';
 import { useAppSelector } from '../../hooks';
 import { getFavorites } from '../../store/offers/selectors';
-import { CITIES } from '../../consts';
 
 export function FavoritesPage(): JSX.Element {
   const offers = useAppSelector(getFavorites);
