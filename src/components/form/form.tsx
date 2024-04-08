@@ -33,7 +33,7 @@ export function Form(props: Props) {
     },
     []
   );
-  const onChangeReview = ({
+  const onChangeComment = ({
     target,
   }: React.ChangeEvent<HTMLTextAreaElement>) => {
     setForm((prev) => ({ ...prev, comment: target.value }));
@@ -68,8 +68,10 @@ export function Form(props: Props) {
       <textarea
         id="review"
         name="review"
+        minLength={50}
+        maxLength={300}
         value={form.comment}
-        onChange={onChangeReview}
+        onChange={onChangeComment}
         className="reviews__textarea form__textarea"
         placeholder="Tell how was your stay, what you like and what can be improved"
       />
