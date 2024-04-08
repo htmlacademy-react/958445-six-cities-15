@@ -1,11 +1,11 @@
 import cn from 'classnames';
 import { ElementType } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import type { City } from '../../types';
 import { useAppDispatch } from '../../hooks';
-import { setCity } from '../../store/city/city';
-import { useNavigate } from 'react-router-dom';
 import { AppRoutesEnum } from '../../consts';
+import { setCity } from '../../store/city/city';
 
 type Props = Readonly<{
   city: City;
