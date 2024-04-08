@@ -1,20 +1,34 @@
+import cn from 'classnames';
 import { Link } from 'react-router-dom';
 import { MouseEventHandler } from 'react';
 
 import { Rating } from '..';
-import { useHandleAddFavorite } from '../../hooks';
 import { AppRoutesEnum } from '../../consts';
 import { Bookmark } from '../bookmark/bookmark';
 import type { ShortOfferType } from '../../types';
+import { useHandleAddFavorite } from '../../hooks';
+
+const SIZES = {
+  BIG: {
+    width: '260',
+    height: '200',
+  },
+  SMALL: {
+    width: '150',
+    height: '110',
+  },
+};
 
 type Props = Readonly<{
   className?: string;
+  isFavorites?: boolean;
   offer: ShortOfferType;
+  size?: keyof typeof SIZES;
   setActiveCard?: (id: string) => void;
 }>;
 
 export function PlaceCard(props: Props) {
-  const { offer, setActiveCard } = props;
+  const { offer, size = 'BIG', isFavorites = false, setActiveCard } = props;
   const link = `${AppRoutesEnum.OFFER}/${offer.id}`;
   const [isFavorite, setIsFavorite] = useHandleAddFavorite(offer);
   const onMouseEnter: MouseEventHandler<HTMLElement> = () =>
@@ -38,15 +52,22 @@ export function PlaceCard(props: Props) {
       >
         <Link to={link}>
           <img
-            width="260"
-            height="200"
             alt="Place image"
             src={offer.previewImage}
+            width={SIZES[size].width}
+            height={SIZES[size].height}
             className="place-card__image"
           />
         </Link>
       </div>
-      <div className="place-card__info">
+      <div
+        className={cn(
+          {
+            ['favorites__card-info']: isFavorites,
+          },
+          'place-card__info'
+        )}
+      >
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{offer.price}</b>

@@ -3,12 +3,13 @@ import { Fragment, memo } from 'react';
 type Props = Readonly<{
   value: number;
   title: string;
+  disabled: boolean;
   formValue: number;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }>;
 
 export const Star = memo((props: Props) => {
-  const { value, title, formValue, handleChange } = props;
+  const { value, title, disabled, formValue, handleChange } = props;
   const id = `${value}-stars`;
 
   return (
@@ -18,6 +19,7 @@ export const Star = memo((props: Props) => {
         type="radio"
         name="rating"
         value={value}
+        disabled={disabled}
         onChange={handleChange}
         checked={value === formValue}
         className="form__rating-input visually-hidden"

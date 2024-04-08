@@ -32,7 +32,7 @@ export function OfferPage(): JSX.Element {
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              {offer.images.map((imageUrl) => (
+              {offer.images.slice(0, 6).map((imageUrl) => (
                 <div key={imageUrl} className="offer__image-wrapper">
                   <img
                     src={imageUrl}

@@ -1,3 +1,4 @@
+import cn from 'classnames';
 import { useState } from 'react';
 
 import { SortTypesEnum } from '../../consts';
@@ -23,18 +24,20 @@ export function SortDropdown({ sortType, setSortType }: Props): JSX.Element {
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>
-      {showDropdown && (
-        <ul className="places__options places__options--custom places__options--opened">
-          {sortTypes.map((type) => (
-            <SortType
-              key={type}
-              type={type}
-              setSortType={setSortType}
-              isActive={type === sortType}
-            />
-          ))}
-        </ul>
-      )}
+      <ul
+        className={cn('places__options places__options--custom', {
+          ['places__options--opened']: showDropdown,
+        })}
+      >
+        {sortTypes.map((type) => (
+          <SortType
+            key={type}
+            type={type}
+            setSortType={setSortType}
+            isActive={type === sortType}
+          />
+        ))}
+      </ul>
     </form>
   );
 }

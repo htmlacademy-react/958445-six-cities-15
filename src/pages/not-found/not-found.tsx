@@ -10,7 +10,8 @@ export function NotFoundPage() {
       <Helmet>
         <title>Not found</title>
       </Helmet>
-      Page not Found{' '}
+      Page not Found <sub>404</sub>
+      <br />
       <Link className={styles.link} to={AppRoutesEnum.HOME}>
         Go home
       </Link>

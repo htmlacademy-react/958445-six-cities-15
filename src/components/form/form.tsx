@@ -18,7 +18,7 @@ const INITIAL_REVIEW = {
 };
 
 type Props = {
-  handleSubmit: (value: Pick<Review, 'comment' | 'rating'>) => void;
+  handleSubmit: (value: Pick<Review, 'comment' | 'rating'>) => Promise<void>;
 };
 
 export function Form(props: Props) {
@@ -26,6 +26,7 @@ export function Form(props: Props) {
   const isValidReview =
     form.rating > INITIAL_RATING &&
     form.comment.trim().length >= MAX_COMMENT_LENGTH;
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onChangeRating = useCallback(
     ({ target }: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,8 +41,11 @@ export function Form(props: Props) {
   };
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    props.handleSubmit(form);
-    setForm(INITIAL_REVIEW);
+    setIsSubmitting(true);
+    props.handleSubmit(form).then(() => {
+      setIsSubmitting(false);
+      setForm(INITIAL_REVIEW);
+    });
   };
 
   return (
@@ -61,6 +65,7 @@ export function Form(props: Props) {
             title={item.title}
             value={item.value}
             formValue={form.rating}
+            disabled={isSubmitting}
             handleChange={onChangeRating}
           />
         )).reverse()}
@@ -71,6 +76,7 @@ export function Form(props: Props) {
         minLength={50}
         maxLength={300}
         value={form.comment}
+        disabled={isSubmitting}
         onChange={onChangeComment}
         className="reviews__textarea form__textarea"
         placeholder="Tell how was your stay, what you like and what can be improved"
@@ -83,7 +89,7 @@ export function Form(props: Props) {
         </p>
         <button
           type="submit"
-          disabled={!isValidReview}
+          disabled={!isValidReview || isSubmitting}
           className="reviews__submit form__submit button"
         >
           Submit

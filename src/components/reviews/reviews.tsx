@@ -13,7 +13,7 @@ type Props = {
 export const Reviews = memo(({ id }: Props): null | JSX.Element => {
   const isAuthorized = useIsAuthorized();
   const [reviews, setReviews] = useReviews(id);
-  const sendReview = sendReviewHandler(setReviews, id);
+  const sendReview = sendReviewHandler(id, setReviews);
 
   return (
     <section className="offer__reviews reviews">

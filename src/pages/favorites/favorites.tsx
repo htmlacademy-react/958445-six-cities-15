@@ -9,27 +9,32 @@ import { Favorites, Header, Footer, Location } from '../../components';
 
 export function FavoritesPage(): JSX.Element {
   const favorites = useAppSelector(getFavorites);
-  const groupedFavorites = CITIES.map((city) =>
-    favorites.filter((item) => item.city.name === city.name)
-  ).filter((item) => item.length > 0);
+  const isEmptyFavorites = favorites.length === 0;
+  const groupedFavorites = isEmptyFavorites
+    ? []
+    : CITIES.map((city) =>
+        favorites.filter((item) => item.city.name === city.name)
+      ).filter((item) => item.length > 0);
 
   return (
     <div
-      className={cn('page page--main', {
-        ['page--favorites-empty']: favorites.length === 0,
+      className={cn('page', {
+        ['page--favorites-empty']: isEmptyFavorites,
       })}
     >
       <Header withNav />
       <main
         className={cn('page__main page__main--favorites', {
-          ['page__main--favorites-empty']: favorites.length === 0,
+          ['page__main--favorites-empty']: isEmptyFavorites,
         })}
       >
         <div className="page__favorites-container container">
           <Helmet>
             <title>Favorites</title>
           </Helmet>
-          {groupedFavorites.length > 0 ? (
+          {isEmptyFavorites ? (
+            <FavoritesEmpty />
+          ) : (
             <section className="favorites">
               <h1 className="favorites__title">Saved listing</h1>
               <ul className="favorites__list">
@@ -46,8 +51,6 @@ export function FavoritesPage(): JSX.Element {
                 ))}
               </ul>
             </section>
-          ) : (
-            <FavoritesEmpty />
           )}
         </div>
       </main>
