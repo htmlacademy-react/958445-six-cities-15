@@ -4,10 +4,13 @@ import { Navigate } from 'react-router-dom';
 
 import { AppRoutesEnum } from '../../consts';
 import { loginAction } from '../../store/api-actions';
-import { useAppDispatch, useIsAuthorized } from '../../hooks';
+import { getCity } from '../../store/city/selectors';
+import { Location } from '../../components/location/location';
+import { useAppDispatch, useAppSelector, useIsAuthorized } from '../../hooks';
 
 export function LoginPage(): JSX.Element {
   const dispatch = useAppDispatch();
+  const city = useAppSelector(getCity);
   const isAuthorized = useIsAuthorized();
   const loginRef = useRef<null | HTMLInputElement>(null);
   const passwordRef = useRef<null | HTMLInputElement>(null);
@@ -68,11 +71,7 @@ export function LoginPage(): JSX.Element {
         </form>
       </section>
       <section className="locations locations--login locations--current">
-        <div className="locations__item">
-          <a className="locations__item-link" href="#">
-            <span>Amsterdam</span>
-          </a>
-        </div>
+        <Location city={city} />
       </section>
     </div>
   );
