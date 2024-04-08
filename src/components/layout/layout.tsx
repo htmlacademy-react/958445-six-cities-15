@@ -16,8 +16,6 @@ export function Layout(): JSX.Element {
   const isOffer = matchPath(pathname, AppRoutesEnum.OFFER) !== null;
   const isFavorites = matchPath(pathname, AppRoutesEnum.FAVORITES) !== null;
 
-  console.log({ offers });
-
   return (
     <div
       className={cn('page', {

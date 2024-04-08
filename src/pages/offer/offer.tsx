@@ -3,11 +3,10 @@ import { Fragment } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 
-import { sendReviewHandler } from './utils';
+import { useNearPlaces, useOffers } from './hooks';
 import { getCity } from '../../store/city/selectors';
 import { NotFoundPage } from '../not-found/not-found';
 import { useIsFavorite, useAppSelector } from '../../hooks';
-import { useNearPlaces, useOffers, useReviews } from './hooks';
 import { Map, Offers, Rating, Reviews, Bookmark } from '../../components';
 
 export function OfferPage(): JSX.Element {
@@ -15,8 +14,6 @@ export function OfferPage(): JSX.Element {
   const offer = useOffers(id);
   const nearPlaces = useNearPlaces(id);
   const city = useAppSelector(getCity);
-  const [reviews, setReviews] = useReviews(id);
-  const sendReview = sendReviewHandler(setReviews, id);
   const [isFavorite, setIsFavorite] = useIsFavorite(offer);
 
   return offer ? (
@@ -109,7 +106,7 @@ export function OfferPage(): JSX.Element {
                 <p className="offer__text">{offer.description}</p>
               </div>
             </div>
-            <Reviews reviews={reviews} handleSubmit={sendReview} />
+            <Reviews id={id} />
           </div>
         </div>
         <Map
