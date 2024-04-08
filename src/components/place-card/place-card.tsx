@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { MouseEventHandler } from 'react';
 
 import { Rating } from '..';
-import { useIsFavorite } from '../../hooks';
+import { useHandleAddFavorite } from '../../hooks';
 import { AppRoutesEnum } from '../../consts';
 import { Bookmark } from '../bookmark/bookmark';
 import type { ShortOfferType } from '../../types';
@@ -16,7 +16,7 @@ type Props = Readonly<{
 export function PlaceCard(props: Props) {
   const { offer, setActiveCard } = props;
   const link = `${AppRoutesEnum.OFFER}/${offer.id}`;
-  const [isFavorite, setIsFavorite] = useIsFavorite(offer);
+  const [isFavorite, setIsFavorite] = useHandleAddFavorite(offer);
   const onMouseEnter: MouseEventHandler<HTMLElement> = () =>
     setActiveCard?.(offer.id);
   const onMouseLeave: MouseEventHandler<HTMLElement> = () =>

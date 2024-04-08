@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import { useNearPlaces, useOffers } from './hooks';
 import { getCity } from '../../store/city/selectors';
 import { NotFoundPage } from '../not-found/not-found';
-import { useIsFavorite, useAppSelector } from '../../hooks';
+import { useHandleAddFavorite, useAppSelector } from '../../hooks';
 import { Map, Offers, Rating, Reviews, Bookmark } from '../../components';
 
 export function OfferPage(): JSX.Element {
@@ -14,7 +14,7 @@ export function OfferPage(): JSX.Element {
   const offer = useOffers(id);
   const nearPlaces = useNearPlaces(id);
   const city = useAppSelector(getCity);
-  const [isFavorite, setIsFavorite] = useIsFavorite(offer);
+  const [isFavorite, setIsFavorite] = useHandleAddFavorite(offer);
 
   return offer ? (
     <Fragment>

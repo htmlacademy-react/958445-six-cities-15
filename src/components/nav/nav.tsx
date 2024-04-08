@@ -27,7 +27,7 @@ export function Nav() {
         <li className="header__nav-item user">
           <Link
             className="header__nav-link header__nav-link--profile"
-            to={isAuthorized ? AppRoutesEnum.HOME : AppRoutesEnum.LOGIN}
+            to={isAuthorized ? AppRoutesEnum.FAVORITES : AppRoutesEnum.LOGIN}
           >
             <div
               className={cn(
@@ -38,13 +38,15 @@ export function Nav() {
                 'user__avatar-wrapper'
               )}
             >
-              <img
-                width="54"
-                height="54"
-                alt="User avatar"
-                src={currentUser?.avatarUrl}
-                className="header__avatar user__avatar"
-              />
+              {isAuthorized && (
+                <img
+                  width="54"
+                  height="54"
+                  alt="User avatar"
+                  src={currentUser?.avatarUrl}
+                  className="header__avatar user__avatar"
+                />
+              )}
             </div>
 
             {isAuthorized ? (

@@ -2,15 +2,14 @@ import { FormEvent, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Navigate } from 'react-router-dom';
 
-import { AppRoutesEnum } from '../../consts';
+import { AppRoutesEnum, CITIES } from '../../consts';
 import { loginAction } from '../../store/api-actions';
-import { getCity } from '../../store/city/selectors';
 import { Location } from '../../components/location/location';
-import { useAppDispatch, useAppSelector, useIsAuthorized } from '../../hooks';
+import { useAppDispatch, useIsAuthorized } from '../../hooks';
 
 export function LoginPage(): JSX.Element {
   const dispatch = useAppDispatch();
-  const city = useAppSelector(getCity);
+  const city = CITIES[Math.floor(Math.random() * CITIES.length)];
   const isAuthorized = useIsAuthorized();
   const loginRef = useRef<null | HTMLInputElement>(null);
   const passwordRef = useRef<null | HTMLInputElement>(null);
