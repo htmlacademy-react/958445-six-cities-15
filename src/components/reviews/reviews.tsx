@@ -22,7 +22,7 @@ export const Reviews = memo(
         </h2>
         {reviews.length > 0 && (
           <ul className="reviews__list">
-            {reviews.map((review) => (
+            {reviews.slice(0, 10).map((review) => (
               <Review key={review.id} review={review} />
             ))}
           </ul>

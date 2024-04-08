@@ -10,19 +10,22 @@ import type { ShortOfferType } from '../../types';
 type Props = Readonly<{
   className?: string;
   offer: ShortOfferType;
-  onMouseEnter?: (id: string) => void;
+  setActiveCard?: (id: string) => void;
 }>;
 
 export function PlaceCard(props: Props) {
-  const { offer, onMouseEnter } = props;
+  const { offer, setActiveCard } = props;
   const link = `${AppRoutesEnum.OFFER}/${offer.id}`;
   const [isFavorite, setIsFavorite] = useIsFavorite(offer);
-  const handleMouseEvent: MouseEventHandler<HTMLElement> = () =>
-    onMouseEnter?.(offer.id);
+  const onMouseEnter: MouseEventHandler<HTMLElement> = () =>
+    setActiveCard?.(offer.id);
+  const onMouseLeave: MouseEventHandler<HTMLElement> = () =>
+    setActiveCard?.('');
 
   return (
     <article
-      onMouseEnter={handleMouseEvent}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
       className={`${props.className}__card place-card`}
     >
       {offer.isPremium && (

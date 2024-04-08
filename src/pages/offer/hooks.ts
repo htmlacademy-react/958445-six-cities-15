@@ -40,7 +40,7 @@ export function useReviews(
   useEffect(() => {
     if (id) {
       api.get<Review[]>(`${ApiRoutesEnum.COMMENTS}/${id}`).then(({ data }) => {
-        setReviews(data);
+        setReviews(data.sort((a,b) => new Date(b.date).getTime() - new Date(a.date).getTime()));
       });
     }
   }, [id]);
