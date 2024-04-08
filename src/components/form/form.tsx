@@ -42,10 +42,12 @@ export function Form(props: Props) {
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     setIsSubmitting(true);
-    props.handleSubmit(form).then(() => {
-      setIsSubmitting(false);
-      setForm(INITIAL_REVIEW);
-    });
+    props
+      .handleSubmit(form)
+      .then(() => {
+        setForm(INITIAL_REVIEW);
+      })
+      .finally(() => setIsSubmitting(false));
   };
 
   return (
