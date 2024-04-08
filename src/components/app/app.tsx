@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import { Layout } from '../layout/layout';
 import { PrivateCheck, Spinner } from '..';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getAuthorizationStatus } from '../../store/user/selectors';
@@ -38,19 +37,17 @@ export function App(): JSX.Element {
 
   return (
     <Routes>
-      <Route path={AppRoutesEnum.HOME} element={<Layout />}>
-        <Route index element={<MainPage />} />
-        <Route path={AppRoutesEnum.LOGIN} element={<LoginPage />} />
-        <Route
-          path={AppRoutesEnum.FAVORITES}
-          element={
-            <PrivateCheck>
-              <FavoritesPage />
-            </PrivateCheck>
-          }
-        />
-        <Route path={`${AppRoutesEnum.OFFER}/:id`} element={<OfferPage />} />
-      </Route>
+      <Route path={AppRoutesEnum.HOME} element={<MainPage />} />
+      <Route path={AppRoutesEnum.LOGIN} element={<LoginPage />} />
+      <Route
+        path={AppRoutesEnum.FAVORITES}
+        element={
+          <PrivateCheck>
+            <FavoritesPage />
+          </PrivateCheck>
+        }
+      />
+      <Route path={`${AppRoutesEnum.OFFER}/:id`} element={<OfferPage />} />
       <Route path={AppRoutesEnum.ROUTE_STAR} element={<NotFoundPage />} />
     </Routes>
   );

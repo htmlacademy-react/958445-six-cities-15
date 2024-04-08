@@ -14,6 +14,7 @@ export function Locations(props: Props): JSX.Element {
           <Location
             city={item}
             key={item.name}
+            className="tabs__item"
             isActive={props.activeCity.name === item.name}
           />
         ))}

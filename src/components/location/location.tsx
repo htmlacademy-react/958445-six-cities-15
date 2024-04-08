@@ -1,4 +1,5 @@
 import cn from 'classnames';
+import { ElementType } from 'react';
 
 import type { City } from '../../types';
 import { useAppDispatch } from '../../hooks';
@@ -9,12 +10,13 @@ import { AppRoutesEnum } from '../../consts';
 type Props = Readonly<{
   city: City;
   href?: string;
+  Tag?: ElementType;
   isActive?: boolean;
   className?: string;
 }>;
 
 export function Location(props: Props): JSX.Element {
-  const { city, isActive, className } = props;
+  const { city, isActive, Tag = 'li', className } = props;
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const handleCityClick = () => {
@@ -23,7 +25,7 @@ export function Location(props: Props): JSX.Element {
   };
 
   return (
-    <li className="locations__item">
+    <Tag className="locations__item">
       <a
         onClick={handleCityClick}
         className={cn('locations__item-link', className, {
@@ -32,6 +34,6 @@ export function Location(props: Props): JSX.Element {
       >
         <span>{city.name}</span>
       </a>
-    </li>
+    </Tag>
   );
 }
