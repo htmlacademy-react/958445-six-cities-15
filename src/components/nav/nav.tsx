@@ -35,11 +35,9 @@ export function Nav() {
                 <span className="header__user-name user__name">
                   {currentUser?.email}
                 </span>
-                {favorites.length > 0 && (
-                  <span className="header__favorite-count">
-                    {favorites.length}
-                  </span>
-                )}
+                <span className="header__favorite-count">
+                  {favorites.length}
+                </span>
               </>
             ) : (
               <span className="header__login">Sign in</span>

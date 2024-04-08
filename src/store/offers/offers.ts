@@ -45,5 +45,3 @@ export const offers = createSlice({
       });
   },
 });
-
-// export const { addFavorite } = offers.actions;
