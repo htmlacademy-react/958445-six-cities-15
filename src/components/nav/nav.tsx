@@ -1,3 +1,4 @@
+import cn from 'classnames';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -26,20 +27,36 @@ export function Nav() {
         <li className="header__nav-item user">
           <Link
             className="header__nav-link header__nav-link--profile"
-            to={isAuthorized ? AppRoutesEnum.HOME : AppRoutesEnum.LOGIN}
+            to={isAuthorized ? AppRoutesEnum.FAVORITES : AppRoutesEnum.LOGIN}
           >
-            <div className="header__avatar-wrapper user__avatar-wrapper"></div>
+            <div
+              className={cn(
+                'header__avatar-wrapper',
+                {
+                  ['header__avatar-wrapper--pro']: currentUser?.isPro,
+                },
+                'user__avatar-wrapper'
+              )}
+            >
+              {isAuthorized && (
+                <img
+                  width="54"
+                  height="54"
+                  alt="User avatar"
+                  src={currentUser?.avatarUrl}
+                  className="header__avatar user__avatar"
+                />
+              )}
+            </div>
 
             {isAuthorized ? (
               <>
                 <span className="header__user-name user__name">
                   {currentUser?.email}
                 </span>
-                {favorites.length > 0 && (
-                  <span className="header__favorite-count">
-                    {favorites.length}
-                  </span>
-                )}
+                <span className="header__favorite-count">
+                  {favorites.length}
+                </span>
               </>
             ) : (
               <span className="header__login">Sign in</span>

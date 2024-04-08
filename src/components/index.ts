@@ -1,11 +1,13 @@
 export { Map } from './map/map';
 export { App } from './app/app';
 export { Form } from './form/form';
+export { Footer } from './footer/footer';
 export { Rating } from './rating/rating';
 export { Header } from './header/header';
 export { Offers } from './offers/offers';
 export { Spinner } from './spinner/spinner';
 export { Reviews } from './reviews/reviews';
+export { Location } from './location/location';
 export { Bookmark } from './bookmark/bookmark';
 export { Locations } from './locations/locations';
 export { Favorites } from './favorites/favorites';

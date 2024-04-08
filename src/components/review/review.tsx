@@ -1,3 +1,5 @@
+import cn from 'classnames';
+
 import { Rating } from '..';
 import type { Review as ReviewType } from '../../types';
 
@@ -14,7 +16,15 @@ export function Review({ review }: Props) {
   return (
     <li className="reviews__item">
       <div className="reviews__user user">
-        <div className="reviews__avatar-wrapper user__avatar-wrapper">
+        <div
+          className={cn(
+            'reviews__avatar-wrapper',
+            {
+              ['reviews__avatar-wrapper--pro']: review.user.isPro,
+            },
+            'user__avatar-wrapper'
+          )}
+        >
           <img
             width="54"
             height="54"

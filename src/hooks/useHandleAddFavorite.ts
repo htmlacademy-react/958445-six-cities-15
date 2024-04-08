@@ -7,7 +7,7 @@ import { setIsFavoriteAction } from '../store/api-actions';
 import type { FullOfferType, ShortOfferType } from '../types';
 import { useAppDispatch, useAppSelector, useIsAuthorized } from '.';
 
-export function useIsFavorite(
+export function useHandleAddFavorite(
   offer: null | ShortOfferType | FullOfferType
 ): [boolean, () => void] {
   const navigate = useNavigate();

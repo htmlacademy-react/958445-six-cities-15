@@ -7,3 +7,7 @@ export const getSelectedOffers = createSelector(
   [getOffers, getCity],
   (allOffers, city) => allOffers.filter((item) => item.city.name === city.name)
 );
+
+export function getCountWithNoun(count: number) {
+  return `${count} ${count > 1 ? 'places' : 'place'}`;
+}

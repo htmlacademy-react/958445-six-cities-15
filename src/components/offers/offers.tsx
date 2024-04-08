@@ -28,7 +28,7 @@ export function Offers(props: Props) {
           offer={offer}
           key={offer.id}
           className={className}
-          onMouseEnter={setActiveCard}
+          setActiveCard={setActiveCard}
         />
       ))}
     </div>
