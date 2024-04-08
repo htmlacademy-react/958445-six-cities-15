@@ -1,3 +1,4 @@
+import cn from 'classnames';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -28,7 +29,23 @@ export function Nav() {
             className="header__nav-link header__nav-link--profile"
             to={isAuthorized ? AppRoutesEnum.HOME : AppRoutesEnum.LOGIN}
           >
-            <div className="header__avatar-wrapper user__avatar-wrapper"></div>
+            <div
+              className={cn(
+                'header__avatar-wrapper',
+                {
+                  ['header__avatar-wrapper--pro']: currentUser?.isPro,
+                },
+                'user__avatar-wrapper'
+              )}
+            >
+              <img
+                width="54"
+                height="54"
+                alt="User avatar"
+                src={currentUser?.avatarUrl}
+                className="header__avatar user__avatar"
+              />
+            </div>
 
             {isAuthorized ? (
               <>

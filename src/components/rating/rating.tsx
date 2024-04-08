@@ -8,7 +8,7 @@ export function Rating({ rating, withValue = false, className }: Props) {
   return (
     <div className={`${className}__rating rating`}>
       <div className={`${className}__stars rating__stars`}>
-        <span style={{ width: `${rating * 20}%` }}></span>
+        <span style={{ width: `${rating * 19}%` }}></span>
         <span className="visually-hidden">Rating</span>
       </div>
       {withValue && (

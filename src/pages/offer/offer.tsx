@@ -1,4 +1,5 @@
-import { Fragment, useState } from 'react';
+import cn from 'classnames';
+import { Fragment } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 
@@ -10,14 +11,13 @@ import { useNearPlaces, useOffers, useReviews } from './hooks';
 import { Map, Offers, Rating, Reviews, Bookmark } from '../../components';
 
 export function OfferPage(): JSX.Element {
-  const { id } = useParams();
+  const { id = '' } = useParams();
   const offer = useOffers(id);
   const nearPlaces = useNearPlaces(id);
   const city = useAppSelector(getCity);
   const [reviews, setReviews] = useReviews(id);
   const sendReview = sendReviewHandler(setReviews, id);
   const [isFavorite, setIsFavorite] = useIsFavorite(offer);
-  const [activeCardId, setActiveCardId] = useState<string>(offer?.id ?? '');
 
   return offer ? (
     <Fragment>
@@ -83,7 +83,15 @@ export function OfferPage(): JSX.Element {
             <div className="offer__host">
               <h2 className="offer__host-title">Meet the host</h2>
               <div className="offer__host-user user">
-                <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
+                <div
+                  className={cn(
+                    'offer__avatar-wrapper',
+                    {
+                      ['offer__avatar-wrapper--pro']: offer.host.isPro,
+                    },
+                    'user__avatar-wrapper'
+                  )}
+                >
                   <img
                     width="74"
                     height="74"
@@ -107,7 +115,7 @@ export function OfferPage(): JSX.Element {
         <Map
           city={city}
           className="offer"
-          selectedPointId={activeCardId}
+          selectedPointId={id}
           points={[...nearPlaces, offer]}
         />
       </section>
@@ -116,12 +124,7 @@ export function OfferPage(): JSX.Element {
           <h2 className="near-places__title">
             Other places in the neighbourhood
           </h2>
-          <Offers
-            isTabs
-            offers={nearPlaces}
-            className="near-places"
-            setActiveCard={setActiveCardId}
-          />
+          <Offers isTabs offers={nearPlaces} className="near-places" />
         </section>
       </div>
     </Fragment>

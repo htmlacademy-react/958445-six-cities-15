@@ -25,7 +25,8 @@ export function useNearPlaces(id?: string) {
     if (id) {
       api
         .get<ShortOfferType[]>(`${ApiRoutesEnum.OFFERS}/${id}/nearby`)
-        .then(({ data }) => setNearPlaces(data));
+        .then(({ data }) => data.slice(0, 3))
+        .then(setNearPlaces);
     }
   }, [id]);
 
@@ -39,9 +40,14 @@ export function useReviews(
 
   useEffect(() => {
     if (id) {
-      api.get<Review[]>(`${ApiRoutesEnum.COMMENTS}/${id}`).then(({ data }) => {
-        setReviews(data.sort((a,b) => new Date(b.date).getTime() - new Date(a.date).getTime()));
-      });
+      api
+        .get<Review[]>(`${ApiRoutesEnum.COMMENTS}/${id}`)
+        .then(({ data }) =>
+          data.sort(
+            (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+          )
+        )
+        .then(setReviews);
     }
   }, [id]);
 
